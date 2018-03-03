@@ -9,12 +9,14 @@ import { MaterialModule } from './material/material.module';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { SidenavComponent } from './sidenav/sidenav.component';
+import { HeaderComponent } from './header/header.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
     SidenavComponent,
+    HeaderComponent,
   ],
   imports: [
     BrowserModule,

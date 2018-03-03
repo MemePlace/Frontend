@@ -1,8 +1,4 @@
-<mat-toolbar color="primary">
-  <button mat-icon-button (click)="sidenav.toggle()">
-    <mat-icon class="material-icons app-toolbar-menu">menu</mat-icon>
-  </button>
-</mat-toolbar>
+<app-header (sidebarToggle)="sidenav.toggle()"></app-header>
 <app-sidenav #sidenav>
   This is content
 </app-sidenav>
