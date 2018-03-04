@@ -8,6 +8,19 @@ import {MatSidenav} from '@angular/material';
 })
 export class SidenavComponent implements OnInit {
   @ViewChild('sidenav') sidenav: MatSidenav;
+
+  get screenWidth(): number {
+    return window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
+  }
+
+  get isMobile(): boolean {
+    return this.screenWidth <= 700;
+  }
+
+  get sidebarWidth(): number {
+    return (this.isMobile) ? this.screenWidth * 0.8 : 250;
+  }
+
   constructor() { }
 
   ngOnInit() {
@@ -15,11 +28,5 @@ export class SidenavComponent implements OnInit {
 
   toggle() {
     this.sidenav.toggle();
-  }
-
-  isMobile(): boolean {
-    const width = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
-
-    return width <= 700;
   }
 }

@@ -1,5 +1,5 @@
-<mat-sidenav-container>
-  <mat-sidenav #sidenav [mode]="isMobile() ? 'over': 'side'" [opened]="!isMobile()">
+<mat-sidenav-container fullscreen [style.top.px]="screenWidth <= 599 ? 56 : 64">
+  <mat-sidenav #sidenav [mode]="isMobile ? 'over': 'side'" [opened]="!isMobile" [style.width.px]="sidebarWidth">
     Sidebar Content
   </mat-sidenav>
   <mat-sidenav-content>
