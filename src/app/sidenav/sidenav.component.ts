@@ -8,7 +8,6 @@ import {MatSidenav} from '@angular/material';
 })
 export class SidenavComponent implements OnInit {
   @ViewChild('sidenav') sidenav: MatSidenav;
-  @ViewChild('matTabs') matTabs: MatTabNav;
 
   get screenWidth(): number {
     return window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
