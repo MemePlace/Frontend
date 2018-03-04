@@ -11,6 +11,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { SidenavComponent } from './sidenav/sidenav.component';
 import { HeaderComponent } from './header/header.component';
 
+import { CommunityModule } from './community/community.module';
 
 @NgModule({
   declarations: [
@@ -23,6 +24,7 @@ import { HeaderComponent } from './header/header.component';
     BrowserAnimationsModule,
     AppRoutingModule,
     MaterialModule,
+    CommunityModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
