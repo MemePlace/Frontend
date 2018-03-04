@@ -1,5 +1,5 @@
 <mat-sidenav-container>
-  <mat-sidenav #sidenav mode="side">
+  <mat-sidenav #sidenav [mode]="isMobile() ? 'over': 'side'">
     Sidebar Content
   </mat-sidenav>
   <mat-sidenav-content>

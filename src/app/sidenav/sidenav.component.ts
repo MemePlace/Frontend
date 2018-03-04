@@ -14,7 +14,12 @@ export class SidenavComponent implements OnInit {
   }
 
   toggle() {
-    console.log('Hello');
     this.sidenav.toggle();
+  }
+
+  isMobile(): boolean {
+    const width = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
+
+    return width <= 700;
   }
 }
