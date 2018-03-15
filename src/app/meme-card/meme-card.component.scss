@@ -1,0 +1,57 @@
+.mat-card-image:first-child {
+  margin-top: 0px;
+}
+
+.mat-card-actions {
+  margin: 0px;
+  padding: 20px 0px;
+}
+
+//.meme-card {
+//  min-width: 100px;
+//  max-width: 400px;
+//  max-height: 370px;
+//  min-height: 370px;
+//  display: block;
+//  position: relative;
+//
+//  padding: 10px;
+//  margin: 5px;
+//}
+
+
+.image-frame {
+  overflow: hidden;
+
+  min-width: inherit;
+  max-width: inherit;
+  min-height: 320px;
+  max-height: 320px;
+
+}
+
+.memeImg {
+  //min-width: inherit;
+  //max-width: inherit;
+  //min-height: 320px;
+  //max-height: 320px;
+  display: block;
+  margin: auto;
+
+  width: 100%;
+  height: auto;
+}
+
+
+.cardActionButtons {
+  float: right;
+}
+
+.cardActionButtons button {
+  border: 0px;
+  cursor: pointer;
+}
+
+mat-card-subtitle, .authorNameField {
+  display: inline;
+}

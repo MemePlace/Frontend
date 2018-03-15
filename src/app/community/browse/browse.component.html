@@ -1,5 +1,13 @@
 <mat-tab-group>
-  <mat-tab label="Top">Content 1</mat-tab>
+  <mat-tab label="Top">
+    <div class="browseContentWrapper">
+      <app-meme-card class="flexItem" *ngFor="let u of users"
+                     [username]=u.un
+                     [cardWidth]=u.width
+                     [cardHeight]=u.height
+                     ></app-meme-card>
+    </div>
+  </mat-tab>
   <mat-tab label="Hot">Content 2</mat-tab>
   <mat-tab label="New">Content 3</mat-tab>
 </mat-tab-group>

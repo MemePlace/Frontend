@@ -1,14 +1,17 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { BrowseComponent } from './browse/browse.component';
-
-import {MatTabsModule} from '@angular/material';
+import { MemeCardComponent } from '../meme-card/meme-card.component';
+import { MatTabsModule, MatIconModule } from '@angular/material';
+import { MatCardModule } from '@angular/material';
 
 @NgModule({
   imports: [
     CommonModule,
     MatTabsModule,
+    MatCardModule,
+    MatIconModule
   ],
-  declarations: [BrowseComponent]
+  declarations: [BrowseComponent, MemeCardComponent]
 })
 export class CommunityModule { }

@@ -2,3 +2,18 @@
 :host ::ng-deep .mat-tab-labels {
   justify-content: center;
 }
+
+.browseContentWrapper {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  align-content: flex-start;
+
+  padding: 20px 5px;
+}
+
+.flexItem {
+  //flex-grow: 1;
+  flex-basis: auto;
+}
