@@ -7,6 +7,10 @@ const routes: Routes = [
     path: '',
     pathMatch: 'full',
     component: BrowseComponent,
+  },
+  {
+    path: 'creation',
+    loadChildren: 'app/creation/creation.module#CreationModule'
   }
 ];
 
