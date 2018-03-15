@@ -17,8 +17,8 @@ export class MemeCardComponent implements OnInit {
 
   // if cardWidth is > 0, then change CSS
 
-  voteCount=0;
-  voted=false;
+  voteCount = 0;
+  voted = false;
 
   // default style
   cardStyle = {
@@ -30,7 +30,7 @@ export class MemeCardComponent implements OnInit {
     'position': 'relative',
     'padding': '10px',
     'margin': '5px',
-  }
+  };
 
   constructor() { }
 
@@ -45,16 +45,16 @@ export class MemeCardComponent implements OnInit {
       'position': 'relative',
       'padding': '10px',
       'margin': '5px',
-    }
+    };
   }
 
 
-  onClickUpVote(){
+  onClickUpVote() {
     this.voteCount++;
     console.log(this.voteCount);
   }
 
-  onClickDownVote(){
+  onClickDownVote() {
     this.voteCount--;
     console.log(this.voteCount);
   }
