@@ -12,7 +12,6 @@ import { SidenavComponent } from './sidenav/sidenav.component';
 import { HeaderComponent } from './header/header.component';
 
 import { CommunityModule } from './community/community.module';
-import { TemplateViewerComponent } from './template-viewer/template-viewer.component';
 
 
 @NgModule({
@@ -20,7 +19,6 @@ import { TemplateViewerComponent } from './template-viewer/template-viewer.compo
     AppComponent,
     SidenavComponent,
     HeaderComponent,
-    TemplateViewerComponent,
   ],
   imports: [
     BrowserModule,
