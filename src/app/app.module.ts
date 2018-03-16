@@ -13,7 +13,6 @@ import { HeaderComponent } from './header/header.component';
 
 import { CommunityModule } from './community/community.module';
 
-
 @NgModule({
   declarations: [
     AppComponent,
