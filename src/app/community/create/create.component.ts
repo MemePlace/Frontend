@@ -7,11 +7,9 @@ import {FormControl, Validators} from '@angular/forms';
   styleUrls: ['./create.component.scss']
 })
 export class CreateComponent implements OnInit {
-
   nameText = "";
   titleText = "";
   descriptionText ="";
-  str = '';
 
   constructor() { }
 
@@ -30,7 +28,5 @@ export class CreateComponent implements OnInit {
     let communityName = this.nameText;
     let communityTitle = this.titleText;
     let communityDescription = this.descriptionText;
-
-    // send the above variables to server
   }
 }

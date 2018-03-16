@@ -1,7 +1,7 @@
 .communityCreationForm {
   margin: 30px;
   height: 70vh;
-  min-height: 400px;
+  min-height: 450px;
   display: flex;
   flex-direction: column;
   position: relative;
@@ -20,13 +20,16 @@ textarea.mat-input-element {
   overflow: auto;
 }
 
+mat-card-content {
+  display: flex;
+  flex-direction: column;
+}
+
 #comDescriptionField textarea {
   height: 30vh;
 }
 
 #submitButton {
-  margin-left: auto;
-  margin-right: auto;
   position: absolute;
   right: 30px;
   bottom: 30px;

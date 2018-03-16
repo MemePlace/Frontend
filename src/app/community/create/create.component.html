@@ -1,21 +1,26 @@
 <mat-card class="communityCreationForm">
-  <mat-form-field id="communityNameField">
-    <input matInput placeholder="Community Name" [formControl]="nameFormControl" [ngModel]="nameText" maxlength="25" >
-    <mat-error *ngIf="nameFormControl.hasError('required')">
-      Name is <strong>required</strong>
-    </mat-error>
-  </mat-form-field>
+  <mat-card-title>Community Creation Form</mat-card-title>
 
-  <mat-form-field id="communityTitleField">
-    <input matInput placeholder="Community Title" [formControl]="titleFormControl" [ngModel]="titleText" maxlength="100">
-    <mat-error *ngIf="titleFormControl.hasError('required')">
-      Community Title is <strong>required</strong>
-    </mat-error>
-  </mat-form-field>
+  <mat-card-content>
+    <mat-form-field id="communityNameField">
+      <input matInput placeholder="Community Name" [formControl]="nameFormControl" [(ngModel)]="nameText" maxlength="25" >
+      <mat-error *ngIf="nameFormControl.hasError('required')">
+        Name is <strong>required</strong>
+      </mat-error>
+    </mat-form-field>
 
-  <mat-form-field id="comDescriptionField">
-    <textarea matInput placeholder="Community Description" [(ngModel)] = "str"></textarea>
-  </mat-form-field>
+    <mat-form-field id="communityTitleField">
+      <input matInput placeholder="Community Title" [formControl]="titleFormControl" [(ngModel)]="titleText" maxlength="100">
+      <mat-error *ngIf="titleFormControl.hasError('required')">
+        Community Title is <strong>required</strong>
+      </mat-error>
+    </mat-form-field>
 
+    <mat-form-field id="comDescriptionField">
+      <textarea matInput placeholder="Community Description" [(ngModel)] = "descriptionText"></textarea>
+    </mat-form-field>
+
+  </mat-card-content>
+  <pre>{{log}}</pre>
   <button mat-raised-button id="submitButton" color="primary" (click)="onCreateCommunity()" >Create Community!</button>
 </mat-card>
