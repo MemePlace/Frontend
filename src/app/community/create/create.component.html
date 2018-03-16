@@ -1,10 +1,22 @@
 <mat-card class="communityCreationForm">
   <mat-form-field id="communityNameField">
-    <input matInput placeholder="Community Name">
+    <input matInput placeholder="Community Name" [formControl]="nameFormControl" maxlength="25">
+    <mat-error *ngIf="nameFormControl.hasError('name') && !nameFormControl.hasError('required')">
+      Please enter a valid name for your community (this name will appear in your community's URL)
+    </mat-error>
+    <mat-error *ngIf="nameFormControl.hasError('required')">
+      Name is <strong>required</strong>
+    </mat-error>
   </mat-form-field>
 
   <mat-form-field id="communityTitleField">
-    <input matInput placeholder="Community Title">
+    <input matInput placeholder="Community Title" [formControl]="titleFormControl" maxlength="100">
+    <mat-error *ngIf="titleFormControl.hasError('title') && !titleFormControl.hasError('required')">
+      Please enter a valid title
+    </mat-error>
+    <mat-error *ngIf="titleFormControl.hasError('required')">
+      Community Title is <strong>required</strong>
+    </mat-error>
   </mat-form-field>
 
   <mat-form-field id="comDescriptionField">

@@ -7,12 +7,13 @@
   position: relative;
 }
 
-#communityNameField {
 
+#communityNameField {
+  border-top: 10px solid transparent;
 }
 
 #communityTitleField {
-
+  border-top: 10px solid transparent;
 }
 
 textarea.mat-input-element {
@@ -23,6 +24,8 @@ textarea.mat-input-element {
 #comDescriptionField textarea {
   height: 30vh;
 }
+
+
 
 #submitButton {
   margin-left: auto;
