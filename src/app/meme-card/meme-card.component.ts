@@ -11,11 +11,6 @@ export class MemeCardComponent implements OnInit {
   @Input() cardWidth: string;
   @Input() username: string;
 
-  // give default value to height and width.
-
-  // if cardHeight is > 0, then change CSS
-
-  // if cardWidth is > 0, then change CSS
 
   voteCount=0;
   voted=false;

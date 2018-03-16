@@ -2,21 +2,14 @@
   <div class="image-frame">
     <img class="memeImg" mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of a Shiba Inu">
   </div>
-  <!-- Actions that are appended to the bottom of the card: show author name, up vote, down vote-->
+
   <mat-card-actions>
-    <!--
-      Temporarily use a service?
-    -->
     <mat-card-subtitle class="authorNameField">
       <a href="/">{{username}}</a>
     </mat-card-subtitle>
 
     <div class="cardActionButtons">
-      <!-- Up vote button -->
-      <!--<button class="upVote" (click)="onClickUpVote" [disabled]="voted">Up vote</md-button>-->
       <button mat-button (click)="onClickUpVote" [disabled]="voted"><i class="material-icons">thumb_up</i></button>
-      <!-- Down vote button -->
-      <!--<button class="downVote" (click)="onClickDownVote" [disabled]="voted">Down vote</button>-->
       <button mat-button (click)="onClickDownVote" [disabled]="voted"><i class="material-icons">thumb_down</i></button>
     </div>
   </mat-card-actions>

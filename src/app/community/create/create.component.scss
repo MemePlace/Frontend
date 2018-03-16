@@ -1,0 +1,33 @@
+.communityCreationForm {
+  margin: 30px;
+  height: 70vh;
+  min-height: 400px;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+#communityNameField {
+
+}
+
+#communityTitleField {
+
+}
+
+textarea.mat-input-element {
+  resize: none;
+  overflow: auto;
+}
+
+#comDescriptionField textarea {
+  height: 30vh;
+}
+
+#submitButton {
+  margin-left: auto;
+  margin-right: auto;
+  position: absolute;
+  right: 30px;
+  bottom: 30px;
+}

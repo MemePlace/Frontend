@@ -4,8 +4,10 @@ import { BrowseComponent } from './browse/browse.component';
 import { MemeCardComponent } from '../meme-card/meme-card.component';
 import { MatTabsModule, MatIconModule } from '@angular/material';
 import { MatCardModule } from '@angular/material';
-import { MatStepperModule } from '@angular/material/stepper';
 import { CreateComponent } from './create/create.component';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatButtonModule } from '@angular/material';
 
 @NgModule({
   imports: [
@@ -13,7 +15,9 @@ import { CreateComponent } from './create/create.component';
     MatTabsModule,
     MatCardModule,
     MatIconModule,
-    MatStepperModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatButtonModule,
   ],
   declarations: [BrowseComponent, MemeCardComponent, CreateComponent]
 })
