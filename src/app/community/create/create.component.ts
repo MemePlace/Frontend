@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {FormControl, Validators} from '@angular/forms';
+import { FormControl, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-community-create',
@@ -7,9 +7,9 @@ import {FormControl, Validators} from '@angular/forms';
   styleUrls: ['./create.component.scss']
 })
 export class CreateComponent implements OnInit {
-  nameText = "";
-  titleText = "";
-  descriptionText ="";
+  nameText = '';
+  titleText = '';
+  descriptionText = '';
 
   constructor() { }
 
@@ -24,9 +24,7 @@ export class CreateComponent implements OnInit {
     Validators.required,
   ]);
 
-  onCreateCommunity(){
-    let communityName = this.nameText;
-    let communityTitle = this.titleText;
-    let communityDescription = this.descriptionText;
+  onCreateCommunity() {
+    // pass nameText, titleText, and descriptionText to server
   }
 }

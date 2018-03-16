@@ -1,3 +1,13 @@
+textarea.mat-input-element {
+  resize: none;
+  overflow: auto;
+}
+
+mat-card-content {
+  display: flex;
+  flex-direction: column;
+}
+
 .communityCreationForm {
   margin: 30px;
   height: 70vh;
@@ -13,16 +23,6 @@
 
 #communityTitleField {
   border-top: 10px solid transparent;
-}
-
-textarea.mat-input-element {
-  resize: none;
-  overflow: auto;
-}
-
-mat-card-content {
-  display: flex;
-  flex-direction: column;
 }
 
 #comDescriptionField textarea {
