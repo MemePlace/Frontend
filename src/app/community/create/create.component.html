@@ -1,27 +1,21 @@
 <mat-card class="communityCreationForm">
   <mat-form-field id="communityNameField">
-    <input matInput placeholder="Community Name" [formControl]="nameFormControl" maxlength="25">
-    <mat-error *ngIf="nameFormControl.hasError('name') && !nameFormControl.hasError('required')">
-      Please enter a valid name for your community (this name will appear in your community's URL)
-    </mat-error>
+    <input matInput placeholder="Community Name" [formControl]="nameFormControl" [ngModel]="nameText" maxlength="25" >
     <mat-error *ngIf="nameFormControl.hasError('required')">
       Name is <strong>required</strong>
     </mat-error>
   </mat-form-field>
 
   <mat-form-field id="communityTitleField">
-    <input matInput placeholder="Community Title" [formControl]="titleFormControl" maxlength="100">
-    <mat-error *ngIf="titleFormControl.hasError('title') && !titleFormControl.hasError('required')">
-      Please enter a valid title
-    </mat-error>
+    <input matInput placeholder="Community Title" [formControl]="titleFormControl" [ngModel]="titleText" maxlength="100">
     <mat-error *ngIf="titleFormControl.hasError('required')">
       Community Title is <strong>required</strong>
     </mat-error>
   </mat-form-field>
 
   <mat-form-field id="comDescriptionField">
-    <textarea matInput placeholder="Community Description"></textarea>
+    <textarea matInput placeholder="Community Description" [(ngModel)] = "str"></textarea>
   </mat-form-field>
 
-  <button mat-raised-button id="submitButton" color="primary" disabled="true">Create Community!</button>
+  <button mat-raised-button id="submitButton" color="primary" (click)="onCreateCommunity()" >Create Community!</button>
 </mat-card>

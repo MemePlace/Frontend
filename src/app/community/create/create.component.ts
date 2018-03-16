@@ -8,6 +8,11 @@ import {FormControl, Validators} from '@angular/forms';
 })
 export class CreateComponent implements OnInit {
 
+  nameText = "";
+  titleText = "";
+  descriptionText ="";
+  str = '';
+
   constructor() { }
 
   ngOnInit() {
@@ -15,12 +20,17 @@ export class CreateComponent implements OnInit {
 
   nameFormControl = new FormControl('', [
     Validators.required,
-    Validators.email,
   ]);
 
   titleFormControl = new FormControl('', [
     Validators.required,
-    Validators.email,
   ]);
 
+  onCreateCommunity(){
+    let communityName = this.nameText;
+    let communityTitle = this.titleText;
+    let communityDescription = this.descriptionText;
+
+    // send the above variables to server
+  }
 }
