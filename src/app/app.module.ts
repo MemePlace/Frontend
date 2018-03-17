@@ -12,6 +12,7 @@ import { SidenavComponent } from './sidenav/sidenav.component';
 import { HeaderComponent } from './header/header.component';
 
 import { CommunityModule } from './community/community.module';
+import { ApiModule } from './api/api.module';
 
 @NgModule({
   declarations: [
@@ -25,6 +26,7 @@ import { CommunityModule } from './community/community.module';
     AppRoutingModule,
     MaterialModule,
     CommunityModule,
+    ApiModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
