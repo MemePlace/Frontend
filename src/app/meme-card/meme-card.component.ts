@@ -7,50 +7,36 @@ import { Component, OnInit, Input } from '@angular/core';
 })
 
 export class MemeCardComponent implements OnInit {
-  @Input() cardHeight: string;
-  @Input() cardWidth: string;
+  @Input() imageHeight: number;
   @Input() username: string;
+  @Input() image: string;
 
   voteCount = 0;
-  voted = false;
-
-  // default style
-  cardStyle = {
-    'min-width': '100px',
-    'max-width': '400px',
-    'max-height': '370px',
-    'min-height': '370px',
-    'display': 'block',
-    'position': 'relative',
-    'padding': '10px',
-    'margin': '5px',
-  };
+  voted = 0;
 
   constructor() { }
 
   ngOnInit() {
-    // y'all need to give correct input w/ correct format. Thanks!
-    this.cardStyle = {
-      'min-width': '100px',
-      'max-width': this.cardWidth,
-      'max-height': this.cardHeight,
-      'min-height': this.cardHeight,
-      'display': 'block',
-      'position': 'relative',
-      'padding': '10px',
-      'margin': '5px',
-    };
   }
 
-
   onClickUpVote() {
-    this.voteCount++;
-    console.log(this.voteCount);
+    this.voteCount -= this.voted; // negate a previous vote
+    if (this.voted != 1) {
+      this.voteCount++;
+      this.voted = 1;
+    } else {
+      this.voted = 0;
+    }
   }
 
   onClickDownVote() {
-    this.voteCount--;
-    console.log(this.voteCount);
+    this.voteCount -= this.voted; // negate a previous vote
+    if (this.voted != -1) {
+      this.voteCount--;
+      this.voted = -1;
+    } else {
+      this.voted = 0;
+    }
   }
 
 }

@@ -1,36 +1,22 @@
-.mat-card-image:first-child {
-  margin-top: 0px;
+.meme-card {
+  padding: 0;
+  text-align: center; // center the image in the card if the width is too small
 }
 
-.mat-card-actions {
-  margin: 0px;
-  padding: 20px 0px;
-}
-
-.image-frame {
-  overflow: hidden;
-  min-width: inherit;
-  max-width: inherit;
-  min-height: 320px;
-  max-height: 320px;
-}
-
-.memeImg {
-  display: block;
-  margin: auto;
-  width: 100%;
-  height: auto;
+.meme-img {
+  width: auto;
 }
 
 .cardActionButtons {
   float: right;
 }
 
-.cardActionButtons button {
-  border: 0px;
-  cursor: pointer;
+.author {
+  float: left;
+  line-height: 40px; // Needed to vertical align
+  vertical-align: middle;
 }
 
-mat-card-subtitle, .authorNameField {
-  display: inline;
+.actions {
+  padding: 0 5px 0 5px;
 }
