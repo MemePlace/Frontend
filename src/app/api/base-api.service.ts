@@ -6,7 +6,7 @@ export enum Version {
 }
 
 const prodBase = 'api.meme.place';
-const devBase = '';
+const devBase = 'localhost:3000';
 
 @Injectable()
 export class BaseApiService {
