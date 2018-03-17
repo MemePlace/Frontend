@@ -7,11 +7,11 @@ export class UserService {
   constructor(private api: BaseApiService) { }
 
   isLoggedIn(): boolean {
-
+    return false;
   }
 
   isUsernameTaken(): boolean {
-
+    return false;
   }
 
   login(username: string, password: string) {
