@@ -26,7 +26,7 @@ export class FabricComponent implements OnInit {
       height: 300,
       fill: 'transparent',
       stroke: '#666',
-      strokeDashArray: [5,5]
+      strokeDashArray: [5, 5]
     });
 
     this.testshape = new fabric.Rect({
@@ -40,5 +40,7 @@ export class FabricComponent implements OnInit {
 
     this.canvas.centerObject(this.boundry);
   }
+
+
 
 }

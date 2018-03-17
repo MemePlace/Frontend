@@ -4,6 +4,33 @@
 
 }
 
+#zoomSlider {
+  -webkit-appearance: none;
+  width: 70%;
+  height: 15px;
+  border-radius: 4px;
+  outline: none;
+  opacity: 0.7;
+  -webkit-transition: .2s;
+  -moz-transition: .2s;
+  transition: opacity .2s;
+  background: lightgray;
+}
+
+#zoomSlider::-webkit-slider-thumb {
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  background: green;
+}
+
+#zoomSlider::-moz-range-thumb {
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  background: green;
+}
+
 canvas {
   margin: 0px 25px 0px 25px;
   width: 1200px;
