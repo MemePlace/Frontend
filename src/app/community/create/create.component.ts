@@ -10,6 +10,8 @@ export class CreateComponent implements OnInit {
   nameText: string;
   titleText: string;
   descriptionText: string;
+  sidebarText: string;
+  NSFW_checked: false;
 
   nameFormControl = new FormControl('', [
     Validators.required,

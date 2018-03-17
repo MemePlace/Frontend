@@ -8,6 +8,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { ReactiveFormsModule } from '@angular/forms';
 import { FormsModule } from '@angular/forms';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 
 @NgModule({
   imports: [
@@ -20,6 +21,7 @@ import { FormsModule } from '@angular/forms';
     MatButtonModule,
     ReactiveFormsModule,
     FormsModule,
+    MatCheckboxModule,
   ],
   declarations: [BrowseComponent, MemeCardComponent, CreateComponent]
 })
