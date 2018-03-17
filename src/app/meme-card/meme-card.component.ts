@@ -21,7 +21,7 @@ export class MemeCardComponent implements OnInit {
 
   onClickUpVote() {
     this.voteCount -= this.voted; // negate a previous vote
-    if (this.voted != 1) {
+    if (this.voted !== 1) {
       this.voteCount++;
       this.voted = 1;
     } else {
@@ -31,7 +31,7 @@ export class MemeCardComponent implements OnInit {
 
   onClickDownVote() {
     this.voteCount -= this.voted; // negate a previous vote
-    if (this.voted != -1) {
+    if (this.voted !== -1) {
       this.voteCount--;
       this.voted = -1;
     } else {

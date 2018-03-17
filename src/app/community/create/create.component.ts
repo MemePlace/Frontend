@@ -7,14 +7,9 @@ import { FormControl, Validators } from '@angular/forms';
   styleUrls: ['./create.component.scss']
 })
 export class CreateComponent implements OnInit {
-  nameText = '';
-  titleText = '';
-  descriptionText = '';
-
-  constructor() { }
-
-  ngOnInit() {
-  }
+  nameText: string;
+  titleText: string;
+  descriptionText: string;
 
   nameFormControl = new FormControl('', [
     Validators.required,
@@ -23,6 +18,11 @@ export class CreateComponent implements OnInit {
   titleFormControl = new FormControl('', [
     Validators.required,
   ]);
+
+  constructor() { }
+
+  ngOnInit() {
+  }
 
   onCreateCommunity() {
     // pass nameText, titleText, and descriptionText to server
