@@ -11,7 +11,7 @@ mat-card-content {
 .communityCreationForm {
   margin: 30px;
   height: 65vh;
-  min-height: 450px;
+  min-height: 500px;
   display: flex;
   flex-direction: column;
   position: relative;
@@ -37,10 +37,6 @@ mat-card-content {
 
 #sidebarTextField {
   border-top: 10px solid transparent;
-}
-
-#comDescriptionField textarea {
-  height: 20vh;
 }
 
 #submitButton {
