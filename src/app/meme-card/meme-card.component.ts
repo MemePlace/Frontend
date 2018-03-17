@@ -21,7 +21,12 @@ export class MemeCardComponent implements OnInit {
 
   onClickUpVote() {
     this.voteCount -= this.voted; // negate a previous vote
+<<<<<<< HEAD
     if (this.voted !== 1) {
+=======
+
+    if (this.voted != 1) {
+>>>>>>> 540e457979c9c035e34cb857addc0a1025fd6b06
       this.voteCount++;
       this.voted = 1;
     } else {
@@ -31,7 +36,12 @@ export class MemeCardComponent implements OnInit {
 
   onClickDownVote() {
     this.voteCount -= this.voted; // negate a previous vote
+<<<<<<< HEAD
     if (this.voted !== -1) {
+=======
+
+    if (this.voted != -1) {
+>>>>>>> 540e457979c9c035e34cb857addc0a1025fd6b06
       this.voteCount--;
       this.voted = -1;
     } else {
