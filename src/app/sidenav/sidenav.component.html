@@ -1,6 +1,8 @@
 <mat-sidenav-container fullscreen [style.top.px]="screenWidth <= 599 ? 56 : 64">
   <mat-sidenav #sidenav [mode]="isMobile ? 'over': 'side'" [opened]="!isMobile" [style.width.px]="sidebarWidth">
     <mat-nav-list>
+      <a mat-list-item [routerLink]="['creation']">Creation Center</a>
+      <mat-divider></mat-divider>
       <a mat-list-item [routerLink]="['/']">Settings</a>
       <mat-divider></mat-divider>
       <a mat-list-item [routerLink]="['/']">Community 1</a>

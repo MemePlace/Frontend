@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { BrowseComponent } from './community/browse/browse.component';
+import { CreationComponent } from './creation/creation.component'
 
 const routes: Routes = [
   {
@@ -10,7 +11,7 @@ const routes: Routes = [
   },
   {
     path: 'creation',
-    loadChildren: 'app/creation/creation.module#CreationModule'
+    component: CreationComponent
   }
 ];
 

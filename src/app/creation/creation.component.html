@@ -1,5 +1,20 @@
-<h1>
-	Creation Center
-</h1>
+<mat-grid-list id="header-row" cols="2" rowHeight="4em">
+    <mat-grid-tile id="page-title-tile">
+      <h1>
+        Creation Center
+      </h1>
+    </mat-grid-tile>
+  <mat-grid-tile id="title-input-tile">
+    <form>
+      <mat-form-field>
+        <input matInput placeholder="Title.. (optional)">
+      </mat-form-field>
+    </form>
+  </mat-grid-tile>
+</mat-grid-list>
 
 <app-fabric></app-fabric>
+
+<div id="undercanvas">
+  <p>After Fabric!</p>
+</div>

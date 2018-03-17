@@ -13,6 +13,8 @@ import { HeaderComponent } from './header/header.component';
 
 import { CommunityModule } from './community/community.module';
 
+import { CreationModule } from './creation/creation.module';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -25,6 +27,7 @@ import { CommunityModule } from './community/community.module';
     AppRoutingModule,
     MaterialModule,
     CommunityModule,
+    CreationModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
