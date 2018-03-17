@@ -1,0 +1,22 @@
+.meme-card {
+  padding: 0;
+  text-align: center; // center the image in the card if the width is too small
+}
+
+.meme-img {
+  width: auto;
+}
+
+.cardActionButtons {
+  float: right;
+}
+
+.author {
+  float: left;
+  line-height: 40px; // Needed to vertical align
+  vertical-align: middle;
+}
+
+.actions {
+  padding: 0 5px 0 5px;
+}
