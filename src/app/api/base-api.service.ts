@@ -1,8 +1,15 @@
 import { Injectable, isDevMode } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import {HttpClient, HttpErrorResponse} from '@angular/common/http';
+import {Observable} from 'rxjs/Observable';
+import {ErrorObservable} from 'rxjs/observable/ErrorObservable';
+import {catchError} from 'rxjs/operators';
 
 export enum Version {
   v1 = 'v1'
+}
+
+export interface Error {
+  error: string;
 }
 
 const prodBase = 'api.meme.place';
@@ -14,20 +21,30 @@ export class BaseApiService {
 
   constructor(private http: HttpClient) { }
 
-  get(version: Version, resource: string) {
-    console.log(resource);
-    return this.http.get(`${this.base}/${version}/${resource}`);
+  private handleError(error: HttpErrorResponse) {
+    if (error.error instanceof ErrorEvent) {
+      // Client side or network error
+      console.error(error.error.message);
+      return new ErrorObservable('Something bad happened, please try again later');
+    } else {
+      // Server error response
+      return new ErrorObservable(error.error);
+    }
   }
 
-  post(version: Version, resource: string, data: {}) {
-    return this.http.post(`${this.base}/${version}/${resource}`, data);
+  get(version: Version, resource: string): Observable<{}> {
+    return this.http.get(`${this.base}/${version}/${resource}`).pipe(catchError(this.handleError));
   }
 
-  put(version: Version, resource: string, data: {}) {
-    return this.http.put(`${this.base}/${version}/${resource}`, data);
+  post(version: Version, resource: string, data: {}): Observable<{}> {
+    return this.http.post(`${this.base}/${version}/${resource}`, data).pipe(catchError(this.handleError));
   }
 
-  delete(version: Version, resource: string) {
-    return this.http.delete(`${this.base}/${version}/${resource}`);
+  put(version: Version, resource: string, data: {}): Observable<{}> {
+    return this.http.put(`${this.base}/${version}/${resource}`, data).pipe(catchError(this.handleError));
+  }
+
+  delete(version: Version, resource: string): Observable<{}> {
+    return this.http.delete(`${this.base}/${version}/${resource}`).pipe(catchError(this.handleError));
   }
 }
