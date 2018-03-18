@@ -1,9 +1,5 @@
-import 'rxjs/add/operator/toPromise';
-import 'rxjs/add/operator/map';
-
 import { Injectable } from '@angular/core';
 import { BaseApiService, Version } from './base-api.service';
-import {Observable} from 'rxjs/Observable';
 
 export interface User {
   id: number;
@@ -15,7 +11,14 @@ export class UserService {
   private loggedIn = false;
   private user: User;
 
-  constructor(private api: BaseApiService) { }
+  constructor(private api: BaseApiService) {
+    // check if they are logged in
+    this.getDetails().then((user) => {
+      console.log(user);
+    }).catch((err) => {
+      console.error('User is not logged in');
+    });
+  }
 
   isLoggedIn() {
     return this.loggedIn;
@@ -25,31 +28,62 @@ export class UserService {
     throw new Error('Method not implemented');
   }
 
+  /**
+   * Logs out the currently logged in user
+   */
   logout() {
     if (!this.isLoggedIn()) return;
 
-    throw new Error('Method not implemented');
+    return this.api.put(Version.v1, 'auth/logout', {}).then((user) => {
+      this.user = null;
+      this.loggedIn = false;
+    });
   }
 
-  login(username: string, password: string): Observable<User> {
-    return this.api.post(Version.v1, 'auth', {username, password}).map((user: User) => {
+  /**
+   * Logs in a new user and returns their details
+   * @param {string} username
+   * @param {string} password
+   * @return {Promise<User>}
+   */
+  login(username: string, password: string): Promise<User> {
+    return this.api.post(Version.v1, 'auth', {username, password}).then((user: User) => {
       this.user = user;
       this.loggedIn = true;
       return user;
     });
   }
 
-  signup(email: string, username: string, password: string): Observable<User> {
-    return this.api.post(Version.v1, 'users', {email, username, password}).map((user: User) => {
+  /**
+   * Signs up a new user and automatically logs them in
+   * @param {string} email
+   * @param {string} username
+   * @param {string} password
+   * @return {Promise<User>} New user details
+   */
+  signup(email: string, username: string, password: string): Promise<User> {
+    return this.api.post(Version.v1, 'users', {email, username, password}).then((user: User) => {
       this.user = user;
       this.loggedIn = true;
       return user;
     });
   }
 
-  getDetails(): User|void {
-    if (this.isLoggedIn()) {
-      return this.user;
+  /**
+   * Retrieves details for the currently logged in user
+   * @param {boolean} force Optional variable to bypass the cache and fetch fresh data
+   * @return {Promise<User>}
+   */
+  getDetails(force = false): Promise<User> {
+    if (!force && this.isLoggedIn()) {
+      return Promise.resolve(this.user);
     }
+
+    // fetch it
+    return this.api.get(Version.v1, 'me').then((user: User) => {
+      this.user = user;
+      this.loggedIn = true;
+      return user;
+    });
   }
 }
