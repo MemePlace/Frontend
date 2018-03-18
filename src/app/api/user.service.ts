@@ -1,28 +1,55 @@
+import 'rxjs/add/operator/toPromise';
+import 'rxjs/add/operator/map';
+
 import { Injectable } from '@angular/core';
 import { BaseApiService, Version } from './base-api.service';
+import {Observable} from 'rxjs/Observable';
+
+export interface User {
+  id: number;
+  username: string;
+}
 
 @Injectable()
 export class UserService {
+  private loggedIn = false;
+  private user: User;
 
   constructor(private api: BaseApiService) { }
 
-  isLoggedIn(): boolean {
-    return false;
+  isLoggedIn() {
+    return this.loggedIn;
   }
 
-  isUsernameTaken(): boolean {
-    return false;
+  isUsernameAvailable() {
+    throw new Error('Method not implemented');
   }
 
-  login(username: string, password: string) {
+  logout() {
+    if (!this.isLoggedIn()) return;
 
+    throw new Error('Method not implemented');
   }
 
-  signup(email: string, username: string, password: string) {
-
+  login(username: string, password: string): Observable<User> {
+    return this.api.post(Version.v1, 'auth', {username, password}).map((user: User) => {
+      this.user = user;
+      this.loggedIn = true;
+      return user;
+    });
   }
 
-  getDetails() {
+  signup(email: string, username: string, password: string): Observable<User> {
+    return this.api.post(Version.v1, 'users', {email, username, password}).map((user: User) => {
+      this.user = user;
+      this.loggedIn = true;
+      return user;
+    });
+  }
 
+  getDetails(): User|void {
+    if (this.isLoggedIn()) {
+      return this.user;
+    }
   }
 }
