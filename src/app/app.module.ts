@@ -1,16 +1,12 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-
-import { AppRoutingModule } from './app-routing.module';
-
-import { AppComponent } from './app.component';
-
-import { MaterialModule } from './material/material.module';
-
+import { FormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { AppRoutingModule } from './app-routing.module';
+import { AppComponent } from './app.component';
+import { MaterialModule } from './material/material.module';
 import { SidenavComponent } from './sidenav/sidenav.component';
 import { HeaderComponent } from './header/header.component';
-
 import { CommunityModule } from './community/community.module';
 import { ApiModule } from './api/api.module';
 
@@ -27,6 +23,7 @@ import { ApiModule } from './api/api.module';
     MaterialModule,
     CommunityModule,
     ApiModule,
+    FormsModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
