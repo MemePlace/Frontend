@@ -56,12 +56,12 @@ export class UserService {
 
   /**
    * Signs up a new user and automatically logs them in
-   * @param {string} email
    * @param {string} username
    * @param {string} password
+   * @param {string?} email
    * @return {Promise<User>} New user details
    */
-  signup(email: string, username: string, password: string): Promise<User> {
+  signup(username: string, password: string, email?: string): Promise<User> {
     return this.api.post(Version.v1, 'users', {email, username, password}).then((user: User) => {
       this.user = user;
       this.loggedIn = true;
