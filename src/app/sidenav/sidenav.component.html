@@ -5,16 +5,16 @@
       <mat-divider></mat-divider>
       <div *ngFor="let community of communitiesFavorited; let i = index; trackBy: tracked">
         <a mat-list-item [routerLink]="['/']">
-          <button mat-icon-button (click)="bookmark(i)" *ngIf="!community.isbookmarked"><mat-icon>star_border</mat-icon></button>
-          <button mat-icon-button (click)="removeBookmark(i)" *ngIf="community.isbookmarked"><mat-icon class="bookmarked">star</mat-icon></button>
+          <button mat-icon-button (click)="favorite(i)" *ngIf="!community.isFavorited"><mat-icon>star_border</mat-icon></button>
+          <button mat-icon-button (click)="removeFavorite(i)" *ngIf="community.isFavorited"><mat-icon class="favorited">star</mat-icon></button>
            {{ community.communityname }}
         </a>
       </div>
       <mat-divider></mat-divider>
       <div *ngFor="let community of communities; let i = index; trackBy: tracked">
         <a mat-list-item [routerLink]="['/']">
-          <button mat-icon-button (click)="bookmark(i)" *ngIf="!community.isbookmarked"><mat-icon>star_border</mat-icon></button>
-          <button mat-icon-button (click)="removeBookmark(i)" *ngIf="community.isbookmarked"><mat-icon class="bookmarked">star</mat-icon></button>
+          <button mat-icon-button (click)="favorite(i)" *ngIf="!community.isFavorited"><mat-icon>star_border</mat-icon></button>
+          <button mat-icon-button (click)="removeFavorite(i)" *ngIf="community.isFavorited"><mat-icon class="favorited">star</mat-icon></button>
            {{ community.communityname }}
         </a>
       </div>

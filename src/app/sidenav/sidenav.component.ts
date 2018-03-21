@@ -8,7 +8,7 @@ import {MatSidenav} from '@angular/material';
 })
 export class SidenavComponent implements OnInit {
   @ViewChild('sidenav') sidenav: MatSidenav;
-  isBookmarked = false;
+  isFavorited = false;
   communityName: String;
   communities: Array<any>;
   communitiesFavorited: Array<any>;
@@ -31,24 +31,24 @@ export class SidenavComponent implements OnInit {
     this.communities = new Array();
     this.communitiesFavorited = new Array();
     for (let i = 0; i < 20; i++) {
-      this.communities.push({ communityname: this.communityName = 'Community ' + i, isbookmarked: this.isBookmarked });
+      this.communities.push({ communityname: this.communityName = 'Community ' + i, isFavorited: this.isFavorited });
     }
-    this.communities.sort((a, b) => a.communityname.localeCompare(b.communityname));
     for (let community of this.communities) {
-      if (community.isbookmarked === true) this.communitiesFavorited.push(community);
+      if (community.isFavorited === true) this.communitiesFavorited.push(community);
     }
+    this.communitiesFavorited.sort((a, b) => a.communityname.localeCompare(b.communityname));
   }
 
   toggle() {
     this.sidenav.toggle();
   }
 
-  bookmark(i: any) {
-    this.communities[i].isbookmarked = true;
+  favorite(i: any) {
+    this.communities[i].isFavorited = true;
     this.communitiesFavorited.push(this.communities[i]);
   }
-  removeBookmark(i: any) {
-    this.communities[i].isbookmarked = false;
+  removeFavorite(i: any) {
+    this.communities[i].isFavorited = false;
     let index = this.communitiesFavorited.indexOf(this.communities[i]);
     if (index !== -1) this.communitiesFavorited.splice(index, 1);
   }
