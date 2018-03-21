@@ -11,6 +11,7 @@ export class SidenavComponent implements OnInit {
   isBookmarked = false;
   communityName: String;
   communities: Array<any>;
+  communitiesFavorited: Array<any>;
 
   get screenWidth(): number {
     return window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
@@ -28,10 +29,14 @@ export class SidenavComponent implements OnInit {
 
   ngOnInit() {
     this.communities = new Array();
-    this.communities = [
-      { communityname: this.communityName = 'Community 1', isbookmarked: this.isBookmarked },
-      { communityname: this.communityName = 'Community 2', isbookmarked: this.isBookmarked }
-    ];
+    this.communitiesFavorited = new Array();
+    for (let i = 0; i < 20; i++) {
+      this.communities.push({ communityname: this.communityName = 'Community ' + i, isbookmarked: this.isBookmarked });
+    }
+    this.communities.sort((a, b) => a.communityname.localeCompare(b.communityname));
+    for (let community of this.communities) {
+      if (community.isbookmarked === true) this.communitiesFavorited.push(community);
+    }
   }
 
   toggle() {
@@ -40,8 +45,11 @@ export class SidenavComponent implements OnInit {
 
   bookmark(i: any) {
     this.communities[i].isbookmarked = true;
+    this.communitiesFavorited.push(this.communities[i]);
   }
   removeBookmark(i: any) {
     this.communities[i].isbookmarked = false;
+    let index = this.communitiesFavorited.indexOf(this.communities[i]);
+    if (index !== -1) this.communitiesFavorited.splice(index, 1);
   }
 }
