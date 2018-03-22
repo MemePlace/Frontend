@@ -3,11 +3,10 @@
     <mat-nav-list>
       <a mat-list-item [routerLink]="['/']">Settings</a>
       <mat-divider></mat-divider>
-      <div *ngFor="let community of communitiesFavorited; let i = index; trackBy: tracked">
-        <a mat-list-item [routerLink]="['/']">
-          <button mat-icon-button (click)="favorite(i)" *ngIf="!community.isFavorited"><mat-icon>star_border</mat-icon></button>
-          <button mat-icon-button (click)="removeFavorite(i)" *ngIf="community.isFavorited"><mat-icon class="favorited">star</mat-icon></button>
-           {{ community.communityname }}
+      <div *ngFor="let communityFav of communitiesFavorited; let j = index">
+        <a mat-list-item [routerLink]="['/']" *ngIf="communityFav.isFavorited">
+          <button mat-icon-button (click)="removeFavoriteFromFav(j)" ><mat-icon class="favorited">star</mat-icon></button>
+           {{ communityFav.communityname }}
         </a>
       </div>
       <mat-divider></mat-divider>
