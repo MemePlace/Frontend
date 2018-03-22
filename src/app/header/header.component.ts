@@ -1,5 +1,7 @@
 import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 
+import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
+
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
@@ -15,5 +17,13 @@ export class HeaderComponent implements OnInit {
 
   toggle() {
     this.sidebarToggle.emit();
+  }
+  
+  registerPage(){
+      // Open dialog box to Register page
+  }
+  
+  loginPage(){
+      // Open dialog box to Login page
   }
 }

@@ -9,12 +9,14 @@ import { SidenavComponent } from './sidenav/sidenav.component';
 import { HeaderComponent } from './header/header.component';
 import { CommunityModule } from './community/community.module';
 import { ApiModule } from './api/api.module';
+import { LoginFormComponent } from './login-form/login-form.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     SidenavComponent,
     HeaderComponent,
+    LoginFormComponent,
   ],
   imports: [
     BrowserModule,
