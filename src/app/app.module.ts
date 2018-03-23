@@ -9,6 +9,7 @@ import { SidenavComponent } from './sidenav/sidenav.component';
 import { HeaderComponent } from './header/header.component';
 import { CommunityModule } from './community/community.module';
 import { ApiModule } from './api/api.module';
+import { SearchModule } from './search/search.module';
 
 @NgModule({
   declarations: [
@@ -23,6 +24,7 @@ import { ApiModule } from './api/api.module';
     MaterialModule,
     CommunityModule,
     ApiModule,
+    SearchModule,
     FormsModule,
   ],
   providers: [],
