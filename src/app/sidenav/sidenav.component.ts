@@ -8,8 +8,6 @@ import {MatSidenav} from '@angular/material';
 })
 export class SidenavComponent implements OnInit {
   @ViewChild('sidenav') sidenav: MatSidenav;
-  isFavorited = false;
-  communityName: String;
   communities: Array<any>;
   communitiesFavorited: Array<any>;
 
@@ -32,36 +30,36 @@ export class SidenavComponent implements OnInit {
     this.communitiesFavorited = new Array();
     // populate 20 random communities
     for (let i = 0; i < 20; i++) {
-      this.communities.push({ communityname: this.communityName = 'Community ' + i, 
-      isFavorited: this.isFavorited, 
-      favouriteCount: Math.floor(Math.random()*(101))});
+      this.communities.push({ communityname: 'Community ' + i,
+      isFavorited: false,
+      favouriteCount: Math.floor(Math.random() * (101))});
     }
-    for (let community of this.communities) {
-      if (community.isFavorited === true) this.communitiesFavorited.push(community);
+    for (const community of this.communities) {
+      if (community.isFavorited === true) { this.communitiesFavorited.push(community); }
     }
-    this.communities.sort((a, b) => b.favouriteCount - a.favouriteCount);
-    this.communitiesFavorited.sort((a, b) => a.communityname.localeCompare(b.communityname));
-    console.log(this.communities);
   }
-  
+
   toggle() {
     this.sidenav.toggle();
   }
 
-  favorite(i: any) {
-    this.communities[i].isFavorited = true;
-    this.communitiesFavorited.push(this.communities[i]);
+  favorite(community: any) {
+    community.isFavorited = true;
+    this.communitiesFavorited.push(community);
     this.communitiesFavorited.sort((a, b) => a.communityname.localeCompare(b.communityname));
   }
-  removeFavorite(i: any) {
-    this.communities[i].isFavorited = false;
-    let index = this.communitiesFavorited.indexOf(this.communities[i]);
-    if (index !== -1) this.communitiesFavorited.splice(index, 1);
+
+  removeFavorite(community: any) {
+    community.isFavorited = false;
+    this.communitiesFavorited = this.communitiesFavorited.filter((com) => {
+      return com !== community;
+    });
   }
-  removeFavoriteFromFav(i: any) {
-    this.communitiesFavorited[i].isFavorited = false;
-    let index = this.communities.indexOf(this.communitiesFavorited[i]);
-    if (index !== -1) this.communities.splice(index, 1);
-    this.communitiesFavorited.splice(i, 1);
+
+  removeFavoriteFromFav(communityFav: any) {
+    communityFav.isFavorited = false;
+    this.communitiesFavorited = this.communitiesFavorited.filter((com) => {
+    return com !== communityFav;
+    });
   }
 }
