@@ -10,6 +10,7 @@ import { HeaderComponent } from './header/header.component';
 import { CommunityModule } from './community/community.module';
 import { ApiModule } from './api/api.module';
 import { LoginFormComponent } from './login-form/login-form.component';
+import { MatDialogModule } from '@angular/material/dialog';
 
 @NgModule({
   declarations: [
@@ -26,8 +27,10 @@ import { LoginFormComponent } from './login-form/login-form.component';
     CommunityModule,
     ApiModule,
     FormsModule,
+    MatDialogModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
+  entryComponents: [LoginFormComponent]
 })
 export class AppModule { }

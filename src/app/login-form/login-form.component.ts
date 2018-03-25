@@ -9,7 +9,7 @@ import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
 })
 export class LoginFormComponent implements OnInit {
 
-  constructor() { }
+  constructor(public dialogRef: MatDialogRef<LoginFormComponent>) { }
 
   ngOnInit() {
   }

@@ -1,6 +1,7 @@
 import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
+import { LoginFormComponent } from '../login-form/login-form.component';
 
 @Component({
   selector: 'app-header',
@@ -10,7 +11,7 @@ import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
 export class HeaderComponent implements OnInit {
   @Output() sidebarToggle: EventEmitter<null> = new EventEmitter();
 
-  constructor() { }
+  constructor(public dialog: MatDialog) { }
 
   ngOnInit() {
   }
@@ -21,9 +22,16 @@ export class HeaderComponent implements OnInit {
   
   registerPage(){
       // Open dialog box to Register page
+
   }
   
   loginPage(){
-      // Open dialog box to Login page
+    // Open dialog box to Login page
+    console.log("HIT HERE MOTHERFUCKER");
+    let openLogin = this.dialog.open(LoginFormComponent, {
+
+    });
+    
+    
   }
 }
