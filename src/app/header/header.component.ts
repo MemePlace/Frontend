@@ -27,7 +27,6 @@ export class HeaderComponent implements OnInit {
   
   loginPage(){
     // Open dialog box to Login page
-    console.log("HIT HERE MOTHERFUCKER");
     let openLogin = this.dialog.open(LoginFormComponent, {
 
     });
