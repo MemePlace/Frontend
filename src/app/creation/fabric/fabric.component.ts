@@ -8,22 +8,39 @@ declare let fabric;
   templateUrl: './fabric.component.html',
   styleUrls: ['./fabric.component.scss']
 })
-export class FabricComponent implements OnInit {
 
+export class FabricComponent implements OnInit {
   private canvas;
   private boundry;
   private testshape;
+  private slideval = 1;
+  public zoomVal = 1;
+  private height = 450;
+  private width = 375;
+  private scaledHeight;
+  private scaledWidth;
 
-  constructor() { }
+  constructor() {}
+
+  setZ(val) {
+    this.zoomVal = val;
+    this.scaledHeight = this.zoomVal * this.height;
+    this.scaledWidth = this.zoomVal * this.width;
+    this.canvas.setHeight(this.scaledHeight);
+    this.canvas.setWidth(this.scaledWidth);
+    this.canvas.setZoom(this.zoomVal);
+  }
+
 
   ngOnInit() {
+
     this.canvas = new fabric.Canvas('canvas', {
 
     });
 
     this.boundry = new fabric.Rect({
-      width: 450,
-      height: 300,
+      height: 400,
+      width: 325,
       fill: 'transparent',
       stroke: '#666',
       strokeDashArray: [5, 5]
