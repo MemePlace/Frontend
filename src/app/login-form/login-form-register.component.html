@@ -1,23 +1,27 @@
 <div class="formContainer">
-    <h1>Login</h1>
+    <h1 mat-dialog-title>Register</h1>
     
-    <form>
+    <div mat-dialog-content class = UserPassContainerRegister>
         <div class="usernameLogin">
             <label for="username">Username:</label>
-            <input type="text" id="name" required>
+            <input type="text" class="usernameInput" required>
         </div>
 
         <div class="form-group">
             <label for="password">Password:</label>
-            <input type="text" id="password" required>
+            <input type="text" class="passwordInput" required>
         </div>
       
         <div class="form-group">
             <label for="Email">Email:</label>
             <input type="text" id="password" placeholder="Optional">
         </div>
+        
+    </div>
 
-        <button type="registerConfirm" (click)="registerValidate()">Register</button>
-        <button type="cancel" (click)="cancel()">Cancel</button>
-    </form>
+    <div mat-dialog-actions>
+        <button mat-button type="registerConfirm" (click)="registerValidate()" cdkFocusInitial>Register</button>
+        <button mat-button type="cancelConfirm" (click)="cancel()">Cancel</button>
+    </div>
+        
 </div>

@@ -9,7 +9,7 @@ import { SidenavComponent } from './sidenav/sidenav.component';
 import { HeaderComponent } from './header/header.component';
 import { CommunityModule } from './community/community.module';
 import { ApiModule } from './api/api.module';
-import { LoginFormComponent } from './login-form/login-form.component';
+import { LoginFormComponent, LoginFormRegister } from './login-form/login-form.component';
 import { MatDialogModule } from '@angular/material/dialog';
 
 @NgModule({
@@ -18,6 +18,7 @@ import { MatDialogModule } from '@angular/material/dialog';
     SidenavComponent,
     HeaderComponent,
     LoginFormComponent,
+    LoginFormRegister,
   ],
   imports: [
     BrowserModule,
@@ -30,7 +31,7 @@ import { MatDialogModule } from '@angular/material/dialog';
     MatDialogModule,
   ],
   providers: [],
-  bootstrap: [AppComponent]
-  entryComponents: [LoginFormComponent]
+  bootstrap: [AppComponent],
+  entryComponents: [LoginFormComponent, LoginFormRegister],
 })
 export class AppModule { }

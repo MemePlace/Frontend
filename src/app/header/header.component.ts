@@ -1,7 +1,7 @@
 import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
-import { LoginFormComponent } from '../login-form/login-form.component';
+import { LoginFormComponent, LoginFormRegister } from '../login-form/login-form.component';
 
 @Component({
   selector: 'app-header',
@@ -9,28 +9,28 @@ import { LoginFormComponent } from '../login-form/login-form.component';
   styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent implements OnInit {
-  @Output() sidebarToggle: EventEmitter<null> = new EventEmitter();
+    @Output() sidebarToggle: EventEmitter<null> = new EventEmitter();
 
-  constructor(public dialog: MatDialog) { }
+    constructor(public dialog: MatDialog) { }
 
-  ngOnInit() {
-  }
+    ngOnInit() {
+    }
 
-  toggle() {
-    this.sidebarToggle.emit();
-  }
+    toggle() {
+        this.sidebarToggle.emit();
+    }
   
-  registerPage(){
-      // Open dialog box to Register page
-
-  }
+    registerPage(){
+        // Open dialog box to Register page
+        let openRegister = this.dialog.open(LoginFormRegister, {
+        
+        });
+    }
   
-  loginPage(){
-    // Open dialog box to Login page
-    let openLogin = this.dialog.open(LoginFormComponent, {
+    loginPage(){
+        // Open dialog box to Login page
+        let openLogin = this.dialog.open(LoginFormComponent, {
 
-    });
-    
-    
-  }
+        });
+    }
 }

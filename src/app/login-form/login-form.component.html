@@ -1,19 +1,24 @@
 <div class="formContainer">
-    <h1>Login</h1>
+    <h1 mat-dialog-title>Login</h1>
     
-    <form>
+    <div mat-dialog-content class="UserPassContainerLogin">
         <div class="usernameLogin">
             <label for="username">Username:</label>
-            <input type="text" id="name" required>
-          </div>
+            <input type="text" class="usernameInput" required>
+        </div>
+        
+        <br>
 
         <div class="form-group">
             <label for="password">Password:</label>
-            <input type="text" id="password" required>
+            <input type="text" class="passwordInput" required>
         </div>
-
+    </div>
+    
+    <div mat-dialog-actions>
         <button type="login" (click)="loginValidate()">Login</button>
         <button type="register" (click)="registerPage()">Register</button>
+        <button type="cancel" (click)="cancel()">Cancel</button>
+    </div>
 
-    </form>
 </div>
