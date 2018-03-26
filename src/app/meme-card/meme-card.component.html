@@ -1,5 +1,6 @@
-<mat-card class="meme-card">
-  <img class="meme-img" [style.height.px]="imageHeight" [style.maxWidth.px]="imageHeight * 2.5" [src]="image">
+<mat-card class="meme-card">;
+  <img class="meme-img" [style.height.px]="imageHeight"
+       [style.maxWidth.px]="imageHeight * 2.5 < screenWidth ? imageHeight * 2.5 : screenWidth" [src]="image">
   <!-- Actions that are appended to the bottom of the card: show author name, up vote, down vote-->
   <mat-card-content class="actions" style="margin-top: -3px;">
     <span class="author">
