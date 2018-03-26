@@ -58,6 +58,9 @@ export class FabricComponent implements OnInit {
     this.canvas.centerObject(this.boundry);
   }
 
+  onInputChange(event: any) {
+    this.setZ(event.value);
+  }
 
 
 }
