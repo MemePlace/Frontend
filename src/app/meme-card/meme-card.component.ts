@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 
 @Component({
   selector: 'app-meme-card',
@@ -19,10 +19,18 @@ export class MemeCardComponent implements OnInit {
   ngOnInit() {
   }
 
+  get screenWidth(): number {
+    return window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
+  }
+
+  get isMobile(): boolean {
+    return this.screenWidth <= 1000;
+  }
+
   onClickUpVote() {
     this.voteCount -= this.voted; // negate a previous vote
 
-    if (this.voted != 1) {
+    if (this.voted !== 1) {
       this.voteCount++;
       this.voted = 1;
     } else {
@@ -33,7 +41,7 @@ export class MemeCardComponent implements OnInit {
   onClickDownVote() {
     this.voteCount -= this.voted; // negate a previous vote
 
-    if (this.voted != -1) {
+    if (this.voted !== -1) {
       this.voteCount--;
       this.voted = -1;
     } else {
