@@ -27,6 +27,30 @@ export class MemeCardComponent implements OnInit {
     return this.screenWidth <= 1000;
   }
 
+  maxCardWidth(height: number): number {
+    if (this.isMobile) {
+      return this.screenWidth * 0.95;
+    } else {
+      return Math.min(this.screenWidth * 0.95, height * 2.5);
+    }
+  }
+
+  minCardWidth(height: number): number {
+    if (this.isMobile) {
+      return this.screenWidth * 0.95;
+    } else {
+      return 0;
+    }
+  }
+
+  checkHeight(height: number): number {
+    if (this.isMobile) {
+      return null;
+    } else {
+      return height;
+    }
+  }
+
   onClickUpVote() {
     this.voteCount -= this.voted; // negate a previous vote
 
