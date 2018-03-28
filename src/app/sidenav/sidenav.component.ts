@@ -18,7 +18,7 @@ export class SidenavComponent implements OnInit {
 
   // I'm not sure if 1000px is a great cutoff point - seems a bit too big (maybe decrease to ~768px?)
   get isMobile(): boolean {
-    return this.screenWidth <= 1000;
+    return this.screenWidth <= 768;
   }
 
   get sidebarWidth(): number {
