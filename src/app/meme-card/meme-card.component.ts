@@ -24,7 +24,7 @@ export class MemeCardComponent implements OnInit {
   }
 
   get isMobile(): boolean {
-    return this.screenWidth <= 1000;
+    return this.screenWidth <= 768;
   }
 
   maxCardWidth(height: number): number {
