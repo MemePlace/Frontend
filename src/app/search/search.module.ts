@@ -1,14 +1,17 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { MatAutocompleteModule } from '@angular/material/autocomplete';
-import { MatInputModule } from '@angular/material/input';
+import { MatAutocompleteModule, MatInputModule } from '@angular/material';
+import { SearchBarComponent } from './search-bar/search-bar.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   imports: [
     CommonModule,
     MatAutocompleteModule,
-    MatInputModule
+    MatInputModule,
+    ReactiveFormsModule
   ],
-  declarations: []
+  declarations: [SearchBarComponent],
+  exports: [SearchBarComponent]
 })
 export class SearchModule { }
