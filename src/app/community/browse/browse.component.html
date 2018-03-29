@@ -1,6 +1,6 @@
 <mat-tab-group>
   <mat-tab label="Top">
-    <div class="browseContentWrapper" [style.justify-content]="isMobile ? 'center' : 'flex-start'">
+    <div class="browseContentWrapper" [style.justify-content]="utils.isMobile ? 'center' : 'flex-start'">
       <app-meme-card class="flexItem" *ngFor="let u of users"
                      [username]="u.un"
                      [image]="u.img"

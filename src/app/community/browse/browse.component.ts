@@ -1,4 +1,5 @@
 import {Component, OnInit} from '@angular/core';
+import {Utils} from '../../utils';
 
 @Component({
   selector: 'app-browse',
@@ -6,6 +7,8 @@ import {Component, OnInit} from '@angular/core';
   styleUrls: ['./browse.component.scss']
 })
 export class BrowseComponent implements OnInit {
+
+  private utils = Utils;
 
   constructor() { }
 
@@ -21,14 +24,6 @@ export class BrowseComponent implements OnInit {
   users = [this.user1, this.user2, this.user3, this.user4, this.user5, this.user6, this.user7, this.user8];
 
   ngOnInit() {
-  }
-
-  get screenWidth(): number {
-    return window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
-  }
-
-  get isMobile(): boolean {
-    return this.screenWidth <= 768;
   }
 
 }

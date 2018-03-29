@@ -1,11 +1,11 @@
 import {Component, Input, OnInit} from '@angular/core';
+import {Utils} from '../utils';
 
 @Component({
   selector: 'app-meme-card',
   templateUrl: './meme-card.component.html',
   styleUrls: ['./meme-card.component.scss']
 })
-
 export class MemeCardComponent implements OnInit {
   @Input() imageHeight: number;
   @Input() username: string;
@@ -19,32 +19,24 @@ export class MemeCardComponent implements OnInit {
   ngOnInit() {
   }
 
-  get screenWidth(): number {
-    return window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
-  }
-
-  get isMobile(): boolean {
-    return this.screenWidth <= 768;
-  }
-
   maxCardWidth(height: number): number {
-    if (this.isMobile) {
-      return this.screenWidth * 0.95;
+    if (Utils.isMobile) {
+      return Utils.screenWidth * 0.95;
     } else {
-      return Math.min(this.screenWidth * 0.95, height * 2.5);
+      return Math.min(Utils.screenWidth * 0.95, height * 2.5);
     }
   }
 
   minCardWidth(height: number): number {
-    if (this.isMobile) {
-      return this.screenWidth * 0.95;
+    if (Utils.isMobile) {
+      return Utils.screenWidth * 0.95;
     } else {
       return 0;
     }
   }
 
   checkHeight(height: number): number {
-    if (this.isMobile) {
+    if (Utils.isMobile) {
       return null;
     } else {
       return height;
