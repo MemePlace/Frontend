@@ -12,6 +12,10 @@ export class SidenavComponent implements OnInit {
   communities: Array<any>;
   communitiesFavorited: Array<any>;
 
+  get sidebarWidth(): number {
+    return 300;
+  }
+
   private utils = Utils;
 
   constructor() { }
