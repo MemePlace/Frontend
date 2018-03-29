@@ -10,6 +10,10 @@ import {Utils} from '../utils';
 export class SidenavComponent implements OnInit {
   @ViewChild('sidenav') sidenav: MatSidenav;
 
+  get sidebarWidth(): number {
+    return 300;
+  }
+
   private utils = Utils;
 
   constructor() { }
