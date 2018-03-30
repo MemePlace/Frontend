@@ -1,4 +1,4 @@
-<mat-card class="search-card" [hidden]="!showBar || utils.isMobile">
+<mat-card class="search-card">
   <input #query matInput
          type="search"
          placeholder="Search"
@@ -17,5 +17,4 @@
     </mat-optgroup>
   </mat-autocomplete>
 </mat-card>
-<button mat-icon-button (click)="toggle()" [color]="showBar ? 'accent': 'basic'"><i class="material-icons">search</i></button>
 

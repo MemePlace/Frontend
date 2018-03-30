@@ -4,6 +4,7 @@ import {MatAutocompleteModule, MatInputModule, MatCardModule, MatButtonModule, M
 import { SearchBarComponent } from './search-bar/search-bar.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MobileSearchDialogComponent } from './mobile-search-dialog/mobile-search-dialog.component';
+import { HeaderSearchComponent } from './header-search/header-search.component';
 
 @NgModule({
   imports: [
@@ -16,8 +17,8 @@ import { MobileSearchDialogComponent } from './mobile-search-dialog/mobile-searc
     MatDialogModule,
     ReactiveFormsModule,
   ],
-  declarations: [SearchBarComponent, MobileSearchDialogComponent],
+  declarations: [SearchBarComponent, MobileSearchDialogComponent, HeaderSearchComponent],
   entryComponents: [MobileSearchDialogComponent],
-  exports: [SearchBarComponent]
+  exports: [HeaderSearchComponent]
 })
 export class SearchModule { }
