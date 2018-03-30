@@ -1,3 +1,8 @@
 .search-card {
   padding: 5px;
+  display: inline-flex
+}
+
+[hidden] {
+  display: none;
 }

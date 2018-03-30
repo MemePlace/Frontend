@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl } from '@angular/forms';
 import {SearchService, AutocompleteResults} from '../../api/search.service';
+import {Utils} from '../../utils';
 
 @Component({
   selector: 'app-search-bar',
@@ -10,7 +10,9 @@ import {SearchService, AutocompleteResults} from '../../api/search.service';
 export class SearchBarComponent implements OnInit {
   private autocompleteTimeout;
 
+  utils = Utils;
   options: AutocompleteResults = {};
+  active = false;
 
   constructor(private searchService: SearchService) { }
 
