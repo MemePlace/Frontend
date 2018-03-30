@@ -1,4 +1,5 @@
 import {Component, EventEmitter, OnInit, Output} from '@angular/core';
+import {Utils} from '../utils';
 
 @Component({
   selector: 'app-header',
@@ -7,6 +8,7 @@ import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 })
 export class HeaderComponent implements OnInit {
   @Output() sidebarToggle: EventEmitter<null> = new EventEmitter();
+  private utils = Utils;
 
   constructor() { }
 
