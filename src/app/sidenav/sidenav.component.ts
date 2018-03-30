@@ -9,8 +9,8 @@ import {Utils} from '../utils';
 })
 export class SidenavComponent implements OnInit {
   @ViewChild('sidenav') sidenav: MatSidenav;
-  communities: Array<any>;
-  communitiesFavorited: Array<any>;
+  communities: Array<any> = [];
+  communitiesFavourited: Array<any> = [];
 
   get sidebarWidth(): number {
     return 300;
@@ -21,16 +21,14 @@ export class SidenavComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-    this.communities = new Array();
-    this.communitiesFavorited = new Array();
     // populate 20 random communities
     for (let i = 0; i < 20; i++) {
       this.communities.push({ communityname: 'Community ' + i,
-      isFavorited: false,
+      isFavourited: false,
       favouriteCount: Math.floor(Math.random() * (101))});
     }
     for (const community of this.communities) {
-      if (community.isFavorited === true) { this.communitiesFavorited.push(community); }
+      if (community.isFavourited === true) { this.communitiesFavourited.push(community); }
     }
   }
 
@@ -38,23 +36,17 @@ export class SidenavComponent implements OnInit {
     this.sidenav.toggle();
   }
 
-  favorite(community: any) {
-    community.isFavorited = true;
-    this.communitiesFavorited.push(community);
-    this.communitiesFavorited.sort((a, b) => a.communityname.localeCompare(b.communityname));
-  }
-
-  removeFavorite(community: any) {
-    community.isFavorited = false;
-    this.communitiesFavorited = this.communitiesFavorited.filter((com) => {
-      return com !== community;
-    });
-  }
-
-  removeFavoriteFromFav(communityFav: any) {
-    communityFav.isFavorited = false;
-    this.communitiesFavorited = this.communitiesFavorited.filter((com) => {
-    return com !== communityFav;
-    });
+  toggleFavourite(community: any) {
+    if (community.isFavourited === false) {
+      community.isFavourited = true;
+      this.communitiesFavourited.push(community);
+      this.communitiesFavourited.sort((a, b) => a.communityname.localeCompare(b.communityname));
+    } 
+    else {
+      community.isFavourited = false;
+      this.communitiesFavourited = this.communitiesFavourited.filter((com) => {
+        return com !== community;
+      });
+    }
   }
 }
