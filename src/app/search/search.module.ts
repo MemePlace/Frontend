@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { MatAutocompleteModule, MatInputModule } from '@angular/material';
+import { MatAutocompleteModule, MatInputModule, MatCardModule } from '@angular/material';
 import { SearchBarComponent } from './search-bar/search-bar.component';
 import { ReactiveFormsModule } from '@angular/forms';
 
@@ -9,7 +9,8 @@ import { ReactiveFormsModule } from '@angular/forms';
     CommonModule,
     MatAutocompleteModule,
     MatInputModule,
-    ReactiveFormsModule
+    MatCardModule,
+    ReactiveFormsModule,
   ],
   declarations: [SearchBarComponent],
   exports: [SearchBarComponent]
