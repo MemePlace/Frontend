@@ -20,8 +20,7 @@ export class HeaderSearchComponent implements OnInit {
   toggle() {
     if (Utils.isMobile) {
       this.openMobileDialog();
-    }
-    else {
+    } else {
       this.showBar = !this.showBar;
     }
   }
