@@ -1,5 +1,6 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {MatSidenav} from '@angular/material';
+import {Utils} from '../utils';
 
 @Component({
   selector: 'app-sidenav',
@@ -9,17 +10,11 @@ import {MatSidenav} from '@angular/material';
 export class SidenavComponent implements OnInit {
   @ViewChild('sidenav') sidenav: MatSidenav;
 
-  get screenWidth(): number {
-    return window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
-  }
-
-  get isMobile(): boolean {
-    return this.screenWidth <= 1000;
-  }
-
   get sidebarWidth(): number {
     return 300;
   }
+
+  private utils = Utils;
 
   constructor() { }
 
