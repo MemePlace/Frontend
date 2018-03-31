@@ -1,0 +1,26 @@
+#creation-container {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+app-zoomslider {
+  width: 100%;
+}
+
+#zoom-container {
+  display: flex;
+  //flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  //align-items: center;
+}
+
+
+#fabiric-container {
+  flex-grow: 85;
+}
+
+#creationBar-container {
+  flex-grow: 15;
+}
