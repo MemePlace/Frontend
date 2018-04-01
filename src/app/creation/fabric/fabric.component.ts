@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input} from '@angular/core';
 import 'fabric';
 
 declare let fabric;
@@ -10,6 +10,10 @@ declare let fabric;
 })
 
 export class FabricComponent implements OnInit {
+  @Input() cHeight: string;
+  @Input() cWidth: string;
+
+
   private canvas;
   private boundry;
   private testshape;
@@ -34,28 +38,28 @@ export class FabricComponent implements OnInit {
 
   ngOnInit() {
 
-    this.canvas = new fabric.Canvas('canvas', {
+  //  this.canvas = new fabric.Canvas('canvas', {
 
-    });
+  //  });
 
-    this.boundry = new fabric.Rect({
-      height: 400,
-      width: 325,
-      fill: 'transparent',
-      stroke: '#666',
-      strokeDashArray: [5, 5]
-    });
+  //  this.boundry = new fabric.Rect({
+  //    height: 400,
+  //    width: 325,
+  //    fill: 'transparent',
+  //    stroke: '#666',
+  //    strokeDashArray: [5, 5]
+  //  });
 
-    this.testshape = new fabric.Rect({
-      width: 100,
-      height: 100,
-      fill: 'red'
-    });
+  //  this.testshape = new fabric.Rect({
+  //    width: 100,
+  //    height: 100,
+  //    fill: 'red'
+  //  });
 
-    this.canvas.add(this.boundry);
-    this.canvas.add(this.testshape);
+  //  this.canvas.add(this.boundry);
+  //  this.canvas.add(this.testshape);
 
-    this.canvas.centerObject(this.boundry);
+  //  this.canvas.centerObject(this.boundry);
   }
 
   onInputChange(event: any) {

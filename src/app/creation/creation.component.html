@@ -14,12 +14,12 @@
 </mat-grid-list>
 
 <div id="zoom-container">
-  <app-zoomslider></app-zoomslider>
+  <app-zoomslider [zoomVal]="1" (changeZoom)="setZoom($event)"></app-zoomslider>
 </div>
 
 <div id="creation-container">
   <div id="fabiric-container">
-    <app-fabric></app-fabric>
+    <app-fabric [cHeight]="350" [cWidth]="250"></app-fabric>
   </div>
   <div id="creationBar-container">
     <app-creationbar></app-creationbar>
