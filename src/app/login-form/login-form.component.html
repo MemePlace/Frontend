@@ -4,21 +4,21 @@
     <div mat-dialog-content class="UserPassContainerLogin">
         <div class="usernameLogin">
             <label for="username">Username:</label>
-            <input type="text" class="usernameInput" required>
+            <input type="text" class="usernameInput" [(ngModel)]="usernameLogin" required>
         </div>
         
         <br>
 
         <div class="form-group">
             <label for="password">Password:</label>
-            <input type="text" class="passwordInput" required>
+            <input type="text" class="passwordInput" [(ngModel)]="passwordLogin" required>
         </div>
     </div>
     
     <div mat-dialog-actions>
-        <button type="login" (click)="loginValidate()">Login</button>
-        <button type="register" (click)="registerPage()">Register</button>
-        <button type="cancel" (click)="cancel()">Cancel</button>
+        <button mat-button type="login" (click)="loginValidate()">Login</button>
+        <button mat-button type="register" (click)="registerPage()">Register</button>
+        <button mat-button type="cancel" (click)="cancel()">Cancel</button>
     </div>
 
 </div>

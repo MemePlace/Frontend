@@ -4,17 +4,21 @@
     <div mat-dialog-content class = UserPassContainerRegister>
         <div class="usernameLogin">
             <label for="username">Username:</label>
-            <input type="text" class="usernameInput" required>
+            <input type="text" class="usernameInput" [(ngModel)]="usernameRegister" required>
         </div>
 
+        <br>
+        
         <div class="form-group">
             <label for="password">Password:</label>
-            <input type="text" class="passwordInput" required>
+            <input type="text" class="passwordInput" [(ngModel)]="passwordRegister" required>
         </div>
+      
+        <br>
       
         <div class="form-group">
             <label for="Email">Email:</label>
-            <input type="text" id="password" placeholder="Optional">
+            <input type="text" id="password" [(ngModel)]="email" placeholder="Optional">
         </div>
         
     </div>
