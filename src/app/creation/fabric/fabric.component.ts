@@ -37,8 +37,9 @@ export class FabricComponent implements OnInit {
 
 
   ngOnInit() {
+    this.canvas = new fabric.Canvas('fabric', {
 
-  //  this.canvas = new fabric.Canvas('canvas', {
+    });
 
   //  });
 

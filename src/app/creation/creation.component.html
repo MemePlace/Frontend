@@ -1,10 +1,15 @@
-<mat-grid-list id="header-row" cols="2" rowHeight="4em">
-    <mat-grid-tile id="page-title-tile">
-      <h1>
-        Creation Center
-      </h1>
-    </mat-grid-tile>
-  <mat-grid-tile id="title-input-tile">
+<mat-grid-list id="header-row" cols="10" rowHeight="4em">
+  <mat-grid-tile id="page-title-tile" [colspan]="3">
+    <h1>
+      Creation Center
+    </h1>
+  </mat-grid-tile>
+
+  <mat-grid-tile id="zoomer" [colspan]="4">
+    <mat-slider #zoomslider id="zoomslide" min="0.25" max="5" step="0.25" value="{{zoomVal}}" (input)="moveZoom($event)" style="margin:0 25px 0 25px, width:100%"></mat-slider>
+  </mat-grid-tile>
+
+  <mat-grid-tile id="title-input-tile" [colspan]="3">
     <form>
       <mat-form-field>
         <input matInput placeholder="Title.. (optional)">
@@ -13,20 +18,31 @@
   </mat-grid-tile>
 </mat-grid-list>
 
-<div id="zoom-container">
-  <app-zoomslider [zoomVal]="1" (changeZoom)="setZoom($event)"></app-zoomslider>
+
+<div id="creation-body" cols="20">
+  <div id="fabricBody">
+    <app-fabric [cHeight]="600" [cWidth]="600"></app-fabric>
+  </div>
+
+  <div id="functionBar">
+    <app-function-bar [sHeight]="600" [sWidth]="600" (changeSize)="setSize($event)"></app-function-bar>
+  </div>
 </div>
+
+
+<!--
 
 <div id="creation-container">
   <div id="fabiric-container">
-    <app-fabric [cHeight]="350" [cWidth]="250"></app-fabric>
+
   </div>
+
   <div id="creationBar-container">
-    <app-creationbar></app-creationbar>
+
   </div>
 
 </div>
-
+-->
 <div id="undercanvas">
   <p>After Fabric!</p>
 </div>

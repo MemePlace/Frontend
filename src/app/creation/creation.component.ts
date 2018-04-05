@@ -14,8 +14,8 @@ export class CreationComponent implements OnInit {
   private _zoomVal?: number;
 
 
-  setZoom(value: number) {
-    this._zoomVal = value;
+  moveZoom(value: any) {
+    //this._zoomVal = value;
     console.log(value);
   }
 

@@ -1,14 +1,31 @@
 #creation-container {
   display: flex;
   flex-direction: row;
+  flex-wrap: nowrap;
+}
+
+app-size {
+  width: 100%;
+  margin: 0 25px 0 25px;
+}
+
+app-fabric {
+  width: 100%;
+}
+
+#creation-body {
+  display: flex;
+  flex-direction: row;
   flex-wrap: wrap;
 }
 
-app-zoomslider {
-  width: 100%;
-  margin: 0 15% 0 15%;
+#fabricBody {
+  flex-grow: 75;
 }
 
+#functionBar {
+  flex-grow: 25;
+}
 
 #zoom-container {
   display: flex;

@@ -2,10 +2,16 @@
 <div id="canvCont" style="overflow: auto">
   <canvas id="canv" class="canvas" height="{{cHeight}}" width="{{cWidth}}"></canvas>
 </div>
--->
+
 <mat-grid-list cols="11" rowHeight="2em">
   <mat-grid-tile id="canvasTile" [colspan]="11"  [rowspan]="15">
-      <canvas id="canvas" class="canvas" height="{{cHeight}}" width="{{cWidth}}"></canvas>
+      <canvas fabric="fabric" height="{{cHeight}}" width="{{cWidth}}"></canvas>
   </mat-grid-tile>
 </mat-grid-list>
+-->
 
+<div id="canvBackdrop">
+  <div id="canvCont">
+    <canvas fabric="myFab" height="{{cHeight}}" width="{{cWidth}}"></canvas>
+  </div>
+</div>

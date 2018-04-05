@@ -1,6 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ZoomsliderComponent } from './zoomslider.component';
+import { ZoomsliderComponent } from './size.component';
 
 describe('ZoomsliderComponent', () => {
   let component: ZoomsliderComponent;

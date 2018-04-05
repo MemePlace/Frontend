@@ -8,8 +8,8 @@ import { FormsModule } from '@angular/forms';
 
 import { CreationComponent } from './creation.component';
 import { FabricComponent } from './fabric/fabric.component';
-import { CreationbarComponent } from './creationbar/creationbar.component';
-import { ZoomsliderComponent } from './zoomslider/zoomslider.component';
+import { SizeComponent } from './size/size.component';
+import { FunctionBarComponent } from './function-bar/function-bar.component';
 
 
 @NgModule({
@@ -22,6 +22,6 @@ import { ZoomsliderComponent } from './zoomslider/zoomslider.component';
     MatSliderModule,
     FormsModule,
   ],
-  declarations: [CreationComponent, FabricComponent, CreationbarComponent, ZoomsliderComponent]
+  declarations: [CreationComponent, FabricComponent, SizeComponent, FunctionBarComponent]
 })
 export class CreationModule { }
