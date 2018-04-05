@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { BaseApiService } from './base-api.service';
 import { UserService } from './user.service';
+import { CommunityService } from './community.service';
 
 @NgModule({
   imports: [
@@ -11,7 +12,8 @@ import { UserService } from './user.service';
   ],
   providers: [
     BaseApiService,
-    UserService
+    UserService,
+    CommunityService
   ]
 })
 export class ApiModule { }
