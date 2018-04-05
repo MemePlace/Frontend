@@ -9,25 +9,16 @@ import {MatDialog} from '@angular/material';
   styleUrls: ['./header-search.component.scss']
 })
 export class HeaderSearchComponent implements OnInit {
-  showBar = false;
-  private utils = Utils;
+  utils = Utils;
 
   constructor(private dialog: MatDialog) { }
 
   ngOnInit() {
   }
 
-  toggle() {
-    if (Utils.isMobile) {
-      this.openMobileDialog();
-    } else {
-      this.showBar = !this.showBar;
-    }
-  }
-
   openMobileDialog() {
     const dialog = this.dialog.open(MobileSearchDialogComponent, {
-      width: 400
+      width: '400px'
     });
 
     dialog.afterClosed().subscribe((query) => {
