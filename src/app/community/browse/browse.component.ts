@@ -8,7 +8,7 @@ import {Utils} from '../../utils';
 })
 export class BrowseComponent implements OnInit {
 
-  private utils = Utils;
+  utils = Utils;
 
   constructor() { }
 

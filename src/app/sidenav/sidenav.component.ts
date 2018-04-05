@@ -16,7 +16,7 @@ export class SidenavComponent implements OnInit {
     return 300;
   }
 
-  private utils = Utils;
+  utils = Utils;
 
   constructor() { }
 
@@ -41,8 +41,7 @@ export class SidenavComponent implements OnInit {
       community.isFavourited = true;
       this.communitiesFavourited.push(community);
       this.communitiesFavourited.sort((a, b) => a.communityname.localeCompare(b.communityname));
-    } 
-    else {
+    } else {
       community.isFavourited = false;
       this.communitiesFavourited = this.communitiesFavourited.filter((com) => {
         return com !== community;
