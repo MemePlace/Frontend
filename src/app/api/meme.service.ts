@@ -33,7 +33,7 @@ export class MemeService {
    * @return {Promise<Meme>} New meme details
    */
   createMeme(title: string, link: string, templateId: number, communityId: number): Promise<Meme>{
-    return this.baseApiService.post(Version.v1, 'memes', {
+    return this.baseApiService.post(Version.v1, `memes`, {
       title: title,
       link: link,
       templateId: templateId,
@@ -49,20 +49,20 @@ export class MemeService {
 
   /**
    * Gets a meme's detail using the meme's id
-   * @param {string} memeId
+   * @param {number} memeId
    */
-  getMemeDetails(memeId: string) {
-    return this.baseApiService.get(Version.v1, 'memes/${memeId}').then( (value:({}|null)) => {
+  getMemeDetails(memeId: number) {
+    return this.baseApiService.get(Version.v1, `memes/${memeId}`).then( (value:({}|null)) => {
       return value;
     });
   }
 
   /**
    * Upvote a meme
-   * @param {string} memeId
+   * @param {number} memeId
    */
-  upvoteMeme(memeId: string): Promise<MemeVote> {
-    return this.baseApiService.put(Version.v1, 'memes/${memeId}/vote', {
+  upvoteMeme(memeId: number): Promise<MemeVote> {
+    return this.baseApiService.put(Version.v1, `memes/${memeId}/vote`, {
       vote: "1"
     }).then( (memeVote: MemeVote) => {
       return memeVote;
@@ -71,10 +71,10 @@ export class MemeService {
 
   /**
    * Downvote a meme
-   * @param {string} memeId
+   * @param {number} memeId
    */
-  downvoteMeme(memeId: string): Promise<MemeVote> {
-    return this.baseApiService.put(Version.v1, 'memes/${memeId}/vote', {
+  downvoteMeme(memeId: number): Promise<MemeVote> {
+    return this.baseApiService.put(Version.v1, `memes/${memeId}/vote`, {
       vote: "-1"
     }).then( (memeVote: MemeVote) => {
       return memeVote;
@@ -83,20 +83,20 @@ export class MemeService {
 
   /**
    * Delete user's vote for a meme
-   * @param {string} memeId
+   * @param {number} memeId
    */
-  deleteMemeVote(memeId: string) {
-    return this.baseApiService.delete(Version.v1, 'memes/${memeId}/vote').then((value:({}|void)) => {
+  deleteMemeVote(memeId: number) {
+    return this.baseApiService.delete(Version.v1, `memes/${memeId}/vote`).then((value:({}|void)) => {
       console.log(value);
     });
   }
 
   /**
    * Delete a meme
-   * @param {string} memeId
+   * @param {number} memeId
    */
-  deleteMeme(memeId: string) {
-    return this.baseApiService.delete(Version.v1, 'memes/${memeId}').then((value:({}|void)) => {
+  deleteMeme(memeId: number) {
+    return this.baseApiService.delete(Version.v1, `memes/${memeId}`).then((value:({}|void)) => {
       console.log(value);
     });
   }
