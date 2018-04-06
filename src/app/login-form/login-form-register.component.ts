@@ -38,7 +38,7 @@ export class LoginFormRegisterComponent {
     // Validate user registration by calling signup from UserService
     this.userService.signup(this.usernameRegisterText, this.passwordRegisterText, this.emailText).then( (user) => {
       this.users = user;
-      this.snackBar.open('Registration Success!', 'close');
+      this.snackBar.open('Welcome to MemePlace!', 'close');
       console.log("made it into then, printing: " + this.users.id + " " + this.users.username);
       this.dialogRef.close();
     }).catch((err) => {

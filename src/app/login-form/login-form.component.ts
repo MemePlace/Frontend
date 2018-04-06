@@ -35,7 +35,7 @@ export class LoginFormComponent implements OnInit {
     loginValidate() {
         // Validate user login
         this.userService.login(this.usernameLoginText, this.passwordLoginText).then((user) => {
-            this.snackBar.open('Successfully Logged In!', 'close');
+            this.snackBar.open('Welcome to MemePlace!', 'close');
             console.log('made it into then, login');
             this.dialogRef.close();
         }).catch(() => {
