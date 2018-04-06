@@ -4,6 +4,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { BaseApiService } from './base-api.service';
 import { UserService } from './user.service';
 import { SearchService } from './search.service';
+import { MemeService } from './meme.service';
 
 @NgModule({
   imports: [
@@ -13,7 +14,8 @@ import { SearchService } from './search.service';
   providers: [
     BaseApiService,
     UserService,
-    SearchService
+    SearchService,
+    MemeService
   ]
 })
 export class ApiModule { }
