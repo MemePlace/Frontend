@@ -1,8 +1,9 @@
 import {Component, OnInit} from '@angular/core';
 import {UserService} from '../api/user.service';
 
-import {MatDialog, MatDialogRef} from '@angular/material';
+import { MatDialogRef} from '@angular/material';
 import {FormControl, Validators} from '@angular/forms';
+import { MatSnackBar } from '@angular/material';
 
 @Component({
   selector: 'app-login-form',
@@ -13,11 +14,12 @@ export class LoginFormComponent implements OnInit {
 
     constructor(public dialogRef: MatDialogRef<LoginFormComponent>,
                 private userService: UserService,
-                public dialog: MatDialog) { }
+                public snackBar: MatSnackBar) { }
 
     usernameLoginText: string;
     passwordLoginText: string;
     RememberMeCheckbox: false;
+    hideInvalidText = false;
 
     usernameFormControl = new FormControl('', [
       Validators.required,
@@ -30,12 +32,17 @@ export class LoginFormComponent implements OnInit {
     ngOnInit() {
     }
 
-    loginValidate(){
+    loginValidate() {
         // Validate user login
         this.userService.login(this.usernameLoginText, this.passwordLoginText).then((user) => {
+            this.snackBar.open('Successfully Logged In!', 'close');
+            console.log('made it into then, login');
             this.dialogRef.close();
-        }).catch((err) => {
-            console.error(err);
+        }).catch(() => {
+            console.log('login fail');
+            this.hideInvalidText = true;
+            this.snackBar.open('Invalid Login Credentials', 'close');
+
         });
     }
 

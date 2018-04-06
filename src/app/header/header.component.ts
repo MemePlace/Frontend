@@ -10,28 +10,25 @@ import {LoginFormRegisterComponent} from '../login-form/login-form-register.comp
   styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent implements OnInit {
-    @Output() sidebarToggle: EventEmitter<null> = new EventEmitter();
+  @Output() sidebarToggle: EventEmitter<null> = new EventEmitter();
 
-    constructor(public dialog: MatDialog) { }
+  constructor(public dialog: MatDialog) {
+  }
 
-    ngOnInit() {
-    }
+  ngOnInit() {
+  }
 
-    toggle() {
-        this.sidebarToggle.emit();
-    }
+  toggle() {
+    this.sidebarToggle.emit();
+  }
 
-    registerPage(){
-        // Open dialog box to Register page
-        let openRegister = this.dialog.open(LoginFormRegisterComponent, {
+  registerPage() {
+    // Open dialog box to Register page
+    const openRegister = this.dialog.open(LoginFormRegisterComponent);
+  }
 
-        });
-    }
-
-    loginPage(){
-        // Open dialog box to Login page
-        let openLogin = this.dialog.open(LoginFormComponent, {
-
-        });
-    }
+  loginPage() {
+    // Open dialog box to Login page
+    const openLogin = this.dialog.open(LoginFormComponent);
+  }
 }

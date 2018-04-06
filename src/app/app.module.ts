@@ -11,7 +11,7 @@ import { CommunityModule } from './community/community.module';
 import { ApiModule } from './api/api.module';
 import { ReactiveFormsModule } from '@angular/forms';
 import {LoginFormModule} from './login-form/login-form.module';
-import {MatDialog} from '@angular/material';
+
 
 @NgModule({
   declarations: [
@@ -30,7 +30,7 @@ import {MatDialog} from '@angular/material';
     ReactiveFormsModule,
     LoginFormModule,
   ],
-  providers: [MatDialog],
+  providers: [],
   bootstrap: [AppComponent],
   entryComponents: [],
 })

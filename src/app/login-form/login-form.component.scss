@@ -16,6 +16,11 @@ mat-card-content {
 
 
 
+#invalidText {
+  font-size: 10px;
+  color: darkred;
+}
+
 #loginButton {
   width: 80px;
   float: right;
@@ -25,3 +30,4 @@ mat-card-content {
   width: 80px;
   float: right;
 }
+

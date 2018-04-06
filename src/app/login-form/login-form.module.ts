@@ -9,6 +9,7 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import {LoginFormComponent} from './login-form.component';
 import {LoginFormRegisterComponent} from './login-form-register.component';
 import {MatDialogModule} from '@angular/material';
+import {MatSnackBarModule} from '@angular/material';
 
 @NgModule({
   imports: [
@@ -23,6 +24,7 @@ import {MatDialogModule} from '@angular/material';
     FormsModule,
     MatCheckboxModule,
     MatDialogModule,
+    MatSnackBarModule,
   ],
   declarations: [LoginFormComponent, LoginFormRegisterComponent],
   entryComponents: [LoginFormComponent, LoginFormRegisterComponent],
