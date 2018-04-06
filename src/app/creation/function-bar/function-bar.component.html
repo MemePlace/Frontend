@@ -1,4 +1,5 @@
 <mat-accordion>
+
   <mat-expansion-panel>
     <mat-expansion-panel-header>
       <mat-panel-title>
@@ -9,55 +10,45 @@
       </mat-panel-description>
     </mat-expansion-panel-header>
 
-
     <form id="newSize">
       <mat-action-row>
         <mat-form-field  class="sizeInput">
-          <input matInput placeholder="Height" value="{{sHeight}}">
+          <input matInput #height type="number" placeholder="Height" value="{{sHeight}}">
         </mat-form-field>
         <mat-form-field  class="sizeInput">
-          <input matInput placeholder="Width" value="{{sWidth}}">
+          <input matInput #width type="number" placeholder="Width" value="{{sWidth}}">
         </mat-form-field>
-
       </mat-action-row>
-
       <mat-action-row>
-        <button mat-button (click)="checkIt()">Submit</button>
+        <button mat-button (click)="changeSize(height.value, width.value)">Submit</button>
       </mat-action-row>
     </form>
-
   </mat-expansion-panel>
-</mat-accordion>
-
-<!--
-<mat-grid-list [cols]="2">
-  <mat-grid-tile [colspan]="2" [rowspan]="2">
-    <button mat-button>Change Size</button>
-  </mat-grid-tile>
-
-</mat-grid-list>
 
 
-<mat-accordion>
   <mat-expansion-panel>
     <mat-expansion-panel-header>
       <mat-panel-title>
-        Set Size
+        Load Image
       </mat-panel-title>
-      <mat-panel-description>
-        "{{sHeight}} x {{sWidth}}"
-      </mat-panel-description>
     </mat-expansion-panel-header>
 
-    <mat-form-field>
-      <input matInput placeholder="Height: {{sHeight}}">
-    </mat-form-field>
+    <form id="uploadImg">
+      <mat-action-row>
+        <input matInput #imgURL type="url" placeholder="URL">
+      </mat-action-row>
+      <mat-action-row>
+        <button mat-button (click)="upload(imgURL.value)">Upload</button>
+      </mat-action-row>
+    </form>
+  </mat-expansion-panel>
 
-    <mat-form-field>
-      <input matInput placeholder="Width: {{sWidth}}">
-    </mat-form-field>
 
-    <button mat-button (click)="subSize($event)">Change Size</button>
+  <mat-expansion-panel>
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        Add Text
+      </mat-panel-title>
+    </mat-expansion-panel-header>
   </mat-expansion-panel>
 </mat-accordion>
--->

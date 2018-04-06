@@ -9,16 +9,18 @@ import {Component, EventEmitter, Input, Output} from '@angular/core';
 export class FunctionBarComponent {
   @Input() sHeight: number;
   @Input() sWidth: number;
-  @Output() changeSize = new EventEmitter<any>();
+  @Output() newSize = new EventEmitter<[number, number]>();
+  @Output() imgURL = new EventEmitter<string>();
 
   constructor() { }
 
-  subSize(event: any) {
-    this.changeSize.emit('tester');
+
+  changeSize(newHeight: number, newWidth: number): void {
+    this.newSize.emit([newHeight, newWidth]);
   }
 
-  checkIt(){
-    alert(this.sHeight + " x " + this.sWidth);
+  upload(value: string): void {
+    this.imgURL.emit(value);
   }
 
 }

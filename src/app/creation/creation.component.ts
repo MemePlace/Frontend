@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit, ViewChild } from '@angular/core';
 import 'fabric';
 import {FabricComponent} from './fabric/fabric.component';
+import {FunctionBarComponent} from './function-bar/function-bar.component';
 
 @Component({
   selector: 'app-creation',
@@ -8,22 +9,34 @@ import {FabricComponent} from './fabric/fabric.component';
   styleUrls: ['./creation.component.scss']
 })
 export class CreationComponent implements OnInit {
-  get zoomVal(): number {
-    return this._zoomVal;
-  }
-  private _zoomVal?: number;
+  @ViewChild('functs') functs;
+  @ViewChild('fab') fab;
+
+  private zoomVal: number;
 
 
-  moveZoom(value: any) {
-    //this._zoomVal = value;
-    console.log(value);
+
+  moveZoom(slide: any) {
+    this.zoomVal = slide.value;
+    this.fab.setZoom(slide.value);
+    console.log(slide);
   }
+
+  resetZoom() {
+    this.zoomVal = 1;
+    this.fab.resetZoom();
+  }
+
 
   constructor() {
 
   }
   ngOnInit() {
+    this.fab.initCanv();
+    this.zoomVal = 1;
 
+    this.fab.addRect();
+    this.fab.upImg();
   }
 
 }
