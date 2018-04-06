@@ -1,7 +1,8 @@
-import { Component, OnInit, Inject } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+import {UserService} from '../api/user.service';
 
-import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
-import { UserService } from '../api/user.service';
+import {MatDialog, MatDialogRef} from '@angular/material';
+import {FormControl, Validators} from '@angular/forms';
 
 @Component({
   selector: 'app-login-form',
@@ -14,64 +15,33 @@ export class LoginFormComponent implements OnInit {
                 private userService: UserService,
                 public dialog: MatDialog) { }
 
-    usernameLogin: string;
-    passwordLogin: string;
-    email: string;                
-                
+    usernameLoginText: string;
+    passwordLoginText: string;
+    RememberMeCheckbox: false;
+
+    usernameFormControl = new FormControl('', [
+      Validators.required,
+    ]);
+
+    passwordFormControl = new FormControl('', [
+      Validators.required,
+    ]);
+
     ngOnInit() {
     }
 
     loginValidate(){
         // Validate user login
-        this.userService.login(this.usernameLogin, this.passwordLogin).then((user) => {
-//           this.users = user;
-            this.dialogRef.close();      
-        }).catch((err) =>{
+        this.userService.login(this.usernameLoginText, this.passwordLoginText).then((user) => {
+            this.dialogRef.close();
+        }).catch((err) => {
             console.error(err);
         });
-        
     }
-  
-    registerPage(){
-        // Go to register page from login page
-        let dialogRef = this.dialog.open(LoginFormRegister, {      
-        
-        })
-    }
-  
-    cancel(): void{
+
+    cancel(): void {
         // Go to Login page from register page
         this.dialogRef.close();
     }
 }
 
-@Component({
-    selector: 'login-form-register.component',
-    templateUrl: 'login-form-register.component.html',
-})
-export class LoginFormRegister {
-    constructor(public dialogRef: MatDialogRef<LoginFormRegister>,
-                private userService: UserService,
-                @Inject(MAT_DIALOG_DATA) public data: any) {}
-                
-    usernameRegister: string;
-    passwordRegister: string;
-    email: string;
-//    users: 
-    
-    registerValidate(){
-        // Validate user registration by calling signup from UserService
-        this.userService.signup(this.usernameRegister, this.passwordRegister, this.email).then((user) => {
-//           this.users = user;
-            this.dialogRef.close();
-        }).catch((err) =>{
-            console.error(err);
-        });
-        
-    }
-                
-    cancel(): void{
-        // Go to Login/Main page from register page
-        this.dialogRef.close();
-    }
-}

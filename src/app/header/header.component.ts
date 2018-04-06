@@ -1,7 +1,8 @@
 import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
-import { LoginFormComponent, LoginFormRegister } from '../login-form/login-form.component';
+import { LoginFormComponent} from '../login-form/login-form.component';
+import {LoginFormRegisterComponent} from '../login-form/login-form-register.component';
 
 @Component({
   selector: 'app-header',
@@ -19,14 +20,14 @@ export class HeaderComponent implements OnInit {
     toggle() {
         this.sidebarToggle.emit();
     }
-  
+
     registerPage(){
         // Open dialog box to Register page
-        let openRegister = this.dialog.open(LoginFormRegister, {
-        
+        let openRegister = this.dialog.open(LoginFormRegisterComponent, {
+
         });
     }
-  
+
     loginPage(){
         // Open dialog box to Login page
         let openLogin = this.dialog.open(LoginFormComponent, {

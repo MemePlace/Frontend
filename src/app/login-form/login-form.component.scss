@@ -1,0 +1,27 @@
+textarea.mat-input-element {
+  resize: none;
+  overflow: auto;
+}
+
+mat-card-content {
+  display: flex;
+  flex-direction: column;
+}
+
+.mat-card-actions {
+  margin-left: 0px;
+  margin-right: 0px;
+  padding: 20px 0;
+}
+
+
+
+#loginButton {
+  width: 80px;
+  float: right;
+}
+
+#registerButton{
+  width: 80px;
+  float: right;
+}

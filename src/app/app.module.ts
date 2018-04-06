@@ -9,16 +9,15 @@ import { SidenavComponent } from './sidenav/sidenav.component';
 import { HeaderComponent } from './header/header.component';
 import { CommunityModule } from './community/community.module';
 import { ApiModule } from './api/api.module';
-import { LoginFormComponent, LoginFormRegister } from './login-form/login-form.component';
-import { MatDialogModule } from '@angular/material/dialog';
+import { ReactiveFormsModule } from '@angular/forms';
+import {LoginFormModule} from './login-form/login-form.module';
+import {MatDialog} from '@angular/material';
 
 @NgModule({
   declarations: [
     AppComponent,
     SidenavComponent,
     HeaderComponent,
-    LoginFormComponent,
-    LoginFormRegister,
   ],
   imports: [
     BrowserModule,
@@ -28,10 +27,11 @@ import { MatDialogModule } from '@angular/material/dialog';
     CommunityModule,
     ApiModule,
     FormsModule,
-    MatDialogModule,
+    ReactiveFormsModule,
+    LoginFormModule,
   ],
-  providers: [],
+  providers: [MatDialog],
   bootstrap: [AppComponent],
-  entryComponents: [LoginFormComponent, LoginFormRegister],
+  entryComponents: [],
 })
 export class AppModule { }

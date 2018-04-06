@@ -1,24 +1,31 @@
-<div class="formContainer">
-    <h1 mat-dialog-title>Login</h1>
-    
-    <div mat-dialog-content class="UserPassContainerLogin">
-        <div class="usernameLogin">
-            <label for="username">Username:</label>
-            <input type="text" class="usernameInput" [(ngModel)]="usernameLogin" required>
-        </div>
-        
-        <br>
+<mat-card class="loginForm">
+    <mat-card-title>Login:</mat-card-title>
 
-        <div class="form-group">
-            <label for="password">Password:</label>
-            <input type="text" class="passwordInput" [(ngModel)]="passwordLogin" required>
-        </div>
-    </div>
-    
-    <div mat-dialog-actions>
-        <button mat-button type="login" (click)="loginValidate()">Login</button>
-        <button mat-button type="register" (click)="registerPage()">Register</button>
+    <mat-card-content>
+      <mat-form-field id="loginUsernameField">
+        <input matInput placeholder="Username" [formControl]="usernameFormControl" [(ngModel)]="usernameLoginText" maxLength="25" >
+        <mat-error *ngIf="usernameFormControl.hasError('required')">
+          Username is <strong>required</strong>
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field id="loginPasswordField">
+        <input matInput placeholder="Password" type="password" [formControl]="passwordFormControl" [(ngModel)]="passwordLoginText" maxLength="25">
+        <mat-error *ngIf="passwordFormControl.hasError('required')">
+        Password is <strong>required</strong>
+        </mat-error>
+      </mat-form-field>
+
+    </mat-card-content>
+
+    <mat-card-actions>
+        <mat-checkbox [(ngModel)]="RememberMeCheckbox">Remember Me</mat-checkbox>
         <button mat-button type="cancel" (click)="cancel()">Cancel</button>
-    </div>
+        <button mat-button id="loginButton" color="primary" (click)="loginValidate()"  cdkFocusInitial>Login</button>
+    </mat-card-actions>
 
-</div>
+  <!-- [disabled]="!(!usernameFormControl.hasError('required') && !passwordFormControl.hasError('required'))" */ -->
+    <mat-card-actions>
+
+    </mat-card-actions>
+</mat-card>
