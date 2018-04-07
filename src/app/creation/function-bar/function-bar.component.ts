@@ -1,4 +1,6 @@
-import {Component, EventEmitter, Input, Output} from '@angular/core';
+import {Component, EventEmitter, Input, Output, ViewChild} from '@angular/core';
+import {CreationComponent} from '../creation.component';
+import {MatCheckbox} from '@angular/material';
 
 @Component({
   selector: 'app-function-bar',
@@ -7,20 +9,38 @@ import {Component, EventEmitter, Input, Output} from '@angular/core';
 })
 
 export class FunctionBarComponent {
-  @Input() sHeight: number;
-  @Input() sWidth: number;
-  @Output() newSize = new EventEmitter<[number, number]>();
-  @Output() imgURL = new EventEmitter<string>();
+  private parent: CreationComponent;
+  private sHeight: number; sWidth: number;
+  private resize = true;
+
+  public hardCodeURL = 'https://fthmb.tqn.com/M1ISdSdfLsU36nAuILe3YlFcY1w=/400x400/filters:fill(auto,1)/success-56a9fd1f3df78cf772abee09.jpg';
+
 
   constructor() { }
 
 
-  changeSize(newHeight: number, newWidth: number): void {
-    this.newSize.emit([newHeight, newWidth]);
+  changeSize(val: [number, number]): void {
+    this.parent.setSize(val);
+  }
+
+  setSize([newHeight, newWidth]: [number, number]): void {
+    this.sHeight = newHeight;
+    this.sWidth = newWidth;
   }
 
   upload(value: string): void {
-    this.imgURL.emit(value);
+    console.log(this.resize);
+    this.parent.uploadImgUrl(value, this.resize);
   }
 
+
+  initBar(par: CreationComponent, size: [number, number]): void {
+    this.parent = par;
+    this.setSize(size);
+    this.resize = true;
+  }
+
+  checkBox(val) {
+    this.resize = val;
+  }
 }

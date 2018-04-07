@@ -14,12 +14,17 @@ export class CreationComponent implements OnInit {
 
   private zoomVal: number;
 
+  private url2 = 'https://www.yourtango.com/sites/default/files/styles/header_slider/public/display_list/stop%20cheating_0.jpg?itok=aO0eTi6_';
+  private longMeme = 'https://img-9gag-fun.9cache.com/photo/a0KZ7rX_700bwp.webp';
 
+  setSize([h, w]: [number, number]) {
+    this.fab.setSize([h, w]);
+    this.functs.setSize([h, w]);
+  }
 
   moveZoom(slide: any) {
     this.zoomVal = slide.value;
     this.fab.setZoom(slide.value);
-    console.log(slide);
   }
 
   resetZoom() {
@@ -27,16 +32,23 @@ export class CreationComponent implements OnInit {
     this.fab.resetZoom();
   }
 
+  uploadImgUrl(url, resize: boolean) {
+    this.fab.upImg(url, resize);
+    console.log('yes');
+  }
 
   constructor() {
 
   }
   ngOnInit() {
-    this.fab.initCanv();
     this.zoomVal = 1;
+    const initSize = 500;
+    this.fab.initCanv(this, initSize, initSize);
+    this.functs.initBar(this, [initSize, initSize]);
 
-    this.fab.addRect();
-    this.fab.upImg();
   }
+
+
+
 
 }

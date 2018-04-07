@@ -1,6 +1,7 @@
 import {Component} from '@angular/core';
 import 'fabric';
 import {Canvas} from 'fabric/fabric-impl';
+import {CreationComponent} from '../creation.component';
 
 declare let fabric;
 
@@ -11,29 +12,36 @@ declare let fabric;
 })
 
 export class FabricComponent {
+  private parent: CreationComponent;
 
   private canvas: Canvas;
-  private height: number; width: number;
+  public height: number; width: number;
   private zoomVal: number; scaledHeight: number; scaledWidth: number;
 
   constructor() {}
 
-  initCanv() {
+  initCanv(par: CreationComponent, h: number, w: number) {
+    this.height = h;
+    this.width = w;
+    this.zoomVal = 1;
+    this.scaledHeight = h;
+    this.scaledWidth = w;
+    this.parent = par;
     this.canvas = new fabric.Canvas('fabric', {});
-    this.setSize(500, 500);
+    this.setSize([h, w]);
   }
 
 
-
-  setSize(nheight: number, nwidth: number) {
-    console.log('old: ' + this.height + ' x ' + this.width);
-    console.log('new: ' + nheight + ' x ' + nwidth);
+  setSize([nheight, nwidth]: [number, number]) {
     this.height = nheight;
     this.width = nwidth;
-    this.adjustSize(nheight, nwidth);
+    this.scaledHeight = nheight * this.zoomVal;
+    this.scaledWidth = nwidth * this.zoomVal;
+    this.adjustSize([this.scaledHeight, this.scaledWidth]);
   }
 
-  adjustSize(h:number, w: number) {
+// This sets the display size, zooming
+  adjustSize([h, w]: [number, number]) {
     this.canvas.setHeight(h);
     this.canvas.setWidth(w);
   }
@@ -44,45 +52,39 @@ export class FabricComponent {
     this.zoomVal = val;
     this.scaledHeight = this.zoomVal * this.height;
     this.scaledWidth = this.zoomVal * this.width;
-    console.log(this.scaledHeight);
-    this.adjustSize(this.scaledHeight, this.scaledWidth);
+    console.log(this.scaledHeight + ' x ' + this.scaledWidth);
+    this.adjustSize([this.scaledHeight, this.scaledWidth]);
     this.canvas.setZoom(this.zoomVal);
   }
 
   resetZoom() {
     this.setZoom(1);
-   // this.adjustSize(this.height, this.width);
   }
 
 
-
-
-  addRect() {
-    const testerShape = new fabric.Rect({
-      width: 100,
-      height: 100,
-      fill: 'red'
-    });
-    this.canvas.add(testerShape);
-  }
-
-  upImg(targeturl) {
-    console.log(targeturl);
-    const url = 'https://fthmb.tqn.com/M1ISdSdfLsU36nAuILe3YlFcY1w=/400x400/filters:fill(auto,1)/success-56a9fd1f3df78cf772abee09.jpg';
-    const url2 = 'https://www.yourtango.com/sites/default/files/styles/header_slider/public/display_list/stop%20cheating_0.jpg?itok=aO0eTi6_';
+  upImg(targeturl: string, resize: boolean): [boolean, [number, number]] {
     const add = (obj: fabric.Object) => (this.canvas.add(obj));
-    const setSize = (height: number, width: number) => (this.setSize(height, width));
+    const setSize = ([height, width]: [number, number]) => (this.parent.setSize([height, width]));
 
-    fabric.Image.fromURL(url2, function(oImg) {
-      add(oImg);
-      setSize(oImg.height, oImg.width);
+// TODO: Hadle bad URL's and other failures
+    fabric.util.loadImage(targeturl, function (oImg, err) {
+      if (err) {
+        alert('Better error handling needed');
+        throw new Error('Failed Image Load');
+      } else {
+        const image = new fabric.Image(oImg);
+        if (resize) {
+          setSize([image.height, image.width]);
+
+        } else {
+          return [true, null];
+        }
+        add(image);
+      }
     });
+    return null;
   }
 
-
-  onInputChange(event: any) {
-    this.setZ(event.value);
-  }
 
 
 }
