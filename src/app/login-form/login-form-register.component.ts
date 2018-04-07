@@ -24,7 +24,7 @@ export class LoginFormRegisterComponent {
     id: 0,
     username: '',
   };
-  hideInvalidText = false;
+  hideInvalidText = true;
 
   usernameFormControl = new FormControl('', [
     Validators.required,
@@ -38,14 +38,15 @@ export class LoginFormRegisterComponent {
     // Validate user registration by calling signup from UserService
     this.userService.signup(this.usernameRegisterText, this.passwordRegisterText, this.emailText).then( (user) => {
       this.users = user;
-      this.snackBar.open('Welcome to MemePlace!', 'close');
-      console.log("made it into then, printing: " + this.users.id + " " + this.users.username);
+      this.snackBar.open('Welcome to MemePlace!', 'close', {
+        duration: 3000
+      });
       this.dialogRef.close();
     }).catch((err) => {
-      console.log("reached here - fail register");
-      this.hideInvalidText = true;
-      this.snackBar.open('Registration Failed', 'close');
-      console.error(err);
+      this.hideInvalidText = false;
+      this.snackBar.open('Registration Failed', 'close', {
+        duration: 3000
+      });
     });
 
   }

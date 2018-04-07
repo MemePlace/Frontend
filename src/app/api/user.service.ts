@@ -32,7 +32,7 @@ export class UserService {
    * Logs out the currently logged in user
    */
   logout() {
-    if (!this.isLoggedIn()) return;
+    if (!this.isLoggedIn()) { return; }
 
     return this.api.put(Version.v1, 'auth/logout', {}).then((user) => {
       this.user = null;

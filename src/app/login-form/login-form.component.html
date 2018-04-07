@@ -1,5 +1,5 @@
 <mat-card class="loginForm">
-  <mat-card-title>Login</mat-card-title> <span id='invalidText' *ngIf="hideInvalidText"><h2>Username or Password is invalid</h2></span>
+  <mat-card-title>Login</mat-card-title> <span id='invalidText' *ngIf="!hideInvalidText"><h2>Username or Password is invalid</h2></span>
     <mat-card-content>
       <mat-form-field id="loginUsernameField">
         <input matInput placeholder="Username" [formControl]="usernameFormControl" [(ngModel)]="usernameLoginText" maxLength="25" >
@@ -23,8 +23,4 @@
         <button mat-button id="loginButton" color="primary" (click)="loginValidate()" [disabled]="!(!usernameFormControl.hasError('required') && !passwordFormControl.hasError('required'))" cdkFocusInitial>Login</button>
     </mat-card-actions>
 
-  <!-- [disabled]="!(!usernameFormControl.hasError('required') && !passwordFormControl.hasError('required'))" */ -->
-    <mat-card-actions>
-
-    </mat-card-actions>
 </mat-card>

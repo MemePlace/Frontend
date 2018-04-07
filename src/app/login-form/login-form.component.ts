@@ -19,7 +19,7 @@ export class LoginFormComponent implements OnInit {
     usernameLoginText: string;
     passwordLoginText: string;
     rememberMeCheckbox: false;
-    hideInvalidText = false;
+    hideInvalidText = true;
 
     usernameFormControl = new FormControl('', [
       Validators.required,
@@ -35,14 +35,13 @@ export class LoginFormComponent implements OnInit {
     loginValidate() {
         // Validate user login
         this.userService.login(this.usernameLoginText, this.passwordLoginText, this.rememberMeCheckbox).then((user) => {
-            this.snackBar.open('Welcome to MemePlace!', 'close');
-            console.log('made it into then, login');
+            this.snackBar.open('Welcome to MemePlace!', 'close', {
+              duration: 3000
+            });
+
             this.dialogRef.close();
         }).catch(() => {
-            console.log('login fail');
-            this.hideInvalidText = true;
-            this.snackBar.open('Invalid Login Credentials', 'close');
-
+            this.hideInvalidText = false;
         });
     }
 

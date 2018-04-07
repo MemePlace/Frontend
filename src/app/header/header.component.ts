@@ -26,9 +26,8 @@ export class HeaderComponent implements OnInit {
     this.userService.getDetails().then((user) => {
       this.users = user;
       this.usernameText = this.users.username;
-      console.log("user was already logged in through cookies: " + this.usernameText);
     }).catch(() => {
-      console.log('no user was logged in');
+      // No cookie data
     });
   }
 
@@ -40,13 +39,13 @@ export class HeaderComponent implements OnInit {
     // Open dialog box to Register page
     const openRegister = this.dialog.open(LoginFormRegisterComponent);
 
+    // When register dialog box closes, checks to see if a user is logged in
     openRegister.afterClosed().subscribe(() => {
       this.userService.getDetails().then((user) => {
         this.users = user;
         this.usernameText = this.users.username;
-        console.log("made it into openRegister, usernameText = " + this.usernameText);
       }).catch(() => {
-        console.log('user did not finish registering');
+        // User hit cancel, nothing happens
       });
     });
   }
@@ -55,27 +54,28 @@ export class HeaderComponent implements OnInit {
     // Open dialog box to Login page
     const openLogin = this.dialog.open(LoginFormComponent);
 
+    // When login dialog box closes, checks to see if a user is logged in
     openLogin.afterClosed().subscribe(() => {
-      this.userService.getDetails().then((user) =>{
+      this.userService.getDetails().then((user) => {
         this.users = user;
         this.usernameText = this.users.username;
-        console.log("made it into openLogin, usernameText = " + this.usernameText);
-      }).catch(() => {
-        console.log('user did not finish logging in');
+      }).catch((err) => {
+        // User hit cancel, nothing happens
       });
     });
   }
 
   gotoProfile() {
-    console.log("test");
+    console.log('test');
   }
 
   logout() {
 
     this.userService.logout().then(() => {
-      console.log("logoutSuccess");
-    }).catch(() => {
-      console.log('logout fail');
+      // User logged out
+    }).catch((err) => {
+      // User failed to log out
+      console.error(err);
     });
 
   }
