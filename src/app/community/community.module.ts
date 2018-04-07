@@ -9,6 +9,7 @@ import { MatInputModule } from '@angular/material/input';
 import { ReactiveFormsModule } from '@angular/forms';
 import { FormsModule } from '@angular/forms';
 import { MatCheckboxModule } from '@angular/material/checkbox';
+import { ManagementComponent } from './management/management.component';
 
 @NgModule({
   imports: [
@@ -23,6 +24,6 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
     FormsModule,
     MatCheckboxModule,
   ],
-  declarations: [BrowseComponent, MemeCardComponent, CreateComponent]
+  declarations: [BrowseComponent, MemeCardComponent, CreateComponent, ManagementComponent]
 })
 export class CommunityModule { }
