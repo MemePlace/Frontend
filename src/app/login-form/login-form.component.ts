@@ -20,6 +20,7 @@ export class LoginFormComponent implements OnInit {
     passwordLoginText: string;
     rememberMeCheckbox: false;
     hideInvalidText = true;
+    errorMessage: string;
 
     usernameFormControl = new FormControl('', [
       Validators.required,
@@ -42,8 +43,7 @@ export class LoginFormComponent implements OnInit {
             this.dialogRef.close();
         }).catch((err) => {
             this.hideInvalidText = false;
-            // Todo: Figure out why the error is returning as Error: [object Object]
-            // console.log(err.toString());
+            this.errorMessage = err.toString();
         });
     }
 

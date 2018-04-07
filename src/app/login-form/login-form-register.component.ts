@@ -25,6 +25,7 @@ export class LoginFormRegisterComponent {
     username: '',
   };
   hideInvalidText = true;
+  errorMessage: string;
 
   usernameFormControl = new FormControl('', [
     Validators.required,
@@ -35,22 +36,32 @@ export class LoginFormRegisterComponent {
   ]);
 
   registerValidate() {
-    // Validate user registration by calling signup from UserService
-    this.userService.signup(this.usernameRegisterText, this.passwordRegisterText, this.emailText).then( (user) => {
-      this.users = user;
-      this.snackBar.open('Welcome to MemePlace!', 'close', {
-        duration: 3000
+      // Validate user registration by calling signup from UserService
+    if (!this.emailText) {
+      // Runs this code if e-mail textbox is empty
+      this.userService.signup(this.usernameRegisterText, this.passwordRegisterText).then((user) => {
+        this.users = user;
+        this.snackBar.open('Welcome to MemePlace!', 'close', {
+          duration: 3000
+        });
+        this.dialogRef.close();
+      }).catch((err) => {
+        this.hideInvalidText = false;
+        this.errorMessage = err.toString();
       });
-      this.dialogRef.close();
-    }).catch((err) => {
-      this.hideInvalidText = false;
-      this.snackBar.open('Registration Failed', 'close', {
-        duration: 3000
+    } else {
+      // Runs this code when e-mail has a value
+      this.userService.signup(this.usernameRegisterText, this.passwordRegisterText, this.emailText).then((user) => {
+        this.users = user;
+        this.snackBar.open('Welcome to MemePlace!', 'close', {
+          duration: 3000
+        });
+        this.dialogRef.close();
+      }).catch((err) => {
+        this.hideInvalidText = false;
+        this.errorMessage = err.toString();
       });
-      // Figure out why the err is returning as Error: [object Object]
-      // console.log(err.toString());
-    });
-
+    }
   }
 
   cancel(): void {
