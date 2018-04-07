@@ -46,8 +46,7 @@ export class CommunityService {
         this.api.post(Version.v1, 'communities', { name, title, description, sidebar, nsfw, creatorId }).then((community: Community) => {
         return community;
         });
-      }
-      else return 'This community already exists';
+      } else { return 'This community already exists'; }
     });
   }
 
@@ -67,13 +66,13 @@ export class CommunityService {
 
   // favourite community
   favouriteCommunity(name: string): Promise<any> {
-    return this.api.put(Version.v1, 'communities/' + name + '/favourite', { name }).then((msg: string) => {
+    return this.api.put(Version.v1, 'communities/' + name + '/favourite', {} ).then((msg: string) => {
       return msg;
     });
   }
   // removes community from favourite communities
   deleteFavourite(name: string): Promise<any> {
-    return this.api.delete(Version.v1, 'communities/' + name + '/favourite').then((msg:string) => {
+    return this.api.delete(Version.v1, 'communities/' + name + '/favourite').then((msg: string) => {
       return msg;
     });
   }
