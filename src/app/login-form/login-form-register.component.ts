@@ -47,6 +47,8 @@ export class LoginFormRegisterComponent {
       this.snackBar.open('Registration Failed', 'close', {
         duration: 3000
       });
+      // Figure out why the err is returning as Error: [object Object]
+      // console.log(err.toString());
     });
 
   }

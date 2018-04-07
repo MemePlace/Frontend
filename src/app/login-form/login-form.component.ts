@@ -40,8 +40,10 @@ export class LoginFormComponent implements OnInit {
             });
 
             this.dialogRef.close();
-        }).catch(() => {
+        }).catch((err) => {
             this.hideInvalidText = false;
+            // Todo: Figure out why the error is returning as Error: [object Object]
+            // console.log(err.toString());
         });
     }
 
