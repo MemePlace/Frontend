@@ -1,3 +1,22 @@
-<p>
-  management works!
-</p>
+<h2>
+  Community Management
+</h2>
+
+<mat-form-field id="communityTitleField">
+  <input matInput placeholder="Title" [formControl]="titleFormControl" [(ngModel)]="titleText" maxlength="100">
+  <mat-error *ngIf="titleFormControl.hasError('required')">
+    Community Title is <strong>required</strong>
+  </mat-error>
+</mat-form-field>
+
+<mat-form-field id="comDescriptionField">
+  <textarea matInput placeholder="Description" [(ngModel)] = "descriptionText" rows="10"></textarea>
+</mat-form-field>
+
+<mat-form-field id="sidebarTextField">
+  <input matInput placeholder="Sidebar Message" [(ngModel)]="sidebarText" maxlength="300">
+</mat-form-field>
+
+<mat-checkbox [(ngModel)]="NSFW_checked">NSFW</mat-checkbox>
+<button mat-raised-button id="submitButton" color="primary" (click)="onUpdateCommunity()"
+        [disabled]="titleFormControl.hasError('required')">Update Community</button>
