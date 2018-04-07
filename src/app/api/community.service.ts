@@ -32,13 +32,7 @@ export class CommunityService {
   constructor(private api: BaseApiService) { }
 
   createCommunity(community: Community): Promise<any> {
-    return this.isCommunityNameAvailable(community.name).then((exists: boolean) => {
-      if (!exists) {
-        this.api.post(Version.v1, 'communities', community).then((community: Community) => {
-        return community;
-        });
-      } else { return 'This community already exists'; }
-    });
+    return this.api.post(Version.v1, 'communities', community);
   }
 
   getCommunities(sort: string, count: number, offset: number): Promise<CommunityList> {
