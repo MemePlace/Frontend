@@ -33,19 +33,6 @@ export class LoginFormRegisterComponent {
 
   registerValidate() {
       // Validate user registration by calling signup from UserService
-    if (!this.emailText) {
-      // Runs this code if e-mail textbox is empty
-      this.userService.signup(this.usernameRegisterText, this.passwordRegisterText).then((user) => {
-        this.snackBar.open('Welcome to MemePlace!', 'close', {
-          duration: 3000
-        });
-        this.dialogRef.close();
-      }).catch((err) => {
-        this.hideInvalidText = false;
-        this.errorMessage = err.toString();
-      });
-    } else {
-      // Runs this code when e-mail has a value
       this.userService.signup(this.usernameRegisterText, this.passwordRegisterText, this.emailText).then((user) => {
         this.snackBar.open('Welcome to MemePlace!', 'close', {
           duration: 3000
@@ -55,7 +42,6 @@ export class LoginFormRegisterComponent {
         this.hideInvalidText = false;
         this.errorMessage = err.toString();
       });
-    }
   }
 
   cancel(): void {
