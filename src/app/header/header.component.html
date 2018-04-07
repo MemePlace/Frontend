@@ -10,7 +10,7 @@
   <button mat-button (click)="registerPage()" *ngIf="!userService.isLoggedIn()">Sign Up</button>
   <button mat-raised-button color="accent" (click)="loginPage()" *ngIf="!userService.isLoggedIn()">Log in</button>
 
-  <p id="username" (click)="gotoProfile()" *ngIf="userService.isLoggedIn()" [(ngModel)]="usernameText" ngDefaultControl>User: {{usernameText}}</p>
+  <p id="username" (click)="gotoProfile()" *ngIf="userService.isLoggedIn()">User: {{userService.user.username}}</p>
   <button mat-raised-button color="accent" (click)="logout()" *ngIf="userService.isLoggedIn()">Log out</button>
 
 

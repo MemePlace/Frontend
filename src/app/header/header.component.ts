@@ -18,13 +18,8 @@ export class HeaderComponent implements OnInit {
               public userService: UserService,
               public snackBar: MatSnackBar) { }
 
-  usernameText = '';
 
-  ngOnInit() {
-    this.userService.getDetails().then((user) => {
-      this.usernameText = user.username;
-    });
-  }
+  ngOnInit() { }
 
   toggle() {
     this.sidebarToggle.emit();
@@ -33,25 +28,11 @@ export class HeaderComponent implements OnInit {
   registerPage() {
     // Open dialog box to Register page
     const openRegister = this.dialog.open(LoginFormRegisterComponent);
-
-    // When register dialog box closes, checks to see if a user is logged in
-    openRegister.afterClosed().subscribe(() => {
-      this.userService.getDetails().then((user) => {
-        this.usernameText = user.username;
-      });
-    });
   }
 
   loginPage() {
     // Open dialog box to Login page
     const openLogin = this.dialog.open(LoginFormComponent);
-
-    // When login dialog box closes, checks to see if a user is logged in
-    openLogin.afterClosed().subscribe(() => {
-      this.userService.getDetails().then((user) => {
-        this.usernameText = user.username;
-      });
-    });
   }
 
   gotoProfile() {
