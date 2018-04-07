@@ -42,7 +42,7 @@
       <mat-action-row>
         <button mat-raised-button color="accent" >Upload File</button>
         <span class="little-spacer"></span>
-        <button mat-raised-button color="accent" (click)="parent.uploadImgUrl(imgURL.value, resize.checked)">URL</button>
+        <button mat-raised-button color="accent" (click)="uploadUrl(imgURL.value, resize.checked)">URL</button>
       </mat-action-row>
       <mat-checkbox #resize [checked]="true">Fit to Image?</mat-checkbox>
     </form>

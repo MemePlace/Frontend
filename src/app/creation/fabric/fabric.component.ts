@@ -62,10 +62,9 @@ export class FabricComponent {
   }
 
 
-  upImg(targeturl: string, resize: boolean): [boolean, [number, number]] {
+  upImg(targeturl: string, resize: boolean) {
     const add = (obj: fabric.Object) => (this.canvas.add(obj));
     const setSize = ([height, width]: [number, number]) => (this.parent.setSize([height, width]));
-
 // TODO: Hadle bad URL's and other failures
     fabric.util.loadImage(targeturl, function (oImg, err) {
       if (err) {
@@ -75,14 +74,10 @@ export class FabricComponent {
         const image = new fabric.Image(oImg);
         if (resize) {
           setSize([image.height, image.width]);
-
-        } else {
-          return [true, null];
         }
         add(image);
       }
     });
-    return null;
   }
 
 

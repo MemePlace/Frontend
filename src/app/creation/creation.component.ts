@@ -34,7 +34,6 @@ export class CreationComponent implements OnInit {
 
   uploadImgUrl(url, resize: boolean) {
     this.fab.upImg(url, resize);
-    console.log('yes');
   }
 
   constructor() {

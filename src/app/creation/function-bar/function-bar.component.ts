@@ -28,9 +28,8 @@ export class FunctionBarComponent {
     this.sWidth = newWidth;
   }
 
-  upload(value: string): void {
-    console.log(this.resize);
-    this.parent.uploadImgUrl(value, this.resize);
+  uploadUrl(value: string, resize: boolean): void {
+    this.parent.uploadImgUrl(value, resize);
   }
 
 
