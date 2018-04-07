@@ -66,7 +66,7 @@ export class HeaderComponent implements OnInit {
   }
 
   gotoProfile() {
-    console.log('test');
+    // To be implemented
   }
 
   logout() {
