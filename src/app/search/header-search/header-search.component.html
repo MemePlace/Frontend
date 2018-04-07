@@ -1,0 +1,2 @@
+<app-search-bar class="search-bar" [hidden]="utils.isMobile"></app-search-bar>
+<button mat-icon-button (click)="openMobileDialog()" [hidden]="!utils.isMobile" [color]="showBar ? 'accent': 'basic'"><i class="material-icons">search</i></button>

@@ -11,6 +11,7 @@ import { CommunityModule } from './community/community.module';
 import { ApiModule } from './api/api.module';
 import { ReactiveFormsModule } from '@angular/forms';
 import {LoginFormModule} from './login-form/login-form.module';
+import { SearchModule } from './search/search.module';
 
 
 @NgModule({
@@ -26,6 +27,7 @@ import {LoginFormModule} from './login-form/login-form.module';
     MaterialModule,
     CommunityModule,
     ApiModule,
+    SearchModule,
     FormsModule,
     ReactiveFormsModule,
     LoginFormModule,

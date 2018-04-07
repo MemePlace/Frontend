@@ -1,0 +1,20 @@
+<mat-card class="search-card">
+  <input #query matInput
+         type="search"
+         placeholder="Search"
+         (keyup)="onKey(query.value)"
+         [matAutocomplete]="auto">
+  <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
+    <mat-optgroup *ngIf="options.communities && options.communities.length > 0" label="Communities">
+      <mat-option *ngFor="let community of options.communities" [value]="community">
+        {{ community.name }} - {{community.title}}
+      </mat-option>
+    </mat-optgroup>
+    <mat-optgroup *ngIf="options.users && options.users.length > 0" label="Users">
+      <mat-option *ngFor="let user of options.users" [value]="user">
+        {{ user.username }}
+      </mat-option>
+    </mat-optgroup>
+  </mat-autocomplete>
+</mat-card>
+

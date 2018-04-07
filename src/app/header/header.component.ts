@@ -5,6 +5,7 @@ import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
 import { LoginFormComponent} from '../login-form/login-form.component';
 import {LoginFormRegisterComponent} from '../login-form/login-form-register.component';
 import {MatSnackBar} from '@angular/material';
+import {Utils} from '../utils';
 
 @Component({
   selector: 'app-header',
@@ -13,6 +14,7 @@ import {MatSnackBar} from '@angular/material';
 })
 export class HeaderComponent implements OnInit {
   @Output() sidebarToggle: EventEmitter<null> = new EventEmitter();
+  private utils = Utils;
 
   constructor(public dialog: MatDialog,
               public userService: UserService,

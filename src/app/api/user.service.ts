@@ -37,7 +37,6 @@ export class UserService {
       return;
     }
 
-
     return this.api.put(Version.v1, 'auth/logout', {}).then((user) => {
       this.user = null;
       this.loggedIn = false;
