@@ -4,6 +4,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { BaseApiService } from './base-api.service';
 import { UserService } from './user.service';
 import { CommunityService } from './community.service';
+import { SearchService } from './search.service';
 
 @NgModule({
   imports: [
@@ -13,7 +14,8 @@ import { CommunityService } from './community.service';
   providers: [
     BaseApiService,
     UserService,
-    CommunityService
+    CommunityService,
+    SearchService
   ]
 })
 export class ApiModule { }

@@ -2,10 +2,11 @@
   <button mat-icon-button (click)="toggle()">
     <mat-icon class="material-icons app-toolbar-menu">menu</mat-icon>
   </button>
-  Meme.Place
+  <span [routerLink]="['/']" class="site-title">{{ utils.isMobile ? 'MP' : 'Meme.Place'}}</span>
 
   <span class="fill-remaining-space"></span>
 
+  <app-header-search></app-header-search>
   <button mat-button>Sign Up</button>
   <button mat-raised-button color="accent">Log in</button>
 </mat-toolbar>
