@@ -16,7 +16,9 @@ export interface MemeVote {
   id: number,
   diff: number,
   MemeId: number,
-  UserId: number
+  UserId: number,
+  createdAt: string,
+  updatedAt: string
 }
 
 @Injectable()

@@ -15,6 +15,10 @@ export interface Error {
 const prodBase = 'http://api.meme.place';
 const devBase = 'http://localhost:3000/api';
 
+const requestOptions = {
+  withCredentials: true
+};
+
 @Injectable()
 export class BaseApiService {
   base = isDevMode() ? devBase : prodBase;
@@ -32,18 +36,22 @@ export class BaseApiService {
   }
 
   get(version: Version, resource: string): Promise<{}|void> {
-    return this.http.get(`${this.base}/${version}/${resource}`).toPromise().catch((err) => this.handleError(err));
+    return this.http.get(`${this.base}/${version}/${resource}`, requestOptions).toPromise()
+      .catch((err) => this.handleError(err));
   }
 
   post(version: Version, resource: string, data: {}): Promise<{}|void> {
-    return this.http.post(`${this.base}/${version}/${resource}`, data).toPromise().catch((err) => this.handleError(err));
+    return this.http.post(`${this.base}/${version}/${resource}`, data, requestOptions).toPromise()
+      .catch((err) => this.handleError(err));
   }
 
   put(version: Version, resource: string, data: {}): Promise<{}|void> {
-    return this.http.put(`${this.base}/${version}/${resource}`, data).toPromise().catch((err) => this.handleError(err));
+    return this.http.put(`${this.base}/${version}/${resource}`, data, requestOptions).toPromise()
+      .catch((err) => this.handleError(err));
   }
 
   delete(version: Version, resource: string): Promise<{}|void> {
-    return this.http.delete(`${this.base}/${version}/${resource}`).toPromise().catch((err) => this.handleError(err));
+    return this.http.delete(`${this.base}/${version}/${resource}`, requestOptions).toPromise()
+      .catch((err) => this.handleError(err));
   }
 }
