@@ -1,4 +1,4 @@
-  <mat-card-title>Register</mat-card-title> <span id='invalidText' *ngIf="!hideInvalidText" [(ngModel)]="errorMessage" ngDefaultControl><h2>{{errorMessage}}</h2></span>
+  <h1 matDialogTitle>Register</h1> <span id='invalidText' *ngIf="!hideInvalidText" [(ngModel)]="errorMessage" ngDefaultControl><h2>{{errorMessage}}</h2></span>
   <mat-card-content>
     <mat-form-field id="registerUsernameField">
       <input matInput placeholder="Username" type="text" [formControl]="usernameFormControl" [(ngModel)]="usernameRegisterText" maxLength="25" >
