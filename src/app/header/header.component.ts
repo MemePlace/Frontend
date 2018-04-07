@@ -16,13 +16,20 @@ export class HeaderComponent implements OnInit {
   constructor(public dialog: MatDialog,
               public userService: UserService) {
   }
-
+  usernameText: string;
   users: User = {
     id: 0,
     username: '',
   };
 
   ngOnInit() {
+    this.userService.getDetails().then((user) => {
+      this.users = user;
+      this.usernameText = this.users.username;
+      console.log("user was already logged in through cookies: " + this.usernameText);
+    }).catch(() => {
+      console.log('no user was logged in');
+    });
   }
 
   toggle() {
@@ -32,15 +39,35 @@ export class HeaderComponent implements OnInit {
   registerPage() {
     // Open dialog box to Register page
     const openRegister = this.dialog.open(LoginFormRegisterComponent);
+
+    openRegister.afterClosed().subscribe(() => {
+      this.userService.getDetails().then((user) => {
+        this.users = user;
+        this.usernameText = this.users.username;
+        console.log("made it into openRegister, usernameText = " + this.usernameText);
+      }).catch(() => {
+        console.log('user did not finish registering');
+      });
+    });
   }
 
   loginPage() {
     // Open dialog box to Login page
     const openLogin = this.dialog.open(LoginFormComponent);
+
+    openLogin.afterClosed().subscribe(() => {
+      this.userService.getDetails().then((user) =>{
+        this.users = user;
+        this.usernameText = this.users.username;
+        console.log("made it into openLogin, usernameText = " + this.usernameText);
+      }).catch(() => {
+        console.log('user did not finish logging in');
+      });
+    });
   }
 
   gotoProfile() {
-
+    console.log("test");
   }
 
   logout() {

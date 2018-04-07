@@ -18,7 +18,7 @@ export class LoginFormComponent implements OnInit {
 
     usernameLoginText: string;
     passwordLoginText: string;
-    RememberMeCheckbox: false;
+    rememberMeCheckbox: false;
     hideInvalidText = false;
 
     usernameFormControl = new FormControl('', [
@@ -34,7 +34,7 @@ export class LoginFormComponent implements OnInit {
 
     loginValidate() {
         // Validate user login
-        this.userService.login(this.usernameLoginText, this.passwordLoginText).then((user) => {
+        this.userService.login(this.usernameLoginText, this.passwordLoginText, this.rememberMeCheckbox).then((user) => {
             this.snackBar.open('Welcome to MemePlace!', 'close');
             console.log('made it into then, login');
             this.dialogRef.close();

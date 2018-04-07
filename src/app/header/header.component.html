@@ -6,10 +6,11 @@
 
   <span class="fill-remaining-space"></span>
 
+
   <button mat-button (click)="registerPage()" *ngIf="!userService.isLoggedIn()">Sign Up</button>
   <button mat-raised-button color="accent" (click)="loginPage()" *ngIf="!userService.isLoggedIn()">Log in</button>
 
-  <p id="username" (click)="gotoProfile()" *ngIf="userService.isLoggedIn()" content=""></p>
+  <p id="username" (click)="gotoProfile()" *ngIf="userService.isLoggedIn()" [(ngModel)]="usernameText" ngDefaultControl>User: {{usernameText}}</p>
   <button mat-raised-button color="accent" (click)="logout()" *ngIf="userService.isLoggedIn()">Log out</button>
 
 

@@ -44,10 +44,11 @@ export class UserService {
    * Logs in a new user and returns their details
    * @param {string} username
    * @param {string} password
+   * @param {boolean} rememberMe
    * @return {Promise<User>}
    */
-  login(username: string, password: string): Promise<User> {
-    return this.api.post(Version.v1, 'auth', {username, password}).then((user: User) => {
+  login(username: string, password: string, rememberMe: boolean): Promise<User> {
+    return this.api.post(Version.v1, 'auth', {username, password, rememberMe}).then((user: User) => {
       this.user = user;
       this.loggedIn = true;
       return user;

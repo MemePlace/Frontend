@@ -18,7 +18,7 @@
     </mat-card-content>
 
     <mat-card-actions>
-        <mat-checkbox [(ngModel)]="RememberMeCheckbox">Remember Me</mat-checkbox>
+        <mat-checkbox [(ngModel)]="rememberMeCheckbox">Remember Me</mat-checkbox>
         <button mat-button type="cancel" (click)="cancel()">Cancel</button>
         <button mat-button id="loginButton" color="primary" (click)="loginValidate()" [disabled]="!(!usernameFormControl.hasError('required') && !passwordFormControl.hasError('required'))" cdkFocusInitial>Login</button>
     </mat-card-actions>
