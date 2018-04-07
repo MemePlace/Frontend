@@ -32,9 +32,7 @@ export class CommunityService {
   constructor(private api: BaseApiService) { }
 
   createCommunity(community: Community): Promise<any> {
-    return this.api.post(Version.v1, 'communities', community).then((community: Community) => {
-      return community;
-    });
+    return this.api.post(Version.v1, 'communities', community);
   }
 
   getCommunities(sort: string, count: number, offset: number): Promise<CommunityList> {
