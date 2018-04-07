@@ -9,7 +9,7 @@ export interface User {
 @Injectable()
 export class UserService {
   private loggedIn = false;
-  private user: User;
+  public user: User;
 
   constructor(private api: BaseApiService) {
     // check if they are logged in

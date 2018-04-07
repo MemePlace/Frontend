@@ -4,6 +4,7 @@ import {User, UserService} from '../api/user.service';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
 import { LoginFormComponent} from '../login-form/login-form.component';
 import {LoginFormRegisterComponent} from '../login-form/login-form-register.component';
+import {MatSnackBar} from '@angular/material';
 
 @Component({
   selector: 'app-header',
@@ -14,20 +15,14 @@ export class HeaderComponent implements OnInit {
   @Output() sidebarToggle: EventEmitter<null> = new EventEmitter();
 
   constructor(public dialog: MatDialog,
-              public userService: UserService) {
-  }
-  usernameText: string;
-  users: User = {
-    id: 0,
-    username: '',
-  };
+              public userService: UserService,
+              public snackBar: MatSnackBar) { }
+
+  usernameText = '';
 
   ngOnInit() {
     this.userService.getDetails().then((user) => {
-      this.users = user;
-      this.usernameText = this.users.username;
-    }).catch(() => {
-      // No cookie data
+      this.usernameText = user.username;
     });
   }
 
@@ -42,10 +37,7 @@ export class HeaderComponent implements OnInit {
     // When register dialog box closes, checks to see if a user is logged in
     openRegister.afterClosed().subscribe(() => {
       this.userService.getDetails().then((user) => {
-        this.users = user;
-        this.usernameText = this.users.username;
-      }).catch(() => {
-        // User hit cancel, nothing happens
+        this.usernameText = user.username;
       });
     });
   }
@@ -57,10 +49,7 @@ export class HeaderComponent implements OnInit {
     // When login dialog box closes, checks to see if a user is logged in
     openLogin.afterClosed().subscribe(() => {
       this.userService.getDetails().then((user) => {
-        this.users = user;
-        this.usernameText = this.users.username;
-      }).catch((err) => {
-        // User hit cancel, nothing happens
+        this.usernameText = user.username;
       });
     });
   }
@@ -74,8 +63,9 @@ export class HeaderComponent implements OnInit {
     this.userService.logout().then(() => {
       // User logged out
     }).catch((err) => {
-      // User failed to log out
-      console.error(err);
+      this.snackBar.open('Failed to Logout: ' + err.toString(), 'close', {
+        duration: 3000
+      });
     });
 
   }

@@ -1,5 +1,4 @@
-<mat-card class="registerForm">
-  <mat-card-title>Register</mat-card-title> <span id='invalidText' *ngIf="!hideInvalidText"><h2>Invalid username/email</h2></span>
+  <mat-card-title>Register</mat-card-title> <span id='invalidText' *ngIf="!hideInvalidText"><h2>Username taken or invalid E-mail</h2></span>
   <mat-card-content>
     <mat-form-field id="registerUsernameField">
       <input matInput placeholder="Username" type="text" [formControl]="usernameFormControl" [(ngModel)]="usernameRegisterText" maxLength="25" >
@@ -27,4 +26,3 @@
     <button mat-button id="registerButton" color="primary"  (click)="registerValidate()" [disabled]="!(!usernameFormControl.hasError('required') && !passwordFormControl.hasError('required'))" cdkFocusInitial>Register</button>
   </mat-card-actions>
 
-</mat-card>

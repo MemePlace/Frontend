@@ -1,4 +1,4 @@
-<mat-card class="loginForm">
+
   <mat-card-title>Login</mat-card-title> <span id='invalidText' *ngIf="!hideInvalidText"><h2>Username or Password is invalid</h2></span>
     <mat-card-content>
       <mat-form-field id="loginUsernameField">
@@ -23,4 +23,4 @@
         <button mat-button id="loginButton" color="primary" (click)="loginValidate()" [disabled]="!(!usernameFormControl.hasError('required') && !passwordFormControl.hasError('required'))" cdkFocusInitial>Login</button>
     </mat-card-actions>
 
-</mat-card>
+
