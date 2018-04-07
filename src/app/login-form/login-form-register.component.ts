@@ -19,6 +19,7 @@ export class LoginFormRegisterComponent {
 
   usernameRegisterText: string;
   passwordRegisterText: string;
+  emailText: string;
   hideInvalidText = true;
   errorMessage: string;
 

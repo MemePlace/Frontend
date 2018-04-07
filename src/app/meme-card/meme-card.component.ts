@@ -1,11 +1,11 @@
-import { Component, OnInit, Input } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
+import {Utils} from '../utils';
 
 @Component({
   selector: 'app-meme-card',
   templateUrl: './meme-card.component.html',
   styleUrls: ['./meme-card.component.scss']
 })
-
 export class MemeCardComponent implements OnInit {
   @Input() imageHeight: number;
   @Input() username: string;
@@ -19,10 +19,34 @@ export class MemeCardComponent implements OnInit {
   ngOnInit() {
   }
 
+  maxCardWidth(height: number): number {
+    if (Utils.isMobile) {
+      return Utils.screenWidth * 0.95;
+    } else {
+      return Math.min(Utils.screenWidth * 0.95, height * 2.5);
+    }
+  }
+
+  minCardWidth(height: number): number {
+    if (Utils.isMobile) {
+      return Utils.screenWidth * 0.95;
+    } else {
+      return 0;
+    }
+  }
+
+  checkHeight(height: number): number {
+    if (Utils.isMobile) {
+      return null;
+    } else {
+      return height;
+    }
+  }
+
   onClickUpVote() {
     this.voteCount -= this.voted; // negate a previous vote
 
-    if (this.voted != 1) {
+    if (this.voted !== 1) {
       this.voteCount++;
       this.voted = 1;
     } else {
@@ -33,7 +57,7 @@ export class MemeCardComponent implements OnInit {
   onClickDownVote() {
     this.voteCount -= this.voted; // negate a previous vote
 
-    if (this.voted != -1) {
+    if (this.voted !== -1) {
       this.voteCount--;
       this.voted = -1;
     } else {
