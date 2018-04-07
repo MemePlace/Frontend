@@ -19,11 +19,6 @@ export class LoginFormRegisterComponent {
 
   usernameRegisterText: string;
   passwordRegisterText: string;
-  emailText: string;
-  users: User = {
-    id: 0,
-    username: '',
-  };
   hideInvalidText = true;
   errorMessage: string;
 
@@ -40,7 +35,6 @@ export class LoginFormRegisterComponent {
     if (!this.emailText) {
       // Runs this code if e-mail textbox is empty
       this.userService.signup(this.usernameRegisterText, this.passwordRegisterText).then((user) => {
-        this.users = user;
         this.snackBar.open('Welcome to MemePlace!', 'close', {
           duration: 3000
         });
@@ -52,7 +46,6 @@ export class LoginFormRegisterComponent {
     } else {
       // Runs this code when e-mail has a value
       this.userService.signup(this.usernameRegisterText, this.passwordRegisterText, this.emailText).then((user) => {
-        this.users = user;
         this.snackBar.open('Welcome to MemePlace!', 'close', {
           duration: 3000
         });
