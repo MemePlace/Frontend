@@ -31,7 +31,7 @@ export class BaseApiService {
       throw new Error('Something bad happened, please try again later');
     } else {
       // Server error response
-      throw new Error(error.error);
+      throw new Error(error.error.error);
     }
   }
 

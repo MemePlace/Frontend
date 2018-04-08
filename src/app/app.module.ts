@@ -9,7 +9,10 @@ import { SidenavComponent } from './sidenav/sidenav.component';
 import { HeaderComponent } from './header/header.component';
 import { CommunityModule } from './community/community.module';
 import { ApiModule } from './api/api.module';
+import { ReactiveFormsModule } from '@angular/forms';
+import {LoginFormModule} from './login-form/login-form.module';
 import { SearchModule } from './search/search.module';
+
 
 @NgModule({
   declarations: [
@@ -26,8 +29,11 @@ import { SearchModule } from './search/search.module';
     ApiModule,
     SearchModule,
     FormsModule,
+    ReactiveFormsModule,
+    LoginFormModule,
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents: [],
 })
 export class AppModule { }

@@ -6,7 +6,12 @@
 
   <span class="fill-remaining-space"></span>
 
+
   <app-header-search></app-header-search>
-  <button mat-button>Sign Up</button>
-  <button mat-raised-button color="accent">Log in</button>
+  <button mat-button (click)="registerPage()" *ngIf="!userService.isLoggedIn()">Sign Up</button>
+  <button mat-raised-button color="accent" (click)="loginPage()" *ngIf="!userService.isLoggedIn()">Log in</button>
+
+  <p id="username" (click)="gotoProfile()" *ngIf="userService.isLoggedIn()">{{userService.user.username}}</p>
+  <button mat-raised-button color="accent" (click)="logout()" *ngIf="userService.isLoggedIn()">Log out</button>
+  
 </mat-toolbar>
