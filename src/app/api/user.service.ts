@@ -66,7 +66,7 @@ export class UserService {
    * @return {Promise<User>} New user details
    */
   signup(username: string, password: string, email?: string): Promise<User> {
-    const body = {username, password};
+    const body: any = {username, password};
 
     if (email) {
       // Adds email to body (works despite the error showing on webstorm)
