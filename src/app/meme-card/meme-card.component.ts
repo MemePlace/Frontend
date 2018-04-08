@@ -1,5 +1,8 @@
 import {Component, Input, OnInit} from '@angular/core';
+import {UserService} from '../api/user.service';
 import {Utils} from '../utils';
+import {MatDialog, MatSnackBar} from '@angular/material';
+import {MemeDialogComponent} from "../meme-dialog/meme-dialog.component";
 
 @Component({
   selector: 'app-meme-card',
@@ -14,9 +17,16 @@ export class MemeCardComponent implements OnInit {
   voteCount = 0;
   voted = 0;
 
-  constructor() { }
+  constructor(public dialog: MatDialog,
+              public userService: UserService,
+              public snackBar: MatSnackBar) {
+  }
 
   ngOnInit() {
+  }
+
+  dialogPage() {
+    const openDialog = this.dialog.open(MemeDialogComponent);
   }
 
   maxCardWidth(height: number): number {
