@@ -9,7 +9,7 @@ export interface User {
 @Injectable()
 export class UserService {
   private loggedIn = false;
-  private user: User;
+  public user: User;
 
   constructor(private api: BaseApiService) {
     // check if they are logged in
@@ -32,6 +32,7 @@ export class UserService {
    * Logs out the currently logged in user
    */
   logout() {
+
     if (!this.isLoggedIn()) {
       return;
     }
@@ -46,10 +47,11 @@ export class UserService {
    * Logs in a new user and returns their details
    * @param {string} username
    * @param {string} password
+   * @param {boolean} rememberMe
    * @return {Promise<User>}
    */
-  login(username: string, password: string): Promise<User> {
-    return this.api.post(Version.v1, 'auth', {username, password}).then((user: User) => {
+  login(username: string, password: string, rememberMe: boolean): Promise<User> {
+    return this.api.post(Version.v1, 'auth', {username, password, rememberMe}).then((user: User) => {
       this.user = user;
       this.loggedIn = true;
       return user;
@@ -64,7 +66,14 @@ export class UserService {
    * @return {Promise<User>} New user details
    */
   signup(username: string, password: string, email?: string): Promise<User> {
-    return this.api.post(Version.v1, 'users', {email, username, password}).then((user: User) => {
+    const body: any = {username, password};
+
+    if (email) {
+      // Adds email to body (works despite the error showing on webstorm)
+      body.email = email;
+    }
+
+    return this.api.post(Version.v1, 'users', body).then((user: User) => {
       this.user = user;
       this.loggedIn = true;
       return user;
