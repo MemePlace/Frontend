@@ -108,15 +108,5 @@ export class MemeService {
       return value;
     });
   }
-
-  updateMemeVote(memeId: number) {
-    return this.baseApiService.get(Version.v1, `memes/${memeId}/vote`).then((value: (number)) => {
-      console.log(value);
-      return value;
-    }).catch((err) => {
-      console.log(err.toString());
-      return 0;
-    })
-  }
-
+  
 }

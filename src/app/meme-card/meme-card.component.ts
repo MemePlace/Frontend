@@ -20,7 +20,7 @@ export class MemeCardComponent implements OnInit {
 
   ngOnInit() {
     this.memeService.getMemeDetails(parseInt(this.memeId)).then((meme) => {
-      this.totalVote = meme.totalVote;
+      this.totalVote = meme.totalVote || 0;
       if (meme.myVote) {
         this.voted =  meme.myVote["diff"];
       }
@@ -59,16 +59,16 @@ export class MemeCardComponent implements OnInit {
     if (this.voted === 1){
       this.memeService.deleteMemeVote(parseInt(this.memeId)).then((value) => {
         this.voted = value;
-        this.memeService.updateMemeVote(parseInt(this.memeId)).then((value) => {
-          this.totalVote = value;
-        });
+        this.totalVote = this.totalVote-1;
       })
     }else{
       this.memeService.upvoteMeme(parseInt(this.memeId)).then((memeVote) => {
+        if (this.voted !== 0) {
+          this.totalVote = this.totalVote+2;
+        }else{
+          this.totalVote = this.totalVote+1;
+        }
         this.voted = memeVote.diff;
-        this.memeService.updateMemeVote(parseInt(this.memeId)).then((value) => {
-          this.totalVote = value;
-        });
       }).catch((err) => {
         console.log(err.toString());
       });
@@ -79,16 +79,16 @@ export class MemeCardComponent implements OnInit {
     if (this.voted === -1) {
       this.memeService.deleteMemeVote(parseInt(this.memeId)).then((value) => {
         this.voted = 0;
-        this.memeService.updateMemeVote(parseInt(this.memeId)).then((value) => {
-          this.totalVote = value;
-        });
+        this.totalVote = this.totalVote+1;
       })
     }else{
       this.memeService.downvoteMeme(parseInt(this.memeId)).then((memeVote) => {
+        if (this.voted !== 0) {
+          this.totalVote = this.totalVote-2;
+        }else{
+          this.totalVote = this.totalVote-1;
+        }
         this.voted = memeVote.diff;
-        this.memeService.updateMemeVote(parseInt(this.memeId)).then((value) => {
-          this.totalVote = value;
-        });
       }).catch((err) => {
         console.log(err.toString());
       });
