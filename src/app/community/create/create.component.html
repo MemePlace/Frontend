@@ -11,6 +11,9 @@
         <mat-error *ngIf="form.get('name').hasError('minlength')">
           Name must be at least 3 characters
         </mat-error>
+        <mat-error *ngIf="form.get('name').hasError('nameExists')">
+          That name is already taken
+        </mat-error>
         <mat-hint *ngIf="form.get('name').valid">meme.place/p/{{form.get('name').value}}</mat-hint>
       </mat-form-field>
 
@@ -35,7 +38,7 @@
 
   <mat-card-actions>
     <button mat-raised-button id="submitButton" color="primary" (click)="onCreateCommunity()"
-            [disabled]="!(!nameFormControl.hasError('required') && !titleFormControl.hasError('required'))">Create Community</button>
+            [disabled]="form.invalid">Create Community</button>
   </mat-card-actions>
 
 </mat-card>
