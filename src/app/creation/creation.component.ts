@@ -38,6 +38,11 @@ export class CreationComponent implements OnInit {
     this.fab.resetZoom();
   }
 
+  uploadFile(file, resize: boolean) {
+
+    this.fab.uploadFile(file, resize);
+  }
+
   uploadImgUrl(url, resize: boolean) {
     console.log(url);
 
@@ -74,6 +79,10 @@ export class CreationComponent implements OnInit {
 
   viewAllObjs() {
     return this.fab.getObjects();
+  }
+
+  download() {
+    this.fab.download();
   }
 
   constructor() {

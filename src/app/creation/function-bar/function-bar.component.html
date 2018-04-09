@@ -52,7 +52,7 @@
   </mat-list-item>
 
   <mat-list-item>
-    <button mat-raised-button matTooltip="Download">
+    <button mat-raised-button matTooltip="Download" (click)="download()">
       <mat-icon>get_app</mat-icon>
     </button>
   </mat-list-item>
@@ -97,7 +97,7 @@
       </mat-action-row>
       <mat-divider></mat-divider>
       <mat-action-row mat-menu-item [disableRipple]="true">
-        <button mat-raised-button color="accent" disabled>Upload File</button>
+        <button mat-raised-button color="accent" (click)="uploadFile()">Upload File</button>
         <button mat-raised-button color="accent" (click)="uploadUrl()">URL</button>
       </mat-action-row>
       <span mat-menu-item [disableRipple]="true">

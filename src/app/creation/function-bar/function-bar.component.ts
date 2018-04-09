@@ -11,6 +11,7 @@ import {CreationComponent} from '../creation.component';
 
 export class FunctionBarComponent {
   @ViewChild('imgURL') urlIn;
+  @ViewChild('fileIn') fileIn;
   private parent: CreationComponent;
   private sHeight: number; sWidth: number;
   public resizeCheck;
@@ -30,6 +31,11 @@ export class FunctionBarComponent {
     this.sWidth = newWidth;
   }
 
+  uploadFile() {
+    const file = this.fileIn.nativeElement.files[0];
+    this.parent.uploadFile(file, this.resizeCheck);
+  }
+
   uploadUrl(): void {
     const url = this.urlIn.nativeElement.value;
     this.parent.uploadImgUrl(url, this.resizeCheck);
@@ -45,6 +51,10 @@ export class FunctionBarComponent {
 
   viewAll() {
     console.log(this.parent.viewAllObjs());
+  }
+
+  download() {
+    this.parent.download();
   }
 
   clear() {

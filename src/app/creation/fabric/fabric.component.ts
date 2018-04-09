@@ -5,6 +5,16 @@ import {CreationComponent} from '../creation.component';
 
 declare let fabric;
 
+/* Credit to: https://stackoverflow.com/questions/35789498/new-typescript-1-8-4-build-error-build-property-result-does-not-exist-on-t */
+interface FileReaderEventTarget extends EventTarget {
+  result: string
+}
+
+interface FileReaderEvent extends Event {
+  target: FileReaderEventTarget;
+  getMessage(): string;
+}
+
 @Component({
   selector: 'app-fabric',
   templateUrl: './fabric.component.html',
@@ -29,6 +39,7 @@ export class FabricComponent {
     this.scaledWidth = w;
     this.parent = par;
     this.canvas = new fabric.Canvas('fabric', {
+      backgroundColor: 'white',
       preserveObjectStacking: true
     });
 
@@ -101,6 +112,78 @@ export class FabricComponent {
     this.canvas.getObjects();
   }
 
+/* CREDIT TO https://github.com/michaeljcalkins/angular-fabric/blob/master/assets/fabric.js */
+  download() {
+    const pic = this.canvas.toDataURL({
+      height: this.height,
+      width: this.width
+    });
+
+    const data = pic.replace('data:image/png;base64,', '');
+    const blob = this.b64toBlob(data, 'image/png');
+
+    this.canvas.discardActiveObject();
+    this.resetZoom();
+
+    const link = document.createElement('a');
+    link.download = 'myCanvas.png';
+    link.href = URL.createObjectURL(blob);
+    link.click();
+
+
+
+  }
+
+  /* CREDIT TO https://github.com/michaeljcalkins/angular-fabric/blob/master/assets/fabric.js */
+  b64toBlob(b64Data, contentType) {
+    contentType = contentType || '';
+    const sliceSize = 512;
+
+    const byteCharacters = atob(b64Data);
+    const byteArrays = [];
+
+    for (let offset = 0; offset < byteCharacters.length; offset += sliceSize) {
+      const slice = byteCharacters.slice(offset, offset + sliceSize);
+
+      const byteNumbers = new Array(slice.length);
+      for (let i = 0; i < slice.length; i++) {
+        byteNumbers[i] = slice.charCodeAt(i);
+      }
+
+      const byteArray = new Uint8Array(byteNumbers);
+
+      byteArrays.push(byteArray);
+    }
+
+    const blob = new Blob(byteArrays, {type: contentType});
+    return blob;
+  }
+
+  uploadFile(file, resize) {
+    const add = (obj: fabric.Object) => (this.canvas.add(obj));
+    const setSize = ([height, width]: [number, number]) => (this.parent.setSize([height, width]));
+
+    const reader = new FileReader();
+    reader.onload = function (event: FileReaderEvent) {
+      const imgObj = new Image();
+      console.log(event);
+      imgObj.src = event.target.result;
+      imgObj.onload = function () {
+        const image = new fabric.Image(imgObj);
+        if (resize) {
+          setSize([image.height, image.width]);
+        }
+        add(image);
+
+      };
+    };
+    reader.readAsDataURL(file);
+
+//    const add = (obj: fabric.Object) => (this.canvas.add(obj));
+
+//    this.upImg(file, resize);
+  }
+
 
   upImg(targeturl: string, resize: boolean) {
     const add = (obj: fabric.Object) => (this.canvas.add(obj));
@@ -118,8 +201,9 @@ export class FabricComponent {
         }
         add(image);
       }
-    });
+    }, { crossOrigin: 'anonymous' });
   }
+
 
   addTxt(bold: boolean, italic: boolean, underline: boolean) {
     const newTxt = new fabric.Textbox('New Text');
