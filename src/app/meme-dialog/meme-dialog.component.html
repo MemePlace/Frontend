@@ -1,3 +1,6 @@
 <h1 mat-dialog-title>
-  meme-dialog works!
+  <img class="meme-img" [style.height.px]="checkHeight(imageHeight)" [style.minWidth.px]="minCardWidth(imageHeight)"
+       [style.maxWidth.px]="maxCardWidth(imageHeight)" [src]="image">
+
+  <div>{{username}}</div>
 </h1>

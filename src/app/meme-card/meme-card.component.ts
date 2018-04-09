@@ -1,7 +1,7 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, ElementRef, Input, OnInit, Renderer2} from '@angular/core';
 import {UserService} from '../api/user.service';
 import {Utils} from '../utils';
-import { MatDialog, MatDialogRef, MatDialogModule, MatSnackBar} from '@angular/material';
+import {MatDialog, MatSnackBar} from '@angular/material';
 import {MemeDialogComponent} from '../meme-dialog/meme-dialog.component';
 
 @Component({
@@ -18,6 +18,8 @@ export class MemeCardComponent implements OnInit {
   voted = 0;
 
   constructor(public dialog: MatDialog,
+              public element: ElementRef,
+              public renderer: Renderer2,
               public userService: UserService,
               public snackBar: MatSnackBar) {
   }
@@ -26,7 +28,12 @@ export class MemeCardComponent implements OnInit {
   }
 
   dialogPage() {
-    const openDialog = this.dialog.open(MemeDialogComponent);
+    const dialogRef = this.dialog.open(MemeDialogComponent);
+    const instance = dialogRef.componentInstance;
+    instance.imageHeight = this.imageHeight;
+    instance.username = this.username;
+    instance.image = this.image;
+    this.element.nativeElement.focus();
   }
 
   maxCardWidth(height: number): number {
