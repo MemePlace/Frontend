@@ -71,8 +71,8 @@ export class CommunityService {
   }
 
   isCommunityNameAvailable(name: string): Promise<boolean> {
-    return this.api.get(Version.v1, `${name}/exists`).then((exists: boolean) => {
-      return exists;
+    return this.api.get(Version.v1, `communities/${name}/exists`).then((data: {exists: boolean}) => {
+      return data.exists;
     });
   }
 }
