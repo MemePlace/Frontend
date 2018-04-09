@@ -33,7 +33,10 @@ export class MemeCardComponent implements OnInit {
     instance.imageHeight = this.imageHeight;
     instance.username = this.username;
     instance.image = this.image;
-    this.element.nativeElement.focus();
+    instance.parent = this;
+    instance.voteCount = this.voteCount;
+    instance.voted = this.voted;
+    this.element.nativeElement.blur();
   }
 
   maxCardWidth(height: number): number {
