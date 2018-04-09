@@ -11,6 +11,7 @@ import {MatSnackBar} from '@angular/material';
 export class CreateComponent {
   private nameTimeout;
   form: FormGroup;
+  submitting = false;
 
   constructor(private fb: FormBuilder, private communityService: CommunityService, private snackBar: MatSnackBar) {
     this.createForm();
@@ -45,8 +46,8 @@ export class CreateComponent {
   }
 
   onCreateCommunity() {
-    // pass nameText, titleText, and descriptionText to server
-    console.log(this.form.value);
+    this.submitting = true;
+
     this.communityService.createCommunity(this.form.value as Community).then((community) => {
       this.snackBar.open(`Created Community ${community.name}!`, 'Close', {
         duration: 5000
@@ -55,6 +56,8 @@ export class CreateComponent {
       // TODO: Redirect to new community
     }).catch((err) => {
       this.snackBar.open(`Creation Failed: ${err.message}`, 'Close');
+    }).then(() => {
+      this.submitting = false;
     });
   }
 }

@@ -43,7 +43,7 @@
 
   <mat-card-actions>
     <button mat-raised-button id="submitButton" color="primary" (click)="onCreateCommunity()"
-            [disabled]="form.status != 'VALID'">Create Community</button>
+            [disabled]="form.status != 'VALID' || submitting">Create Community</button>
   </mat-card-actions>
 
 </mat-card>
