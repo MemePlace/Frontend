@@ -6,6 +6,7 @@ import { UserService } from './user.service';
 import { CommunityService } from './community.service';
 import { SearchService } from './search.service';
 import {StorageService} from './storage.service';
+import {AuthGuardService} from './auth-guard.service';
 
 @NgModule({
   imports: [
@@ -13,6 +14,7 @@ import {StorageService} from './storage.service';
     HttpClientModule,
   ],
   providers: [
+    AuthGuardService,
     BaseApiService,
     UserService,
     CommunityService,
