@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
-import {CommunityService} from '../../api/community.service';
+import {Community, CommunityService} from '../../api/community.service';
+import {MatSnackBar} from '@angular/material';
 
 @Component({
   selector: 'app-community-create',
@@ -11,7 +12,7 @@ export class CreateComponent {
   private nameTimeout;
   form: FormGroup;
 
-  constructor(private fb: FormBuilder, private communityService: CommunityService) {
+  constructor(private fb: FormBuilder, private communityService: CommunityService, private snackBar: MatSnackBar) {
     this.createForm();
   }
 
@@ -46,5 +47,14 @@ export class CreateComponent {
   onCreateCommunity() {
     // pass nameText, titleText, and descriptionText to server
     console.log(this.form.value);
+    this.communityService.createCommunity(this.form.value as Community).then((community) => {
+      this.snackBar.open(`Created Community ${community.name}!`, 'Close', {
+        duration: 5000
+      });
+      
+      // TODO: Redirect to new community
+    }).catch((err) => {
+      this.snackBar.open(`Creation Failed: ${err.message}`, 'Close');
+    });
   }
 }

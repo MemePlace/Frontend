@@ -7,7 +7,6 @@ export interface Community {
   description?: string;
   sidebar?: string;
   nsfw?: boolean;
-  creatorId: number;
 }
 
 export interface CommunityList {
@@ -31,7 +30,7 @@ export class CommunityService {
 
   constructor(private api: BaseApiService) { }
 
-  createCommunity(community: Community): Promise<any> {
+  createCommunity(community: Community): Promise<Community> {
     return this.api.post(Version.v1, 'communities', community);
   }
 
