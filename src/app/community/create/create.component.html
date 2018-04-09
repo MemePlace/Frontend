@@ -17,7 +17,7 @@
         <mat-error *ngIf="form.get('name').hasError('nameExists')">
           That name is already taken
         </mat-error>
-        <mat-hint *ngIf="form.get('name').valid">meme.place/p/{{form.get('name').value}}</mat-hint>
+        <mat-hint *ngIf="form.get('name').valid">meme.place/p/{{form.get('name').value}} is available!</mat-hint>
         <mat-hint align="end">Required</mat-hint>
       </mat-form-field>
 
