@@ -71,7 +71,7 @@ export class MemeService {
    */
   upvoteMeme(memeId: number): Promise<MemeVote> {
     return this.baseApiService.put(Version.v1, `memes/${memeId}/vote`, {
-      vote: "1"
+      vote: 1
     }).then( (memeVote: MemeVote) => {
       return memeVote;
     });
@@ -83,7 +83,7 @@ export class MemeService {
    */
   downvoteMeme(memeId: number): Promise<MemeVote> {
     return this.baseApiService.put(Version.v1, `memes/${memeId}/vote`, {
-      vote: "-1"
+      vote: -1
     }).then( (memeVote: MemeVote) => {
       return memeVote;
     });
@@ -108,5 +108,5 @@ export class MemeService {
       return value;
     });
   }
-  
+
 }
