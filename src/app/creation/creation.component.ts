@@ -47,7 +47,7 @@ export class CreationComponent implements OnInit {
     console.log(url);
 
     if (url === '') {
-      this.fab.upImg(this.sampleUrls[Math.floor(Math.random()*this.sampleUrls.length)], resize);
+      this.fab.upImg(this.sampleUrls[Math.floor(Math.random() * this.sampleUrls.length)], resize);
     } else {
       this.fab.upImg(url, resize);
     }
@@ -68,7 +68,7 @@ export class CreationComponent implements OnInit {
   moveObj(to: number) {
     if (to === 2) {
       this.fab.moveFront();
-    } else if(to === 1) {
+    } else if (to === 1) {
       this.fab.moveForward();
     } else if (to === -1) {
       this.fab.moveBackward();
@@ -86,12 +86,23 @@ export class CreationComponent implements OnInit {
   }
 
   constructor() {
+    const paste = (file) => (this.fab.uploadFile(file, true));
+    window.addEventListener('paste', function(e: ClipboardEvent) {
+      paste(e.clipboardData.files[0]);
+    });
+
     const myDel = () => (this.delete());
     document.addEventListener('keypress', function(e: KeyboardEvent) {
       if (document.activeElement.id === 'canvCont' && e.key === 'Delete') {
         myDel();
       }
     });
+  }
+
+  pasteImage(event: ClipboardEvent) {
+    const cbData = event.clipboardData;
+    console.log(cbData.files[0]);
+    this.fab.pasted();
   }
 
   ngOnInit() {
@@ -107,7 +118,7 @@ export class CreationComponent implements OnInit {
   }
 
   debug2() {
-    var objs = this.fab.canvas.getObjects();
+    let objs = this.fab.canvas.getObjects();
     console.log(objs);
   }
 
@@ -116,7 +127,8 @@ export class CreationComponent implements OnInit {
   }
 
   debug4() {
-    console.log(this.fab.canvas.getObjects());
+    //console.log(this.fab.canvas.getObjects());
+    this.fab.toJSON();
   }
 
 }

@@ -71,4 +71,8 @@ export class FunctionBarComponent {
     this.parent = par;
     this.setSize(size);
   }
+
+  test() {
+    console.log('its happening');
+  }
 }

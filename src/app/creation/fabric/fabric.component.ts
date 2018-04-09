@@ -7,7 +7,7 @@ declare let fabric;
 
 /* Credit to: https://stackoverflow.com/questions/35789498/new-typescript-1-8-4-build-error-build-property-result-does-not-exist-on-t */
 interface FileReaderEventTarget extends EventTarget {
-  result: string
+  result: string;
 }
 
 interface FileReaderEvent extends Event {
@@ -163,6 +163,9 @@ export class FabricComponent {
     const add = (obj: fabric.Object) => (this.canvas.add(obj));
     const setSize = ([height, width]: [number, number]) => (this.parent.setSize([height, width]));
 
+    console.log('deep');
+    console.log(file);
+
     const reader = new FileReader();
     reader.onload = function (event: FileReaderEvent) {
       const imgObj = new Image();
@@ -174,14 +177,9 @@ export class FabricComponent {
           setSize([image.height, image.width]);
         }
         add(image);
-
       };
     };
     reader.readAsDataURL(file);
-
-//    const add = (obj: fabric.Object) => (this.canvas.add(obj));
-
-//    this.upImg(file, resize);
   }
 
 
@@ -233,7 +231,8 @@ export class FabricComponent {
     this.canvas.clear();
   }
 
-  keyHit(e) {
-    console.log('key: hit');
+  toJSON() {
+    console.log(JSON.stringify(this.canvas));
   }
+
 }
