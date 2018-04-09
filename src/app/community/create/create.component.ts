@@ -51,7 +51,7 @@ export class CreateComponent {
       this.snackBar.open(`Created Community ${community.name}!`, 'Close', {
         duration: 5000
       });
-      
+
       // TODO: Redirect to new community
     }).catch((err) => {
       this.snackBar.open(`Creation Failed: ${err.message}`, 'Close');

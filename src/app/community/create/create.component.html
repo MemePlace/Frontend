@@ -4,12 +4,15 @@
   <mat-card-content>
     <form [formGroup]="form">
       <mat-form-field>
-        <input matInput type="text" placeholder="Name (shorthand form, used in URL)" formControlName="name" maxlength="25" >
+        <input matInput type="text" placeholder="Name (shorthand form, used in URL)" formControlName="name" maxlength="25" pattern="[a-zA-Z0-9]*">
         <mat-error *ngIf="form.get('name').hasError('required')">
           Name is <strong>required</strong>
         </mat-error>
         <mat-error *ngIf="form.get('name').hasError('minlength')">
           Name must be at least 3 characters
+        </mat-error>
+        <mat-error *ngIf="form.get('name').hasError('pattern')">
+          The name can only contain alphanumeric characters without spaces
         </mat-error>
         <mat-error *ngIf="form.get('name').hasError('nameExists')">
           That name is already taken
