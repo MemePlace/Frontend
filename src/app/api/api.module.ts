@@ -5,6 +5,7 @@ import { BaseApiService } from './base-api.service';
 import { UserService } from './user.service';
 import { CommunityService } from './community.service';
 import { SearchService } from './search.service';
+import {StorageService} from './storage.service';
 
 @NgModule({
   imports: [
@@ -15,7 +16,8 @@ import { SearchService } from './search.service';
     BaseApiService,
     UserService,
     CommunityService,
-    SearchService
+    SearchService,
+    StorageService
   ]
 })
 export class ApiModule { }
