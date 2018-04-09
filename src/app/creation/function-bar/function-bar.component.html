@@ -74,10 +74,13 @@
   <form id="newSize">
     <mat-action-row>
       <mat-form-field class="sizeInput">
-        <input matInput #height type="number" placeholder="Height" value="{{sHeight}}">
+        <input matInput #height type="number" placeholder="Height" value="{{sHeight}}" (change)="checkAR('h', height.value)">
       </mat-form-field>
+      <button mat-icon-button class="tiny" (click)="toggleAspectRatio()">
+        <mat-icon class="tiny">{{aspectIcon}}</mat-icon>
+      </button>
       <mat-form-field class="sizeInput">
-        <input matInput #width type="number" placeholder="Width" value="{{sWidth}}">
+        <input matInput #width type="number" placeholder="Width" value="{{sWidth}}" (change)="checkAR('w', width.value)">
       </mat-form-field>
       <button mat-raised-button color="accent" (click)="changeSize([height.value, width.value])">Submit</button>
     </mat-action-row>

@@ -13,8 +13,12 @@ export class FunctionBarComponent {
   @ViewChild('imgURL') urlIn;
   @ViewChild('fileIn') fileIn;
   private parent: CreationComponent;
-  private sHeight: number; sWidth: number;
-  public resizeCheck;
+  public sHeight: number;
+  public sWidth: number;
+  public resizeCheck: boolean;
+  public aspectIcon: string;
+  public arToggle: boolean;
+  public aspectRatio: number;
 
   public hardCodeURL; // = 'https://fthmb.tqn.com/M1ISdSdfLsU36nAuILe3YlFcY1w=/400x400/filters:fill(auto,1)/success-56a9fd1f3df78cf772abee09.jpg';
 
@@ -65,8 +69,34 @@ export class FunctionBarComponent {
     this.resizeCheck = !this.resizeCheck;
   }
 
+  toggleAspectRatio() {
+    if (this.arToggle) {
+      this.arToggle = false;
+      this.aspectIcon = 'lock_open';
+    } else {
+      this.arToggle = true;
+      this.aspectIcon = 'lock';
+      this.aspectRatio = this.sHeight / this.sWidth;
+      console.log(this.aspectRatio);
+    }
+  }
+
+  checkAR(axis: string, value: number) {
+    if (axis === 'h' && this.arToggle === true) {
+      this.sHeight = value;
+      this.sWidth = this.sHeight / this.aspectRatio;
+      console.log('gotta change w: ' + (this.sHeight));
+    } else if (axis === 'w' && this.arToggle === true) {
+      this.sWidth = value;
+      this.sHeight = this.sWidth * this.aspectRatio;
+      console.log('gotta mess up h: ' + (this.sWidth * this.aspectRatio));
+    }
+  }
+
 
   initBar(par: CreationComponent, size: [number, number]): void {
+    this.arToggle = false;
+    this.aspectIcon = 'lock_open';
     this.resizeCheck = true;
     this.parent = par;
     this.setSize(size);
