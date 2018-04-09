@@ -8,7 +8,6 @@ import { FormsModule } from '@angular/forms';
 
 import { CreationComponent } from './creation.component';
 import { FabricComponent } from './fabric/fabric.component';
-import { SizeComponent } from './size/size.component';
 import { FunctionBarComponent } from './function-bar/function-bar.component';
 
 
@@ -22,6 +21,6 @@ import { FunctionBarComponent } from './function-bar/function-bar.component';
     MatSliderModule,
     FormsModule,
   ],
-  declarations: [CreationComponent, FabricComponent, SizeComponent, FunctionBarComponent]
+  declarations: [CreationComponent, FabricComponent, FunctionBarComponent]
 })
 export class CreationModule { }
