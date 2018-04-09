@@ -39,6 +39,8 @@ export class CreationComponent implements OnInit {
   }
 
   uploadImgUrl(url, resize: boolean) {
+    console.log(url);
+
     if (url === '') {
       this.fab.upImg(this.sampleUrls[Math.floor(Math.random()*this.sampleUrls.length)], resize);
     } else {
@@ -50,8 +52,8 @@ export class CreationComponent implements OnInit {
     this.fab.delete();
   }
 
-  addTxt() {
-    this.fab.addTxt();
+  addTxt(b: boolean, i: boolean, u: boolean) {
+    this.fab.addTxt(b, i, u);
   }
 
   clear() {
@@ -68,6 +70,10 @@ export class CreationComponent implements OnInit {
     } else if (to === -2) {
       this.fab.moveBottom();
     }
+  }
+
+  viewAllObjs() {
+    return this.fab.getObjects();
   }
 
   constructor() {
@@ -101,6 +107,7 @@ export class CreationComponent implements OnInit {
   }
 
   debug4() {
+    console.log(this.fab.canvas.getObjects());
   }
 
 }

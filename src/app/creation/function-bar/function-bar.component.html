@@ -21,26 +21,26 @@
   </mat-list-item>
 
   <mat-list-item>
-    <button mat-raised-button [matMenuTriggerFor]="objects" matTooltip="Object Options">
+    <button mat-raised-button matTooltip="Object Options">
       <mat-icon>arrow_drop_down</mat-icon>
       <mat-icon>touch_app</mat-icon>
     </button>
   </mat-list-item>
 
   <mat-list-item>
-    <button mat-raised-button matTooltip="Move Selection Up A Layer">
+    <button mat-raised-button matTooltip="Move Selection Up A Layer" (click)="moveObj(1)">
       <mat-icon>expand_less</mat-icon>
     </button>
   </mat-list-item>
 
   <mat-list-item>
-    <button mat-raised-button matTooltip="View All Layers">
+    <button mat-raised-button matTooltip="View All Layers" (click)="viewAll()">
       <mat-icon>menu</mat-icon>
     </button>
   </mat-list-item>
 
   <mat-list-item>
-    <button mat-raised-button matTooptip="Move Selection Down A Layer">
+    <button mat-raised-button matTooptip="Move Selection Down A Layer" (click)="moveObj(-1)">
       <mat-icon>expand_more</mat-icon>
     </button>
   </mat-list-item>
@@ -89,7 +89,7 @@
   <span (click)="$event.stopPropagation()">
     <form>
       <mat-action-row mat-menu-item [disableRipple]="true">
-        <input matInput #imgURL type="url" placeholder="Please enter a URL..." value="{{hardCodeURL}}">
+        <input matInput #imgURL type="url" [required]="true" placeholder="Please enter a URL...">
       </mat-action-row>
       <mat-divider></mat-divider>
       <mat-action-row mat-menu-item [disableRipple]="true">
@@ -97,11 +97,11 @@
       </mat-action-row>
       <mat-divider></mat-divider>
       <mat-action-row mat-menu-item [disableRipple]="true">
-        <button mat-raised-button color="accent">Upload File</button>
-        <button mat-raised-button color="accent" (click)="uploadUrl(imgURL.value, resize.checked)">URL</button>
+        <button mat-raised-button color="accent" disabled>Upload File</button>
+        <button mat-raised-button color="accent" (click)="uploadUrl()">URL</button>
       </mat-action-row>
       <span mat-menu-item [disableRipple]="true">
-        <mat-checkbox #resize [checked]="true">Fit to Image?</mat-checkbox>
+        <mat-checkbox #resize [checked]="true" (change)="toggleSize()">Fit to Image?</mat-checkbox>
       </span>
     </form>
   </span>
@@ -127,9 +127,9 @@
     <mat-divider></mat-divider>
     <form>
       <mat-button-toggle-group multiple mat-menu-item [disableRipple]="true">
-        <mat-button-toggle><mat-icon>format_bold</mat-icon></mat-button-toggle>
-        <mat-button-toggle><mat-icon>format_italic</mat-icon></mat-button-toggle>
-        <mat-button-toggle><mat-icon>format_underline</mat-icon></mat-button-toggle>
+        <mat-button-toggle #bold><mat-icon>format_bold</mat-icon></mat-button-toggle>
+        <mat-button-toggle #italic><mat-icon>format_italic</mat-icon></mat-button-toggle>
+        <mat-button-toggle #underline><mat-icon>format_underline</mat-icon></mat-button-toggle>
       </mat-button-toggle-group>
 
       <mat-divider></mat-divider>
@@ -137,10 +137,9 @@
 
       <mat-divider></mat-divider>
       <mat-action-row mat-menu-item [disableRipple]="true">
-        <button mat-raised-button color="accent" (click)="addTxt()">Add New Text</button>
+        <button mat-raised-button color="accent" (click)="addTxt(bold.value, italic.value, underline.value)">Add New Text</button>
       </mat-action-row>
       <span mat-menu-item [disableRipple]="true">
-        <mat-checkbox #resize [checked]="true">Fit to Image?</mat-checkbox>
       </span>
     </form>
   </span>

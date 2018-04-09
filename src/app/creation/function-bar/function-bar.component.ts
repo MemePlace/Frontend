@@ -1,4 +1,4 @@
-import {Component, ViewEncapsulation} from '@angular/core';
+import {Component, ViewChild, ViewEncapsulation} from '@angular/core';
 import {CreationComponent} from '../creation.component';
 
 
@@ -10,9 +10,10 @@ import {CreationComponent} from '../creation.component';
 })
 
 export class FunctionBarComponent {
+  @ViewChild('imgURL') urlIn;
   private parent: CreationComponent;
   private sHeight: number; sWidth: number;
-  private resize = true;
+  public resizeCheck;
 
   public hardCodeURL; // = 'https://fthmb.tqn.com/M1ISdSdfLsU36nAuILe3YlFcY1w=/400x400/filters:fill(auto,1)/success-56a9fd1f3df78cf772abee09.jpg';
 
@@ -29,25 +30,35 @@ export class FunctionBarComponent {
     this.sWidth = newWidth;
   }
 
-  uploadUrl(value: string, resize: boolean): void {
-    this.parent.uploadImgUrl(value, resize);
+  uploadUrl(): void {
+    const url = this.urlIn.nativeElement.value;
+    this.parent.uploadImgUrl(url, this.resizeCheck);
   }
 
-  addTxt() {
-    this.parent.addTxt();
+  addTxt(bold: boolean, italic: boolean, underline: boolean) {
+    this.parent.addTxt(bold, italic, underline);
   }
 
   moveObj(val: number) {
     this.parent.moveObj(val);
   }
 
+  viewAll() {
+    console.log(this.parent.viewAllObjs());
+  }
+
   clear() {
     this.parent.clear();
   }
 
+  toggleSize() {
+    this.resizeCheck = !this.resizeCheck;
+  }
+
+
   initBar(par: CreationComponent, size: [number, number]): void {
+    this.resizeCheck = true;
     this.parent = par;
     this.setSize(size);
-    this.resize = true;
   }
 }

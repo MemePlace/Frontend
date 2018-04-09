@@ -18,6 +18,7 @@ export class FabricComponent {
   public height: number; width: number;
   private zoomVal: number; scaledHeight: number; scaledWidth: number;
 
+
   constructor() { }
 
   initCanv(par: CreationComponent, h: number, w: number) {
@@ -94,6 +95,12 @@ export class FabricComponent {
     this.canvas.sendToBack(this.canvas.getActiveObject());
   }
 
+  getObjects() {
+    console.log('reached');
+    console.log(this.canvas.getObjects());
+    this.canvas.getObjects();
+  }
+
 
   upImg(targeturl: string, resize: boolean) {
     const add = (obj: fabric.Object) => (this.canvas.add(obj));
@@ -114,10 +121,20 @@ export class FabricComponent {
     });
   }
 
-  addTxt() {
-    const fabTxt = new fabric.IText('New Text');
-    this.canvas.add(fabTxt);
-    this.canvas.centerObject(fabTxt);
+  addTxt(bold: boolean, italic: boolean, underline: boolean) {
+    const newTxt = new fabric.Textbox('New Text');
+    if (bold) {
+      newTxt.set('fontWeight', 'bold');
+    }
+    if (italic) {
+      newTxt.set('fontStyle', 'italic');
+    }
+
+
+
+    this.canvas.add(newTxt);
+    this.canvas.centerObject(newTxt);
+    this.canvas.requestRenderAll();
   }
 
   delete() {
