@@ -6,3 +6,8 @@
 .little-spacer {
   margin: 0 8px 0 8px;
 }
+
+
+.cdk-overlay-container .mat-menu-panel {
+  max-width: 560px !important;
+}

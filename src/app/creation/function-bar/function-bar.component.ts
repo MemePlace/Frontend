@@ -1,11 +1,12 @@
-import {Component, EventEmitter, Input, Output, ViewChild} from '@angular/core';
+import {Component, ViewEncapsulation} from '@angular/core';
 import {CreationComponent} from '../creation.component';
-import {MatCheckbox} from '@angular/material';
+
 
 @Component({
   selector: 'app-function-bar',
   templateUrl: './function-bar.component.html',
-  styleUrls: ['./function-bar.component.scss']
+  styleUrls: ['./function-bar.component.scss'],
+  encapsulation: ViewEncapsulation.None,
 })
 
 export class FunctionBarComponent {
@@ -13,7 +14,7 @@ export class FunctionBarComponent {
   private sHeight: number; sWidth: number;
   private resize = true;
 
-  public hardCodeURL = 'https://fthmb.tqn.com/M1ISdSdfLsU36nAuILe3YlFcY1w=/400x400/filters:fill(auto,1)/success-56a9fd1f3df78cf772abee09.jpg';
+  public hardCodeURL; // = 'https://fthmb.tqn.com/M1ISdSdfLsU36nAuILe3YlFcY1w=/400x400/filters:fill(auto,1)/success-56a9fd1f3df78cf772abee09.jpg';
 
 
   constructor() { }
@@ -32,14 +33,14 @@ export class FunctionBarComponent {
     this.parent.uploadImgUrl(value, resize);
   }
 
+  moveObj(val: number) {
+    this.parent.moveObj(val);
+  }
+
 
   initBar(par: CreationComponent, size: [number, number]): void {
     this.parent = par;
     this.setSize(size);
     this.resize = true;
-  }
-
-  checkBox(val) {
-    this.resize = val;
   }
 }

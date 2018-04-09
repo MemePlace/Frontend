@@ -27,7 +27,9 @@ export class FabricComponent {
     this.scaledHeight = h;
     this.scaledWidth = w;
     this.parent = par;
-    this.canvas = new fabric.Canvas('fabric', {});
+    this.canvas = new fabric.Canvas('fabric', {
+      preserveObjectStacking: true
+    });
     this.setSize([h, w]);
   }
 
@@ -61,6 +63,22 @@ export class FabricComponent {
     this.setZoom(1);
   }
 
+  moveFront() {
+    this.canvas.bringToFront(this.canvas.getActiveObject());
+  }
+
+  moveForward() {
+    this.canvas.bringForward(this.canvas.getActiveObject());
+  }
+
+  moveBackward() {
+    this.canvas.sendBackwards(this.canvas.getActiveObject());
+  }
+
+  moveBottom() {
+    this.canvas.sendToBack(this.canvas.getActiveObject());
+  }
+
 
   upImg(targeturl: string, resize: boolean) {
     const add = (obj: fabric.Object) => (this.canvas.add(obj));
@@ -71,6 +89,7 @@ export class FabricComponent {
         alert('Better error handling needed');
         throw new Error('Failed Image Load');
       } else {
+        console.log('not an err');
         const image = new fabric.Image(oImg);
         if (resize) {
           setSize([image.height, image.width]);
@@ -78,6 +97,15 @@ export class FabricComponent {
         add(image);
       }
     });
+  }
+
+  addText() {
+    const fabTxt = new fabric.IText("New Text");
+    this.canvas.add(fabTxt);
+  }
+
+  clearCanvas() {
+    this.canvas.clear();
   }
 
 

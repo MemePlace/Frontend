@@ -1,59 +1,114 @@
-<mat-accordion>
+<mat-divider></mat-divider>
+<button mat-raised-button [matMenuTriggerFor]="size" matTooltip="Adjust Size">
+  <mat-icon>zoom_out_map</mat-icon>
+</button>
+<mat-divider></mat-divider>
+<button mat-raised-button [matMenuTriggerFor]="load" matTooltip="Load Image">
+  <mat-icon>insert_photo</mat-icon>
+</button>
+<mat-divider></mat-divider>
+<button mat-raised-button [matMenuTriggerFor]="text" matTooltip="Add New Text">
+  <mat-icon>text_fields</mat-icon>
+</button>
+<mat-divider></mat-divider>
+<button mat-raised-button [matMenuTriggerFor]="objects" matTooltip="Object Options">
+  <mat-icon>touch_app</mat-icon>
+</button>
+<mat-divider></mat-divider>
 
-  <mat-expansion-panel>
-    <mat-expansion-panel-header>
-      <mat-panel-title>
-        Set Size
-      </mat-panel-title>
-      <mat-panel-description>
-        {{sHeight}} x {{sWidth}}
-      </mat-panel-description>
-    </mat-expansion-panel-header>
 
-    <form id="newSize">
-      <mat-action-row>
-        <mat-form-field  class="sizeInput">
-          <input matInput #height type="number" placeholder="Height" value="{{sHeight}}">
-        </mat-form-field>
-        <mat-form-field  class="sizeInput">
-          <input matInput #width type="number" placeholder="Width" value="{{sWidthsWidth}}">
-        </mat-form-field>
-        <span class="little-spacer"></span>
-        <button mat-raised-button color="accent" (click)="changeSize([height.value, width.value])">Submit</button>
+
+<mat-menu #size="matMenu" [overlapTrigger]="false">
+  <span mat-menu-item [disableRipple]="true" (click)="$event.stopPropagation()">
+  <form id="newSize">
+    <mat-action-row>
+      <mat-form-field class="sizeInput">
+        <input matInput #height type="number" placeholder="Height" value="{{sHeight}}">
+      </mat-form-field>
+      <mat-form-field class="sizeInput">
+        <input matInput #width type="number" placeholder="Width" value="{{sWidth}}">
+      </mat-form-field>
+      <button mat-raised-button color="accent" (click)="changeSize([height.value, width.value])">Submit</button>
+    </mat-action-row>
+  </form>
+  </span>
+</mat-menu>
+
+<mat-menu #load="matMenu" [overlapTrigger]="false">
+  <span (click)="$event.stopPropagation()">
+    <form>
+      <mat-action-row mat-menu-item [disableRipple]="true">
+        <input matInput #imgURL type="url" placeholder="Please enter a URL..." value="{{hardCodeURL}}">
       </mat-action-row>
-    </form>
-  </mat-expansion-panel>
-
-
-  <mat-expansion-panel>
-    <mat-expansion-panel-header>
-      <mat-panel-title>
-        Load Image
-      </mat-panel-title>
-    </mat-expansion-panel-header>
-
-    <form id="uploadImg">
-      <mat-action-row>
-        <input matInput #imgURL type="url" placeholder="URL" value="{{hardCodeURL}}">
-      </mat-action-row>
-      <mat-action-row>
+      <mat-divider></mat-divider>
+      <mat-action-row mat-menu-item [disableRipple]="true">
         <input #fileIn type="file">
       </mat-action-row>
-      <mat-action-row>
-        <button mat-raised-button color="accent" >Upload File</button>
-        <span class="little-spacer"></span>
+      <mat-divider></mat-divider>
+      <mat-action-row mat-menu-item [disableRipple]="true">
+        <button mat-raised-button color="accent">Upload File</button>
         <button mat-raised-button color="accent" (click)="uploadUrl(imgURL.value, resize.checked)">URL</button>
       </mat-action-row>
-      <mat-checkbox #resize [checked]="true">Fit to Image?</mat-checkbox>
+      <span mat-menu-item [disableRipple]="true">
+        <mat-checkbox #resize [checked]="true">Fit to Image?</mat-checkbox>
+      </span>
     </form>
-  </mat-expansion-panel>
+  </span>
+</mat-menu>
 
 
-  <mat-expansion-panel>
-    <mat-expansion-panel-header>
-      <mat-panel-title>
-        Add Text
-      </mat-panel-title>
-    </mat-expansion-panel-header>
-  </mat-expansion-panel>
-</mat-accordion>
+<mat-menu #text="matMenu" [overlapTrigger]="false">
+  <span (click)="$event.stopPropagation()">
+    <form>
+      <mat-action-row mat-menu-item [disableRipple]="true">
+        <button mat-raised-button mat-icon-button><mat-icon>bold</mat-icon></button>
+        <button mat-raised-button mat-icon-button><mat-icon>italic</mat-icon></button>
+        <button mat-raised-button mat-icon-button><mat-icon>underline</mat-icon></button>
+      </mat-action-row>
+      <mat-divider></mat-divider>
+      <mat-action-row mat-menu-item [disableRipple]="true">
+        <input #fileIn type="file">
+      </mat-action-row>
+      <mat-divider></mat-divider>
+      <mat-action-row mat-menu-item [disableRipple]="true">
+        <button mat-raised-button color="accent">Upload File</button>
+        <button mat-raised-button color="accent" (click)="uploadUrl(imgURL.value, resize.checked)">URL</button>
+      </mat-action-row>
+      <span mat-menu-item [disableRipple]="true">
+        <mat-checkbox #resize [checked]="true">Fit to Image?</mat-checkbox>
+      </span>
+    </form>
+  </span>
+</mat-menu>
+
+<mat-menu #objects="matMenu" [overlapTrigger]="false">
+  <span (click)="$event.stopPropagation()">
+    <form>
+      <mat-action-row mat-menu-item [disableRipple]="true">
+        <input matInput #imgURL type="url" placeholder="Please enter a URL..." value="{{hardCodeURL}}">
+      </mat-action-row>
+      <mat-divider></mat-divider>
+      <mat-action-row mat-menu-item [disableRipple]="true">
+        <input #fileIn type="file">
+      </mat-action-row>
+      <mat-divider></mat-divider>
+      <mat-action-row mat-menu-item [disableRipple]="true">
+        <button mat-raised-button color="accent">Upload File</button>
+        <button mat-raised-button color="accent" (click)="uploadUrl(imgURL.value, resize.checked)">URL</button>
+      </mat-action-row>
+      <span mat-menu-item [disableRipple]="true">
+        <mat-checkbox #resize [checked]="true">Fit to Image?</mat-checkbox>
+      </span>
+    </form>
+  </span>
+</mat-menu>
+
+
+
+<!--
+
+<button mat-button (click)="parent.debug1()">Debug1</button>
+<button mat-button (click)="parent.debug2()">Debug2</button>
+<button mat-button (click)="parent.debug3()">Debug3</button>
+
+-->
