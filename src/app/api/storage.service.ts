@@ -1,40 +1,50 @@
 import { Injectable } from '@angular/core';
 
+export enum StorageType {
+  local,
+  session
+}
+
+const typeMap = {
+  [StorageType.local]: localStorage,
+  [StorageType.session]: sessionStorage
+};
+
 @Injectable()
 export class StorageService {
 
   constructor() { }
 
-  get(key: string) {
-    return localStorage.getItem(key);
+  get(type: StorageType, key: string) {
+    return typeMap[type].getItem(key);
   }
 
-  getJSON(key: string): {} {
+  getJSON(type: StorageType, key: string): {} {
     try {
-      return JSON.parse(localStorage.getItem(key));
+      return JSON.parse(typeMap[type].getItem(key));
     }
     catch(e) {
       return null;
     }
   }
 
-  set(key: string, value: string) {
-    localStorage.setItem(key, value);
+  set(type: StorageType, key: string, value: string) {
+    typeMap[type].setItem(key, value);
   }
 
-  setJSON(key: string, value: {}) {
-    localStorage.setItem(key, JSON.stringify(value));
+  setJSON(type: StorageType, key: string, value: {}) {
+    typeMap[type].setItem(key, JSON.stringify(value));
   }
 
-  exists(key: string) {
-    return localStorage.getItem(key) !== null;
+  exists(type: StorageType, key: string) {
+    return typeMap[type].getItem(key) !== null;
   }
 
-  remove(key: string) {
-    localStorage.removeItem(key);
+  remove(type: StorageType, key: string) {
+    typeMap[type].removeItem(key);
   }
 
-  clear() {
-    localStorage.clear();
+  clear(type: StorageType) {
+    typeMap[type].clear();
   }
 }
