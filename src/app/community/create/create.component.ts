@@ -42,7 +42,7 @@ export class CreateComponent {
           }
         }).catch((err) => resolve(null));
       }, 250);
-    })
+    });
   }
 
   onCreateCommunity() {
