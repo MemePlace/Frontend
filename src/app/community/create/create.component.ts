@@ -19,8 +19,9 @@ export class CreateComponent {
     this.form = this.fb.group({
       name: ['', [Validators.required, Validators.minLength(3)], [this.nameExists.bind(this)]],
       title: ['', Validators.required],
-      description: [''],
-      sidebar: [''],
+      description: '',
+      sidebar: '',
+      nsfw: false
     });
 
     console.log(this.form);
@@ -44,5 +45,6 @@ export class CreateComponent {
 
   onCreateCommunity() {
     // pass nameText, titleText, and descriptionText to server
+    console.log(this.form.value);
   }
 }
