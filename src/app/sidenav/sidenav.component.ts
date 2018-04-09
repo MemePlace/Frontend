@@ -51,10 +51,6 @@ export class SidenavComponent implements OnInit {
     this.sidenav.toggle();
   }
 
-  sortInt(a, b) {
-    return a - b;
-  }
-
   toggleFavourite(community: any) {
     if (community.isFavourited === false) {
       community.isFavourited = true;
