@@ -6,16 +6,16 @@
       <mat-divider></mat-divider>
       <mat-list-item *ngFor="let communityFav of communitiesFavourited; let j = index">
         <a mat-line *ngIf="communityFav.isFavourited" [routerLink]="['/']">
-           {{ communityFav.communityname }}
+           {{ communityFav.title }}
         </a>
         <button mat-icon-button (click)="toggleFavourite(communityFav)" ><mat-icon class="Favourited">star</mat-icon></button>
       </mat-list-item>
       <mat-divider></mat-divider>
       <mat-list-item *ngFor="let community of communities">
-        <a mat-line [routerLink]="['/']">
-           {{ community.communityname }}
+        <a mat-line *ngIf="!community.isFavourited" [routerLink]="['/']">
+           {{ community.title }}
         </a>
-        <button mat-icon-button (click)="toggleFavourite(community)"><mat-icon [style.color]="community.isFavourited ? '#FFD700': ''">star_border</mat-icon></button>
+        <button mat-icon-button (click)="toggleFavourite(community)"><mat-icon>star_border</mat-icon></button>
       </mat-list-item>
     </mat-nav-list>
   </mat-sidenav>
