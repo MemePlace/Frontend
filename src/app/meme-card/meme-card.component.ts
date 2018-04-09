@@ -1,8 +1,8 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {UserService} from '../api/user.service';
 import {Utils} from '../utils';
-import {MatDialog, MatSnackBar} from '@angular/material';
-import {MemeDialogComponent} from "../meme-dialog/meme-dialog.component";
+import { MatDialog, MatDialogRef, MatDialogModule, MatSnackBar} from '@angular/material';
+import {MemeDialogComponent} from '../meme-dialog/meme-dialog.component';
 
 @Component({
   selector: 'app-meme-card',

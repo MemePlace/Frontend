@@ -5,6 +5,8 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
 import {MaterialModule} from './material/material.module';
+import {MatDialogModule} from '@angular/material';
+import {MatSnackBarModule} from '@angular/material';
 import {SidenavComponent} from './sidenav/sidenav.component';
 import {HeaderComponent} from './header/header.component';
 import {CommunityModule} from './community/community.module';
@@ -23,11 +25,14 @@ import {MemeDialogComponent} from './meme-dialog/meme-dialog.component';
     BrowserAnimationsModule,
     AppRoutingModule,
     MaterialModule,
+    MatDialogModule,
+    MatSnackBarModule,
     CommunityModule,
     ApiModule,
     FormsModule,
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents: [MemeDialogComponent],
 })
 export class AppModule { }
