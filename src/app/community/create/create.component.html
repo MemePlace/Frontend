@@ -2,32 +2,38 @@
   <mat-card-title>Community Creation</mat-card-title>
 
   <mat-card-content>
-    <mat-form-field id="communityNameField">
-      <input matInput placeholder="Name (shorthand form, used in URL)" [formControl]="nameFormControl" [(ngModel)]="nameText" maxlength="25" >
-      <mat-error *ngIf="nameFormControl.hasError('required')">
-        Name is <strong>required</strong>
-      </mat-error>
-    </mat-form-field>
+    <form [formGroup]="form">
+      <mat-form-field>
+        <input matInput type="text" placeholder="Name (shorthand form, used in URL)" formControlName="name" maxlength="25" >
+        <mat-error *ngIf="form.get('name').hasError('required')">
+          Name is <strong>required</strong>
+        </mat-error>
+        <mat-error *ngIf="form.get('name').hasError('minlength')">
+          Name must be at least 3 characters
+        </mat-error>
+        <mat-hint *ngIf="form.get('name').valid">meme.place/p/{{form.get('name').value}}</mat-hint>
+      </mat-form-field>
 
-    <mat-form-field id="communityTitleField">
-      <input matInput placeholder="Title" [formControl]="titleFormControl" [(ngModel)]="titleText" maxlength="100">
-      <mat-error *ngIf="titleFormControl.hasError('required')">
-        Community Title is <strong>required</strong>
-      </mat-error>
-    </mat-form-field>
+      <mat-form-field>
+        <input matInput placeholder="Title" formControlName="title" maxlength="100">
+        <mat-error *ngIf="form.get('title').hasError('required')">
+          Community Title is <strong>required</strong>
+        </mat-error>
+      </mat-form-field>
 
-    <mat-form-field id="comDescriptionField">
-      <textarea matInput placeholder="Description" [(ngModel)] = "descriptionText" rows="10"></textarea>
-    </mat-form-field>
+      <mat-form-field>
+        <textarea matInput placeholder="Description" formControlName="description" rows="3"></textarea>
+      </mat-form-field>
 
-    <mat-form-field id="sidebarTextField">
-      <input matInput placeholder="Sidebar Message" [(ngModel)]="sidebarText" maxlength="300">
-    </mat-form-field>
+      <mat-form-field>
+        <input matInput placeholder="Sidebar Message" formControlName="sidebar" maxlength="300">
+      </mat-form-field>
 
+       <mat-checkbox matTooltip="Not Suitable for Work">NSFW</mat-checkbox>
+    </form>
   </mat-card-content>
 
   <mat-card-actions>
-    <mat-checkbox [(ngModel)]="NSFW_checked">NSFW</mat-checkbox>
     <button mat-raised-button id="submitButton" color="primary" (click)="onCreateCommunity()"
             [disabled]="!(!nameFormControl.hasError('required') && !titleFormControl.hasError('required'))">Create Community</button>
   </mat-card-actions>

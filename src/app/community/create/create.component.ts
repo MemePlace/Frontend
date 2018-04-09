@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, Validators } from '@angular/forms';
+import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 
 @Component({
   selector: 'app-community-create',
@@ -7,12 +7,6 @@ import { FormControl, Validators } from '@angular/forms';
   styleUrls: ['./create.component.scss']
 })
 export class CreateComponent implements OnInit {
-  nameText: string;
-  titleText: string;
-  descriptionText: string;
-  sidebarText: string;
-  NSFW_checked: false;
-
   nameFormControl = new FormControl('', [
     Validators.required,
   ]);
@@ -21,7 +15,22 @@ export class CreateComponent implements OnInit {
     Validators.required,
   ]);
 
-  constructor() { }
+  form: FormGroup;
+
+  constructor(private fb: FormBuilder) {
+    this.createForm();
+  }
+
+  createForm() {
+    this.form = this.fb.group({
+      name: ['', [Validators.required, Validators.minLength(3)]],
+      title: ['', Validators.required],
+      description: [''],
+      sidebar: [''],
+    });
+
+    console.log(this.form);
+  }
 
   ngOnInit() {
   }
