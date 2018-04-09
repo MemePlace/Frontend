@@ -33,10 +33,17 @@ export class FunctionBarComponent {
     this.parent.uploadImgUrl(value, resize);
   }
 
+  addTxt() {
+    this.parent.addTxt();
+  }
+
   moveObj(val: number) {
     this.parent.moveObj(val);
   }
 
+  clear() {
+    this.parent.clear();
+  }
 
   initBar(par: CreationComponent, size: [number, number]): void {
     this.parent = par;

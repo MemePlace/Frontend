@@ -46,6 +46,18 @@ export class CreationComponent implements OnInit {
     }
   }
 
+  delete() {
+    this.fab.delete();
+  }
+
+  addTxt() {
+    this.fab.addTxt();
+  }
+
+  clear() {
+    this.fab.clearCanvas();
+  }
+
   moveObj(to: number) {
     if (to === 2) {
       this.fab.moveFront();
@@ -58,7 +70,14 @@ export class CreationComponent implements OnInit {
     }
   }
 
-  constructor() { }
+  constructor() {
+    const myDel = () => (this.delete());
+    document.addEventListener('keypress', function(e: KeyboardEvent) {
+      if (document.activeElement.id === 'canvCont' && e.key === 'Delete') {
+        myDel();
+      }
+    });
+  }
 
   ngOnInit() {
     this.zoomVal = 1;
@@ -82,7 +101,6 @@ export class CreationComponent implements OnInit {
   }
 
   debug4() {
-    alert('it works');
   }
 
 }

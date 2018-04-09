@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, ViewChild} from '@angular/core';
 import 'fabric';
 import {Canvas} from 'fabric/fabric-impl';
 import {CreationComponent} from '../creation.component';
@@ -18,7 +18,7 @@ export class FabricComponent {
   public height: number; width: number;
   private zoomVal: number; scaledHeight: number; scaledWidth: number;
 
-  constructor() {}
+  constructor() { }
 
   initCanv(par: CreationComponent, h: number, w: number) {
     this.height = h;
@@ -30,8 +30,23 @@ export class FabricComponent {
     this.canvas = new fabric.Canvas('fabric', {
       preserveObjectStacking: true
     });
+
     this.setSize([h, w]);
+
+    this.canvas.on('selection:created', function(e) {
+      console.log('created event happened: ' + e);
+    });
+
+    this.canvas.on('selection:updated', function(e) {
+      console.log('update event happened: ' + e);
+    });
+
+    this.canvas.on('selection:cleared', function(e) {
+      console.log('cleared event happened: ' + e);
+    });
   }
+
+
 
 
   setSize([nheight, nwidth]: [number, number]) {
@@ -99,15 +114,25 @@ export class FabricComponent {
     });
   }
 
-  addText() {
-    const fabTxt = new fabric.IText("New Text");
+  addTxt() {
+    const fabTxt = new fabric.IText('New Text');
     this.canvas.add(fabTxt);
+    this.canvas.centerObject(fabTxt);
+  }
+
+  delete() {
+    let obj: fabric.Object;
+    obj = this.canvas.getActiveObject();
+    if (obj) {
+      this.canvas.remove(obj);
+    }
   }
 
   clearCanvas() {
     this.canvas.clear();
   }
 
-
-
+  keyHit(e) {
+    console.log('key: hit');
+  }
 }

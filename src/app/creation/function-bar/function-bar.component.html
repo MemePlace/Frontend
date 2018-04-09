@@ -1,21 +1,72 @@
-<mat-divider></mat-divider>
-<button mat-raised-button [matMenuTriggerFor]="size" matTooltip="Adjust Size">
-  <mat-icon>zoom_out_map</mat-icon>
-</button>
-<mat-divider></mat-divider>
-<button mat-raised-button [matMenuTriggerFor]="load" matTooltip="Load Image">
-  <mat-icon>insert_photo</mat-icon>
-</button>
-<mat-divider></mat-divider>
-<button mat-raised-button [matMenuTriggerFor]="text" matTooltip="Add New Text">
-  <mat-icon>text_fields</mat-icon>
-</button>
-<mat-divider></mat-divider>
-<button mat-raised-button [matMenuTriggerFor]="objects" matTooltip="Object Options">
-  <mat-icon>touch_app</mat-icon>
-</button>
-<mat-divider></mat-divider>
+<mat-list dense>
+  <mat-list-item>
+    <button mat-raised-button [matMenuTriggerFor]="size" matTooltip="Adjust Size">
+      <mat-icon>arrow_drop_down</mat-icon>
+      <mat-icon>zoom_out_map</mat-icon>
+    </button>
+  </mat-list-item>
 
+  <mat-list-item>
+    <button mat-raised-button [matMenuTriggerFor]="load" matTooltip="Load Image">
+      <mat-icon>arrow_drop_down</mat-icon>
+      <mat-icon>insert_photo</mat-icon>
+    </button>
+  </mat-list-item>
+
+  <mat-list-item>
+    <button mat-raised-button [matMenuTriggerFor]="text" matTooltip="Add New Text">
+      <mat-icon>arrow_drop_down</mat-icon>
+      <mat-icon>text_fields</mat-icon>
+    </button>
+  </mat-list-item>
+
+  <mat-list-item>
+    <button mat-raised-button [matMenuTriggerFor]="objects" matTooltip="Object Options">
+      <mat-icon>arrow_drop_down</mat-icon>
+      <mat-icon>touch_app</mat-icon>
+    </button>
+  </mat-list-item>
+
+  <mat-list-item>
+    <button mat-raised-button matTooltip="Move Selection Up A Layer">
+      <mat-icon>expand_less</mat-icon>
+    </button>
+  </mat-list-item>
+
+  <mat-list-item>
+    <button mat-raised-button matTooltip="View All Layers">
+      <mat-icon>menu</mat-icon>
+    </button>
+  </mat-list-item>
+
+  <mat-list-item>
+    <button mat-raised-button matTooptip="Move Selection Down A Layer">
+      <mat-icon>expand_more</mat-icon>
+    </button>
+  </mat-list-item>
+
+  <mat-list-item>
+    <button mat-raised-button matTooltip="Select All">
+      <mat-icon>select_all</mat-icon>
+    </button>
+  </mat-list-item>
+
+  <mat-list-item>
+    <button mat-raised-button matTooltip="Download">
+      <mat-icon>get_app</mat-icon>
+    </button>
+  </mat-list-item>
+
+
+
+  <mat-list-item>
+    <button mat-raised-button color="warn" matTooltip="Clear All" (click)="clear()">
+      <mat-icon>delete</mat-icon>
+    </button>
+  </mat-list-item>
+
+
+</mat-list>
 
 
 <mat-menu #size="matMenu" [overlapTrigger]="false">
@@ -59,20 +110,34 @@
 
 <mat-menu #text="matMenu" [overlapTrigger]="false">
   <span (click)="$event.stopPropagation()">
+          <mat-button-toggle-group mat-menu-item [disableRipple]="true">
+        <mat-button-toggle value="left">
+          <mat-icon>format_align_left</mat-icon>
+        </mat-button-toggle>
+        <mat-button-toggle value="center">
+          <mat-icon>format_align_center</mat-icon>
+        </mat-button-toggle>
+        <mat-button-toggle value="right">
+          <mat-icon>format_align_right</mat-icon>
+        </mat-button-toggle>
+        <mat-button-toggle value="justify">
+          <mat-icon>format_align_justify</mat-icon>
+        </mat-button-toggle>
+      </mat-button-toggle-group>
+    <mat-divider></mat-divider>
     <form>
-      <mat-action-row mat-menu-item [disableRipple]="true">
-        <button mat-raised-button mat-icon-button><mat-icon>bold</mat-icon></button>
-        <button mat-raised-button mat-icon-button><mat-icon>italic</mat-icon></button>
-        <button mat-raised-button mat-icon-button><mat-icon>underline</mat-icon></button>
-      </mat-action-row>
+      <mat-button-toggle-group multiple mat-menu-item [disableRipple]="true">
+        <mat-button-toggle><mat-icon>format_bold</mat-icon></mat-button-toggle>
+        <mat-button-toggle><mat-icon>format_italic</mat-icon></mat-button-toggle>
+        <mat-button-toggle><mat-icon>format_underline</mat-icon></mat-button-toggle>
+      </mat-button-toggle-group>
+
+      <mat-divider></mat-divider>
+
+
       <mat-divider></mat-divider>
       <mat-action-row mat-menu-item [disableRipple]="true">
-        <input #fileIn type="file">
-      </mat-action-row>
-      <mat-divider></mat-divider>
-      <mat-action-row mat-menu-item [disableRipple]="true">
-        <button mat-raised-button color="accent">Upload File</button>
-        <button mat-raised-button color="accent" (click)="uploadUrl(imgURL.value, resize.checked)">URL</button>
+        <button mat-raised-button color="accent" (click)="addTxt()">Add New Text</button>
       </mat-action-row>
       <span mat-menu-item [disableRipple]="true">
         <mat-checkbox #resize [checked]="true">Fit to Image?</mat-checkbox>
@@ -102,6 +167,12 @@
     </form>
   </span>
 </mat-menu>
+
+
+
+
+
+
 
 
 
