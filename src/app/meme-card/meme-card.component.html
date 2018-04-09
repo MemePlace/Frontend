@@ -10,7 +10,7 @@
     <div class="cardActionButtons">
       <!-- Up vote button -->
       <button mat-icon-button (click)="onClickUpVote()" [color]="voted == 1 ? 'primary': 'basic'"><i class="material-icons">thumb_up</i></button>
-      <span>{{voteCount}}</span>
+      <span>{{totalVote}}</span>
       <!-- Down vote button -->
       <button mat-icon-button (click)="onClickDownVote()" [color]="voted == -1 ? 'warn': 'basic'"><i class="material-icons">thumb_down</i></button>
     </div>

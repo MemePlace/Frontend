@@ -13,12 +13,18 @@ export class MemeCardComponent implements OnInit {
   @Input() image: string;
   @Input() memeId: string;
 
-  voteCount = 0;
+  totalVote = 0;
   voted = 0;
 
   constructor(private memeService: MemeService) { }
 
   ngOnInit() {
+    this.memeService.getMemeDetails(parseInt(this.memeId)).then((meme) => {
+      this.totalVote = meme.totalVote;
+      if (meme.myVote) {
+        this.voted =  meme.myVote["diff"];
+      }
+    });
   }
 
   maxCardWidth(height: number): number {
@@ -45,38 +51,48 @@ export class MemeCardComponent implements OnInit {
     }
   }
 
+  onClickMeme() {
+    // TODO
+  }
+
   onClickUpVote() {
-    //this.voteCount -= this.voted; // negate a previous vote
-
-    const result = this.memeService.upvoteMeme(parseInt(this.memeId));
-
-    this.voted = result['diff'];
-    this.voteCount = result['diff'];
-
-    // if (this.voted !== 1) {
-    //   this.voteCount++;
-    //   this.voted = 1;
-    // } else {
-    //   this.voted = 0;
-    // }
+    if (this.voted === 1){
+      this.memeService.deleteMemeVote(parseInt(this.memeId)).then((value) => {
+        this.voted = value;
+        this.memeService.updateMemeVote(parseInt(this.memeId)).then((value) => {
+          this.totalVote = value;
+        });
+      })
+    }else{
+      this.memeService.upvoteMeme(parseInt(this.memeId)).then((memeVote) => {
+        this.voted = memeVote.diff;
+        this.memeService.updateMemeVote(parseInt(this.memeId)).then((value) => {
+          this.totalVote = value;
+        });
+      }).catch((err) => {
+        console.log(err.toString());
+      });
+    }
   }
 
   onClickDownVote() {
-    //this.voteCount -= this.voted; // negate a previous vote
-
-    const result = this.memeService.downvoteMeme(parseInt(this.memeId));
-
-    console.log(result);
-
-    this.voted = result['diff'];
-    this.voteCount = result['diff'];
-
-    // if (this.voted !== -1) {
-    //   this.voteCount--;
-    //   this.voted = -1;
-    // } else {
-    //   this.voted = 0;
-    // }
+    if (this.voted === -1) {
+      this.memeService.deleteMemeVote(parseInt(this.memeId)).then((value) => {
+        this.voted = 0;
+        this.memeService.updateMemeVote(parseInt(this.memeId)).then((value) => {
+          this.totalVote = value;
+        });
+      })
+    }else{
+      this.memeService.downvoteMeme(parseInt(this.memeId)).then((memeVote) => {
+        this.voted = memeVote.diff;
+        this.memeService.updateMemeVote(parseInt(this.memeId)).then((value) => {
+          this.totalVote = value;
+        });
+      }).catch((err) => {
+        console.log(err.toString());
+      });
+    }
   }
 
 }

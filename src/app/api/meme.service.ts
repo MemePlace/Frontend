@@ -9,7 +9,13 @@ export interface Meme {
   TemplateId: number,
   CommunityId: number,
   updatedAt: string,
-  createdAt: string
+  createdAt: string,
+  creator: {
+    username: string,
+  }
+  Community: string,
+  totalVote: number,
+  myVote: number
 }
 
 export interface MemeVote {
@@ -53,9 +59,9 @@ export class MemeService {
    * Gets a meme's detail using the meme's id
    * @param {number} memeId
    */
-  getMemeDetails(memeId: number) {
-    return this.baseApiService.get(Version.v1, `memes/${memeId}`).then( (value:({}|null)) => {
-      return value;
+  getMemeDetails(memeId: number): Promise<Meme> {
+    return this.baseApiService.get(Version.v1, `memes/${memeId}`).then( (meme: Meme) => {
+      return meme;
     });
   }
 
@@ -89,7 +95,7 @@ export class MemeService {
    */
   deleteMemeVote(memeId: number) {
     return this.baseApiService.delete(Version.v1, `memes/${memeId}/vote`).then((value:({}|void)) => {
-      console.log(value);
+      return 0;
     });
   }
 
@@ -99,8 +105,18 @@ export class MemeService {
    */
   deleteMeme(memeId: number) {
     return this.baseApiService.delete(Version.v1, `memes/${memeId}`).then((value:({}|void)) => {
-      console.log(value);
+      return value;
     });
+  }
+
+  updateMemeVote(memeId: number) {
+    return this.baseApiService.get(Version.v1, `memes/${memeId}/vote`).then((value: (number)) => {
+      console.log(value);
+      return value;
+    }).catch((err) => {
+      console.log(err.toString());
+      return 0;
+    })
   }
 
 }
