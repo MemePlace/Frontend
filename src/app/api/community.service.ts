@@ -8,6 +8,7 @@ export interface Community {
   sidebar?: string;
   nsfw?: boolean;
   creatorId: number;
+  isFavourited?: boolean;
 }
 
 export interface CommunityList {
