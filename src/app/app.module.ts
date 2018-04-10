@@ -30,7 +30,7 @@ import {MemeDialogComponent} from './meme-dialog/meme-dialog.component';
     ApiModule,
     FormsModule,
   ],
-  providers: [],
+  providers: [MemeDialogComponent],
   bootstrap: [AppComponent],
   entryComponents: [MemeDialogComponent],
 })

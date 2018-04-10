@@ -1,6 +1,6 @@
 <mat-card class="meme-card">
   <button mat-button (click)="dialogPage()">
-    <img class="meme-img" [style.height.px]="checkHeight(imageHeight)" [style.minWidth.px]="minCardWidth(imageHeight)"
+    <img class="meme-img" [style.height.px]="checkHeight(imageHeight)" [style.minWidth.px]="minCardWidth()"
          [style.maxWidth.px]="maxCardWidth(imageHeight)" [src]="image">
   </button>
   <!-- Actions that are appended to the bottom of the card: show author name, up vote, down vote-->

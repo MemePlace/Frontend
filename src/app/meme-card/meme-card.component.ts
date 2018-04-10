@@ -1,7 +1,6 @@
-import {Component, ElementRef, Input, OnInit, Renderer2} from '@angular/core';
-import {UserService} from '../api/user.service';
+import {Component, ElementRef, Input, OnInit} from '@angular/core';
 import {Utils} from '../utils';
-import {MatDialog, MatSnackBar} from '@angular/material';
+import {MatDialog} from '@angular/material';
 import {MemeDialogComponent} from '../meme-dialog/meme-dialog.component';
 
 @Component({
@@ -18,25 +17,24 @@ export class MemeCardComponent implements OnInit {
   voted = 0;
 
   constructor(public dialog: MatDialog,
-              public element: ElementRef,
-              public renderer: Renderer2,
-              public userService: UserService,
-              public snackBar: MatSnackBar) {
+              public element: ElementRef) {
   }
 
   ngOnInit() {
   }
 
   dialogPage() {
-    const dialogRef = this.dialog.open(MemeDialogComponent);
-    const instance = dialogRef.componentInstance;
-    instance.imageHeight = this.imageHeight;
-    instance.username = this.username;
-    instance.image = this.image;
-    instance.parent = this;
-    instance.voteCount = this.voteCount;
-    instance.voted = this.voted;
-    this.element.nativeElement.blur();
+    if (!Utils.isMobile) {
+      const dialogRef = this.dialog.open(MemeDialogComponent);
+      const instance = dialogRef.componentInstance;
+      instance.username = this.username;
+      instance.image = this.image;
+      instance.parent = this;
+      instance.voteCount = this.voteCount;
+      instance.voted = this.voted;
+      // I want the card to lose focus after you click it but the following line doesn't seem to work
+      this.element.nativeElement.blur();
+    }
   }
 
   maxCardWidth(height: number): number {
@@ -47,7 +45,7 @@ export class MemeCardComponent implements OnInit {
     }
   }
 
-  minCardWidth(height: number): number {
+  minCardWidth(): number {
     if (Utils.isMobile) {
       return Utils.screenWidth * 0.95;
     } else {
