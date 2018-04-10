@@ -5,6 +5,7 @@ import { BaseApiService } from './base-api.service';
 import { UserService } from './user.service';
 import { CommunityService } from './community.service';
 import { SearchService } from './search.service';
+import { MemeService } from './meme.service';
 
 @NgModule({
   imports: [
@@ -14,6 +15,8 @@ import { SearchService } from './search.service';
   providers: [
     BaseApiService,
     UserService,
+    SearchService,
+    MemeService,
     CommunityService,
     SearchService
   ]
