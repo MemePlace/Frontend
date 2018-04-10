@@ -32,11 +32,11 @@ export class PageNotFoundComponent implements OnInit {
     if (c.width !== this.mainRef.nativeElement.offsetWidth) {
       c.width = this.mainRef.nativeElement.offsetWidth;
 
-      const columns = c.width / this.fontSize;
+      const columns = parseInt(c.width / this.fontSize, 10);
 
       this.drops = [];
       for (let x = 0; x < columns; x++) {
-        this.drops[x] = 1;
+        this.drops[x] = -1;
       }
     }
 
@@ -53,6 +53,11 @@ export class PageNotFoundComponent implements OnInit {
 
     for(let i = 0; i < this.drops.length; i++)
     {
+      if (this.drops[i] === -1 && Math.random() < 0.975) {
+        // When starting out, don't let all the characters fall at once
+        continue;
+      }
+
       const letter = this.characters[Math.floor(Math.random() * this.characters.length)];
       ctx.fillText(letter, i * this.fontSize, this.drops[i] * this.fontSize);
 
