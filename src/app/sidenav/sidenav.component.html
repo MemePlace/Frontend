@@ -11,12 +11,14 @@
         <button mat-icon-button (click)="toggleFavourite(communityFav)" ><mat-icon class="Favourited">star</mat-icon></button>
       </mat-list-item>
       <mat-divider></mat-divider>
-      <mat-list-item *ngFor="let community of communities">
-        <a mat-line *ngIf="!community.isFavourited" [routerLink]="['/']">
-           {{ community.title }}
-        </a>
-        <button mat-icon-button (click)="toggleFavourite(community)"><mat-icon>star_border</mat-icon></button>
-      </mat-list-item>
+      <ng-container *ngFor="let community of communities">
+        <mat-list-item *ngIf="!community.isFavourited">
+          <a mat-line [routerLink]="['/']">
+             {{ community.title }}
+          </a>
+          <button mat-icon-button (click)="toggleFavourite(community)"><mat-icon>star_border</mat-icon></button>
+        </mat-list-item>
+      </ng-container>
     </mat-nav-list>
   </mat-sidenav>
   <mat-sidenav-content>

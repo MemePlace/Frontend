@@ -1,16 +1,12 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {MatSidenav} from '@angular/material';
 import {Utils} from '../utils';
+import {CommunityService} from '../api/community.service';
+import {Community} from '../api/community.service';
+import { resolve, reject } from 'q';
 
-export interface Community {
-  name: string;
-  title: string;
-  description?: string;
-  sidebar?: string;
-  nsfw?: boolean;
-  creatorId: number;
+interface ICommunity extends Community {
   isFavourited: boolean;
-  favouriteCount: number;
 }
 
 @Component({
@@ -20,8 +16,8 @@ export interface Community {
 })
 export class SidenavComponent implements OnInit {
   @ViewChild('sidenav') sidenav: MatSidenav;
-  communities: Array<Community> = [];
-  communitiesFavourited: Array<Community> = [];
+  communities: Array<ICommunity> = [];
+  communitiesFavourited: Array<ICommunity> = [];
 
   get sidebarWidth(): number {
     return 300;
@@ -29,22 +25,22 @@ export class SidenavComponent implements OnInit {
 
   utils = Utils;
 
-  constructor() { }
+  constructor(private _CommunityService: CommunityService) { }
 
   ngOnInit() {
-    // populate 20 random communities
-    for (let i = 0; i < 20; i++) {
-      this.communities.push({
-        name: 'Community' + i,
-        title: 'Community ' + i,
-        creatorId: Math.floor(Math.random() * (100001)),
-        isFavourited: false,
-        favouriteCount: Math.floor(Math.random() * (101))});
-    }
-    for (const community of this.communities) {
-      if (community.isFavourited === true) { this.communitiesFavourited.push(community); }
-    }
-    this.communities.sort((a, b) => a.favouriteCount - b.favouriteCount);
+
+    this._CommunityService.getCommunities('top', 10, 0).then(
+      res => {
+        resolve(res);
+        this.communities = res.communities.map((entry: any) => {
+          entry.isFavourited = false;
+          return entry;
+        });
+      },
+      err => {
+        reject(err);
+      }
+    );
   }
 
   toggle() {
@@ -56,13 +52,8 @@ export class SidenavComponent implements OnInit {
       community.isFavourited = true;
       this.communitiesFavourited.push(community);
       this.communitiesFavourited.sort((a, b) => a.title.localeCompare(b.title));
-      this.communities = this.communities.filter((com) => {
-        return com !== community;
-      });
     } else {
       community.isFavourited = false;
-      this.communities.push(community);
-      this.communities.sort((a, b) => a.favouriteCount - b.favouriteCount);
       this.communitiesFavourited = this.communitiesFavourited.filter((com) => {
         return com !== community;
       });
