@@ -1,0 +1,25 @@
+img {
+  margin: 40px auto 0 auto;
+  position: relative;
+}
+
+.container {
+  background: black;
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+  text-align: center;
+  position: relative;
+  -ms-overflow-style: none;  // IE 10+
+  overflow: -moz-scrollbars-none;  // Firefox
+}
+
+.container::-webkit-scrollbar {
+  display: none;  // Safari and Chrome
+}
+
+#matrix {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%); // Center
+}
