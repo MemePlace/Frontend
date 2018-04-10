@@ -23,6 +23,23 @@ export class CreationComponent implements OnInit {
   ];
   private gifUrl = 'https://media.giphy.com/media/YWf50NNii3r4k/giphy.gif';
 
+  public fonts: [
+    { name: 'Arial' },
+    { name: 'Lora' },
+    { name: 'Croissant One' },
+    { name: 'Architects Daughter' },
+    { name: 'Emblema One' },
+    { name: 'Graduate' },
+    { name: 'Hammersmith One' },
+    { name: 'Oswald' },
+    { name: 'Oxygen' },
+    { name: 'Krona One' },
+    { name: 'Indie Flower' },
+    { name: 'Courgette' },
+    { name: 'Gruppo' },
+    { name: 'Ranchers' }
+    ]
+
   setSize([h, w]: [number, number]) {
     this.fab.setSize([h, w]);
     this.functs.setSize([h, w]);
@@ -81,6 +98,10 @@ export class CreationComponent implements OnInit {
     return this.fab.getObjects();
   }
 
+  selectAll() {
+    this.fab.selectAll();
+  }
+
   download() {
     this.fab.download();
   }
@@ -99,17 +120,12 @@ export class CreationComponent implements OnInit {
     });
   }
 
-  pasteImage(event: ClipboardEvent) {
-    const cbData = event.clipboardData;
-    console.log(cbData.files[0]);
-    this.fab.pasted();
-  }
 
   ngOnInit() {
     this.zoomVal = 1;
     const initSize = 500;
     this.fab.initCanv(this, initSize, initSize);
-    this.functs.initBar(this, [initSize, initSize]);
+    this.functs.initBar(this, [initSize, initSize], this.fonts);
   }
 
 
@@ -127,8 +143,7 @@ export class CreationComponent implements OnInit {
   }
 
   debug4() {
-    //console.log(this.fab.canvas.getObjects());
-    this.fab.toJSON();
+    console.log(this.fab.canvas.getActiveObject());
   }
 
 }

@@ -129,9 +129,6 @@ export class FabricComponent {
     link.download = 'myCanvas.png';
     link.href = URL.createObjectURL(blob);
     link.click();
-
-
-
   }
 
   /* CREDIT TO https://github.com/michaeljcalkins/angular-fabric/blob/master/assets/fabric.js */
@@ -154,10 +151,10 @@ export class FabricComponent {
 
       byteArrays.push(byteArray);
     }
-
     const blob = new Blob(byteArrays, {type: contentType});
     return blob;
   }
+
 
   uploadFile(file, resize) {
     const add = (obj: fabric.Object) => (this.canvas.add(obj));
@@ -192,7 +189,6 @@ export class FabricComponent {
         alert('Better error handling needed');
         throw new Error('Failed Image Load');
       } else {
-        console.log('not an err');
         const image = new fabric.Image(oImg);
         if (resize) {
           setSize([image.height, image.width]);
@@ -225,6 +221,13 @@ export class FabricComponent {
     if (obj) {
       this.canvas.remove(obj);
     }
+  }
+
+  selectAll() {
+    const selection = new fabric.ActiveSelection(this.canvas.getObjects(), {
+      canvas: this.canvas
+    });
+    this.canvas.setActiveObject(selection).renderAll();
   }
 
   clearCanvas() {

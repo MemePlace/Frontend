@@ -46,7 +46,7 @@
   </mat-list-item>
 
   <mat-list-item>
-    <button mat-raised-button matTooltip="Select All">
+    <button mat-raised-button matTooltip="Select All" (click)="selectAll()">
       <mat-icon>select_all</mat-icon>
     </button>
   </mat-list-item>
@@ -134,9 +134,12 @@
         <mat-button-toggle #italic><mat-icon>format_italic</mat-icon></mat-button-toggle>
         <mat-button-toggle #underline><mat-icon>format_underline</mat-icon></mat-button-toggle>
       </mat-button-toggle-group>
-
       <mat-divider></mat-divider>
-
+      <mat-form-field>
+        <mat-select placeholder="Font">
+          <mat-option *ngFor="let font of this.fonts" [value]="font.name">{{font.name}}</mat-option>
+        </mat-select>
+      </mat-form-field>
 
       <mat-divider></mat-divider>
       <mat-action-row mat-menu-item [disableRipple]="true">
