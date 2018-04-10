@@ -1,8 +1,6 @@
 <mat-card class="meme-card">
-  <button mat-button (click)="dialogPage()">
-    <img class="meme-img" [style.height.px]="checkHeight(imageHeight)" [style.minWidth.px]="minCardWidth()"
-       [style.maxWidth.px]="maxCardWidth(imageHeight)" [src]="imageLink">
-  </button>
+  <img class="meme-img" [style.height.px]="checkHeight(imageHeight)" [style.minWidth.px]="minCardWidth(imageHeight)"
+       [style.maxWidth.px]="maxCardWidth(imageHeight)" [src]="image">
   <!-- Actions that are appended to the bottom of the card: show author name, up vote, down vote-->
   <mat-card-content class="actions" style="margin-top: -3px;">
     <span class="author">
@@ -11,10 +9,10 @@
 
     <div class="cardActionButtons">
       <!-- Up vote button -->
-      <button mat-icon-button (click)="onClickUpVote()" [color]="myVote == 1 ? 'primary': 'basic'"><i class="material-icons">thumb_up</i></button>
-      <span>{{totalVote}}</span>
+      <button mat-icon-button (click)="onClickUpVote()" [color]="voted == 1 ? 'primary': 'basic'"><i class="material-icons">thumb_up</i></button>
+      <span>{{voteCount}}</span>
       <!-- Down vote button -->
-      <button mat-icon-button (click)="onClickDownVote()" [color]="myVote == -1 ? 'warn': 'basic'"><i class="material-icons">thumb_down</i></button>
+      <button mat-icon-button (click)="onClickDownVote()" [color]="voted == -1 ? 'warn': 'basic'"><i class="material-icons">thumb_down</i></button>
     </div>
 
     <div style="clear: both"></div>
