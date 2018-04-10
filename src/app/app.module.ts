@@ -12,6 +12,7 @@ import { ApiModule } from './api/api.module';
 import { ReactiveFormsModule } from '@angular/forms';
 import {LoginFormModule} from './login-form/login-form.module';
 import { SearchModule } from './search/search.module';
+import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 
 
 @NgModule({
@@ -19,6 +20,7 @@ import { SearchModule } from './search/search.module';
     AppComponent,
     SidenavComponent,
     HeaderComponent,
+    PageNotFoundComponent,
   ],
   imports: [
     BrowserModule,
