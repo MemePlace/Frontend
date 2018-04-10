@@ -16,30 +16,29 @@ export class PageNotFoundComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-    this.createMatrix();
-
     setInterval(this.draw.bind(this), 33);
-  }
-
-  createMatrix() {
-    console.log(this.matrixRef);
-
-    const canvas = this.matrixRef.nativeElement;
-    canvas.height = this.mainRef.nativeElement.offsetHeight;
-    canvas.width = this.mainRef.nativeElement.offsetWidth;
-
-    const columns = canvas.width / this.fontSize;
-    this.drops = [];
-
-    for (let x = 0; x < columns; x++) {
-      this.drops[x] = 1;
-    }
   }
 
   draw() {
     // Inspired by http://thecodeplayer.com/walkthrough/matrix-rain-animation-html5-canvas-javascript
     const ctx = this.matrixRef.nativeElement.getContext('2d');
     const c = this.matrixRef.nativeElement;
+
+    // On resize recompute drops
+    if (c.width !== this.mainRef.nativeElement.offsetWidth) {
+      c.width = this.mainRef.nativeElement.offsetWidth;
+
+      const columns = c.width / this.fontSize;
+
+      this.drops = [];
+      for (let x = 0; x < columns; x++) {
+        this.drops[x] = 1;
+      }
+    }
+
+    if (c.height !== this.mainRef.nativeElement.offsetHeight) {
+      c.height = this.mainRef.nativeElement.offsetHeight;
+    }
 
     // Translucent black background
     ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
