@@ -32,7 +32,7 @@ export class PageNotFoundComponent implements OnInit {
     if (c.width !== this.mainRef.nativeElement.offsetWidth) {
       c.width = this.mainRef.nativeElement.offsetWidth;
 
-      const columns = parseInt(c.width / this.fontSize, 10);
+      const columns = Math.floor(c.width / this.fontSize);
 
       this.drops = [];
       for (let x = 0; x < columns; x++) {
