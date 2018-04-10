@@ -35,11 +35,10 @@ export class SidenavComponent implements OnInit {
         user => {
           resolve(user);
           communityList.communities.forEach((community: any) => {
-            if(user.Favourites.filter(ele => ele.name === community.name).length > 0) {
+            if (user.Favourites.filter(ele => ele.name === community.name).length > 0) {
               community.isFavourited = true;
               this.communitiesFavourited.push(community);
-            } 
-            else community.isFavourited = false;
+            } else { community.isFavourited = false; }
           });
           this.communitiesFavourited.sort((a, b) => a.title.localeCompare(b.title));
           this.communities = communityList.communities;
