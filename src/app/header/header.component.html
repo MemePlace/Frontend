@@ -2,10 +2,16 @@
   <button mat-icon-button (click)="toggle()">
     <mat-icon class="material-icons app-toolbar-menu">menu</mat-icon>
   </button>
-  Meme.Place
+  <span [routerLink]="['/']" class="site-title">{{ utils.isMobile ? 'MP' : 'Meme.Place'}}</span>
 
   <span class="fill-remaining-space"></span>
 
-  <button mat-button>Sign Up</button>
-  <button mat-raised-button color="accent">Log in</button>
+
+  <app-header-search style="margin-right: 10px;"></app-header-search>
+  <button mat-button (click)="registerPage()" *ngIf="!userService.isLoggedIn()">Sign Up</button>
+  <button mat-raised-button color="accent" (click)="loginPage()" *ngIf="!userService.isLoggedIn()">Log in</button>
+
+  <p id="username" (click)="gotoProfile()" *ngIf="userService.isLoggedIn()">{{userService.user.username}}</p>
+  <button mat-raised-button color="accent" (click)="logout()" *ngIf="userService.isLoggedIn()">Log out</button>
+
 </mat-toolbar>

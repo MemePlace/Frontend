@@ -2,13 +2,12 @@
   <mat-tab label="Top">
     <div class="browseContentWrapper" [style.justify-content]="utils.isMobile ? 'center' : 'flex-start'">
       <app-meme-card class="flexItem" *ngFor="let u of users"
-                     [username]="u.un"
-                     [image]="u.img"
                      [imageHeight]="u.height"
+                     [memeId]="u.memeId"
                      [style.marginLeft.px]="utils.isMobile ? 0 : 10"
       ></app-meme-card>
     </div>
   </mat-tab>
-  <mat-tab label="Hot"><app-community-create></app-community-create></mat-tab>
+  <mat-tab label="Hot"></mat-tab>
   <mat-tab label="New">Content 3</mat-tab>
 </mat-tab-group>
