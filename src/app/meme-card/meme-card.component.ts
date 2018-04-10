@@ -1,8 +1,8 @@
-import { Component, ElementRef, Input, OnInit } from '@angular/core';
-import { Utils } from '../utils';
-import { MemeService } from '../api/meme.service';
-import { MatDialog } from '@angular/material';
-import { MemeDialogComponent } from '../meme-dialog/meme-dialog.component';
+import {Component, ElementRef, Input, OnInit} from '@angular/core';
+import {Utils} from '../utils';
+import {MemeService} from '../api/meme.service';
+import {MatDialog} from '@angular/material';
+import {MemeDialogComponent} from '../meme-dialog/meme-dialog.component';
 
 @Component({
   selector: 'app-meme-card',
@@ -13,7 +13,7 @@ export class MemeCardComponent implements OnInit {
   @Input() imageHeight: number;
   @Input() memeId: number;
 
-  imageLink: string= "data:image/png;base64,ffff";  // ensures no null request being sent
+  imageLink = 'data:image/png;base64,ffff';  // ensures no null request being sent
   username: string;
   totalVote = 0;
   myVote = 0;
@@ -25,11 +25,10 @@ export class MemeCardComponent implements OnInit {
   ngOnInit() {
     this.memeService.getMemeDetails(this.memeId).then((meme) => {
       this.imageLink = meme.link;
-      this.username = meme.creator["username"];
-      console.log(this.imageLink);
+      this.username = meme.creator['username'];
       this.totalVote = meme.totalVote || 0;
       if (meme.myVote) {
-        this.myVote =  meme.myVote["diff"];
+        this.myVote = meme.myVote['diff'];
       }
     });
   }
@@ -39,12 +38,10 @@ export class MemeCardComponent implements OnInit {
       const dialogRef = this.dialog.open(MemeDialogComponent);
       const instance = dialogRef.componentInstance;
       instance.username = this.username;
-      instance.image = this.image;
+      instance.image = this.imageLink;
       instance.parent = this;
-      instance.voteCount = this.voteCount;
-      instance.voted = this.voted;
-      // I want the card to lose focus after you click it but the following line doesn't seem to work
-      this.element.nativeElement.blur();
+      instance.totalVote = this.totalVote;
+      instance.myVote = this.myVote;
     }
   }
 
@@ -73,17 +70,17 @@ export class MemeCardComponent implements OnInit {
   }
 
   onClickUpVote() {
-    if (this.myVote === 1){
+    if (this.myVote === 1) {
       this.memeService.deleteMemeVote(this.memeId).then((value) => {
         this.myVote = value;
-        this.totalVote = this.totalVote-1;
-      })
-    }else{
+        this.totalVote = this.totalVote - 1;
+      });
+    } else {
       this.memeService.upvoteMeme(this.memeId).then((memeVote) => {
         if (this.myVote !== 0) {
-          this.totalVote = this.totalVote+2;
-        }else{
-          this.totalVote = this.totalVote+1;
+          this.totalVote = this.totalVote + 2;
+        } else {
+          this.totalVote = this.totalVote + 1;
         }
         this.myVote = memeVote.diff;
       }).catch((err) => {
@@ -96,14 +93,14 @@ export class MemeCardComponent implements OnInit {
     if (this.myVote === -1) {
       this.memeService.deleteMemeVote(this.memeId).then((value) => {
         this.myVote = 0;
-        this.totalVote = this.totalVote+1;
-      })
-    }else{
+        this.totalVote = this.totalVote + 1;
+      });
+    } else {
       this.memeService.downvoteMeme(this.memeId).then((memeVote) => {
         if (this.myVote !== 0) {
-          this.totalVote = this.totalVote-2;
-        }else{
-          this.totalVote = this.totalVote-1;
+          this.totalVote = this.totalVote - 2;
+        } else {
+          this.totalVote = this.totalVote - 1;
         }
         this.myVote = memeVote.diff;
       }).catch((err) => {

@@ -1,30 +1,30 @@
-import { Injectable } from '@angular/core';
-import { BaseApiService, Version } from './base-api.service';
+import {Injectable} from '@angular/core';
+import {BaseApiService, Version} from './base-api.service';
 
 export interface Meme {
-  id: number,
-  title: string,
-  link: string,
-  creatorId: number,
-  TemplateId: number,
-  CommunityId: number,
-  updatedAt: string,
-  createdAt: string,
+  id: number;
+  title: string;
+  link: string;
+  creatorId: number;
+  TemplateId: number;
+  CommunityId: number;
+  updatedAt: string;
+  createdAt: string;
   creator: {
     username: string,
-  }
-  Community: string,
-  totalVote: number,
-  myVote: number
+  };
+  Community: string;
+  totalVote: number;
+  myVote: number;
 }
 
 export interface MemeVote {
-  id: number,
-  diff: number,
-  MemeId: number,
-  UserId: number,
-  createdAt: string,
-  updatedAt: string
+  id: number;
+  diff: number;
+  MemeId: number;
+  UserId: number;
+  createdAt: string;
+  updatedAt: string;
 }
 
 @Injectable()
@@ -40,7 +40,7 @@ export class MemeService {
    * @param {number} communityId
    * @return {Promise<Meme>} New meme details
    */
-  createMeme(title: string, link: string, templateId: number, communityId: number): Promise<Meme>{
+  createMeme(title: string, link: string, templateId: number, communityId: number): Promise<Meme> {
     return this.baseApiService.post(Version.v1, `memes`, {
       title: title,
       link: link,
@@ -94,7 +94,7 @@ export class MemeService {
    * @param {number} memeId
    */
   deleteMemeVote(memeId: number) {
-    return this.baseApiService.delete(Version.v1, `memes/${memeId}/vote`).then((value:({}|void)) => {
+    return this.baseApiService.delete(Version.v1, `memes/${memeId}/vote`).then((value: ({} | void)) => {
       return 0;
     });
   }
@@ -104,7 +104,7 @@ export class MemeService {
    * @param {number} memeId
    */
   deleteMeme(memeId: number) {
-    return this.baseApiService.delete(Version.v1, `memes/${memeId}`).then((value:({}|void)) => {
+    return this.baseApiService.delete(Version.v1, `memes/${memeId}`).then((value: ({} | void)) => {
       return value;
     });
   }

@@ -14,8 +14,8 @@ export class MemeDialogComponent implements OnInit {
   @Input() username: string;
   @Input() image: string;
   @Input() parent: MemeCardComponent;
-  @Input() voteCount: number;
-  @Input() voted: number;
+  @Input() totalVote: number;
+  @Input() myVote: number;
 
   constructor() {
   }
@@ -38,14 +38,14 @@ export class MemeDialogComponent implements OnInit {
   // I'd rather do these in a more natural way, e.g. property binding but I can't seem to get it to work properly
   onClickUpVote() {
     this.parent.onClickUpVote();
-    this.voteCount = this.parent.voteCount;
-    this.voted = this.parent.voted;
+    this.totalVote = this.parent.totalVote;
+    this.myVote = this.parent.myVote;
   }
 
   onClickDownVote() {
     this.parent.onClickDownVote();
-    this.voteCount = this.parent.voteCount;
-    this.voted = this.parent.voted;
+    this.totalVote = this.parent.totalVote;
+    this.myVote = this.parent.myVote;
   }
 
 }
