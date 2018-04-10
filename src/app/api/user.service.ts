@@ -2,6 +2,10 @@ import {Injectable} from '@angular/core';
 import {BaseApiService, Version} from './base-api.service';
 
 export interface User {
+  Favourites?: Array<{
+    name: string,
+    title: string
+  }>;
   id: number;
   username: string;
 }
