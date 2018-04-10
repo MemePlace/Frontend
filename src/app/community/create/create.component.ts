@@ -25,8 +25,6 @@ export class CreateComponent {
       sidebar: '',
       nsfw: false
     });
-
-    console.log(this.form);
   }
 
   nameExists(control: FormControl) {
