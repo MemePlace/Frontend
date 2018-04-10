@@ -20,7 +20,7 @@ export class PageNotFoundComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-    setInterval(this.draw.bind(this), 33);
+    setInterval(this.draw.bind(this), 50);
   }
 
   draw() {
