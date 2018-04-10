@@ -199,8 +199,10 @@ export class FabricComponent {
   }
 
 
-  addTxt(bold: boolean, italic: boolean, underline: boolean) {
-    const newTxt = new fabric.Textbox('New Text');
+  addTxt(bold: boolean, italic: boolean, underline: boolean, font: string) {
+    const newTxt = new fabric.Textbox('New Text', {
+      fontFamily: font,
+    });
     if (bold) {
       newTxt.set('fontWeight', 'bold');
     }

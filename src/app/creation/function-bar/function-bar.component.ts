@@ -12,6 +12,7 @@ import {CreationComponent} from '../creation.component';
 export class FunctionBarComponent {
   @ViewChild('imgURL') urlIn;
   @ViewChild('fileIn') fileIn;
+  @ViewChild('fontOption') fontOption;
   private parent: CreationComponent;
   public sHeight: number;
   public sWidth: number;
@@ -19,9 +20,24 @@ export class FunctionBarComponent {
   public aspectIcon: string;
   public arToggle: boolean;
   public aspectRatio: number;
-  public fonts;
+  selected = 'Arial';
 
-  public hardCodeURL; // = 'https://fthmb.tqn.com/M1ISdSdfLsU36nAuILe3YlFcY1w=/400x400/filters:fill(auto,1)/success-56a9fd1f3df78cf772abee09.jpg';
+  public fonts: Array<any> = [
+    { name: 'Arial' },
+    { name: 'Lora' },
+    { name: 'Croissant One' },
+    { name: 'Architects Daughter' },
+    { name: 'Emblema One' },
+    { name: 'Graduate' },
+    { name: 'Hammersmith One' },
+    { name: 'Oswald' },
+    { name: 'Oxygen' },
+    { name: 'Krona One' },
+    { name: 'Indie Flower' },
+    { name: 'Courgette' },
+    { name: 'Gruppo' },
+    { name: 'Ranchers' }
+    ];
 
 
   constructor() { }
@@ -47,7 +63,8 @@ export class FunctionBarComponent {
   }
 
   addTxt(bold: boolean, italic: boolean, underline: boolean) {
-    this.parent.addTxt(bold, italic, underline);
+    const font = this.fontOption.value);
+    this.parent.addTxt(bold, italic, underline, font);
   }
 
   moveObj(val: number) {
@@ -99,8 +116,7 @@ export class FunctionBarComponent {
   }
 
 
-  initBar(par: CreationComponent, size: [number, number], fonts): void {
-    this.fonts = fonts;
+  initBar(par: CreationComponent, size: [number, number]): void {
     this.arToggle = false;
     this.aspectIcon = 'lock_open';
     this.resizeCheck = true;
@@ -108,7 +124,4 @@ export class FunctionBarComponent {
     this.setSize(size);
   }
 
-  test() {
-    console.log('its happening');
-  }
 }

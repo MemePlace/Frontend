@@ -23,22 +23,6 @@ export class CreationComponent implements OnInit {
   ];
   private gifUrl = 'https://media.giphy.com/media/YWf50NNii3r4k/giphy.gif';
 
-  public fonts: [
-    { name: 'Arial' },
-    { name: 'Lora' },
-    { name: 'Croissant One' },
-    { name: 'Architects Daughter' },
-    { name: 'Emblema One' },
-    { name: 'Graduate' },
-    { name: 'Hammersmith One' },
-    { name: 'Oswald' },
-    { name: 'Oxygen' },
-    { name: 'Krona One' },
-    { name: 'Indie Flower' },
-    { name: 'Courgette' },
-    { name: 'Gruppo' },
-    { name: 'Ranchers' }
-    ]
 
   setSize([h, w]: [number, number]) {
     this.fab.setSize([h, w]);
@@ -74,8 +58,8 @@ export class CreationComponent implements OnInit {
     this.fab.delete();
   }
 
-  addTxt(b: boolean, i: boolean, u: boolean) {
-    this.fab.addTxt(b, i, u);
+  addTxt(b: boolean, i: boolean, u: boolean, font: string) {
+    this.fab.addTxt(b, i, u, font);
   }
 
   clear() {
@@ -125,7 +109,7 @@ export class CreationComponent implements OnInit {
     this.zoomVal = 1;
     const initSize = 500;
     this.fab.initCanv(this, initSize, initSize);
-    this.functs.initBar(this, [initSize, initSize], this.fonts);
+    this.functs.initBar(this, [initSize, initSize]);
   }
 
 
@@ -134,7 +118,7 @@ export class CreationComponent implements OnInit {
   }
 
   debug2() {
-    let objs = this.fab.canvas.getObjects();
+    const objs = this.fab.canvas.getObjects();
     console.log(objs);
   }
 

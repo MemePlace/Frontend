@@ -136,8 +136,8 @@
       </mat-button-toggle-group>
       <mat-divider></mat-divider>
       <mat-form-field>
-        <mat-select placeholder="Font">
-          <mat-option *ngFor="let font of this.fonts" [value]="font.name">{{font.name}}</mat-option>
+        <mat-select  #fontOption [(value)]="selected" placeholder="Font">
+          <mat-option *ngFor="let font of fonts"  [value]="font.name">{{font.name}}</mat-option>
         </mat-select>
       </mat-form-field>
 
