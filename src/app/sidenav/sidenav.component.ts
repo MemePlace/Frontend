@@ -4,7 +4,7 @@ import {Utils} from '../utils';
 import {UserService} from '../api/user.service';
 import {CommunityService} from '../api/community.service';
 import {Community} from '../api/community.service';
-import { resolve, reject } from 'q';
+
 
 @Component({
   selector: 'app-sidenav',
@@ -22,28 +22,26 @@ export class SidenavComponent implements OnInit {
 
   utils = Utils;
 
-  constructor(private _UserService: UserService, private _CommunityService: CommunityService) { }
+  constructor(private userService: UserService, private communityService: CommunityService) { }
 
-  ngOnInit() {
+  async ngOnInit() {
 
-    this._CommunityService.getCommunities('top', 10, 0)
-    .then(
-      communityList => {
-      resolve(communityList);
-      this._UserService.getDetails()
-      .then(
-        user => {
-          resolve(user);
-          communityList.communities.forEach((community: any) => {
-            if (user.Favourites.filter(ele => ele.name === community.name).length > 0) {
-              community.isFavourited = true;
-              this.communitiesFavourited.push(community);
-            } else { community.isFavourited = false; }
-          });
-          this.communitiesFavourited.sort((a, b) => a.title.localeCompare(b.title));
-          this.communities = communityList.communities;
-        }).catch((err) => reject(err));
-    }).catch((err) => reject(err));
+    const communityList = await this.communityService.getCommunities('top', 10, 0);
+
+    if (this.userService.isLoggedIn()) {
+      const user = await this.userService.getDetails(true);
+      this.communitiesFavourited = user.Favourites as Community[];
+      this.communitiesFavourited.forEach((communityFav) => {
+        communityFav.isFavourited = true;
+      });
+      communityList.communities.forEach((community: any) => {
+        if (user.Favourites.filter(c => c.name === community.name).length > 0) {
+          community.isFavourited = true;
+        } else { community.isFavourited = false; }
+      });
+    }
+    this.communities = communityList.communities;
+    console.log(this.communities);
   }
 
   toggle() {
@@ -51,25 +49,24 @@ export class SidenavComponent implements OnInit {
   }
 
   toggleFavourite(community: Community) {
-    if (community.isFavourited === false) {
-      community.isFavourited = true;
-      this._CommunityService.favouriteCommunity(community.name)
-      .then(msg => {
-        resolve(msg);
-        console.log(msg);
-      }).catch((err) => resolve(null));
-      this.communitiesFavourited.push(community);
-      this.communitiesFavourited.sort((a, b) => a.title.localeCompare(b.title));
-    } else {
-      community.isFavourited = false;
-      this._CommunityService.deleteFavourite(community.name)
-      .then(msg => {
-        resolve(msg);
-        console.log(msg);
-      }).catch((err) => resolve(null));
-      this.communitiesFavourited = this.communitiesFavourited.filter((com) => {
-        return com !== community;
-      });
+    if(this.userService.isLoggedIn()) {
+      if (community.isFavourited === false) {
+        // favourite community
+        this.communityService.favouriteCommunity(community.name);
+        community.isFavourited = true;
+        this.communitiesFavourited.push(community);
+      } else {
+        // unfavourite community
+        this.communityService.deleteFavourite(community.name);
+        this.communities[
+          this.communities.map((c) => {
+            return c.name;
+          }).indexOf(community.name)].isFavourited = false;
+        community.isFavourited = false;
+        this.communitiesFavourited = this.communitiesFavourited.filter((com) => {
+          return com !== community;
+        });
+      }
     }
   }
 }
