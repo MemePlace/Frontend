@@ -1,8 +1,8 @@
-import {Component, Input, OnInit} from '@angular/core';
-import {Utils} from '../utils';
-import {MemeService} from '../api/meme.service';
-import {MatDialog} from '@angular/material';
-import {MemeDialogComponent} from '../meme-dialog/meme-dialog.component';
+import { Component, Input, OnInit } from '@angular/core';
+import { Utils } from '../utils';
+import { MemeService } from '../api/meme.service';
+import { MatDialog } from '@angular/material';
+import { MemeDialogComponent } from '../meme-dialog/meme-dialog.component';
 
 @Component({
   selector: 'app-meme-card',
@@ -44,9 +44,10 @@ export class MemeCardComponent implements OnInit {
     this.memeService.getMemeDetails(this.memeId).then((meme) => {
       this.imageLink = meme.link;
       this.username = meme.creator['username'];
+      console.log(this.imageLink);
       this._totalVote = meme.totalVote || 0;
       if (meme.myVote) {
-        this._myVote = meme.myVote['diff'];
+        this._myVote =  meme.myVote['diff'];
       }
     });
   }
