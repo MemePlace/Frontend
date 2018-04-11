@@ -15,7 +15,6 @@ import { MemeService } from './meme.service';
   providers: [
     BaseApiService,
     UserService,
-    SearchService,
     MemeService,
     CommunityService,
     SearchService
