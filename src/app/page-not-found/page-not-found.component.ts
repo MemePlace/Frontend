@@ -9,15 +9,13 @@ import {Utils} from '../utils';
 export class PageNotFoundComponent implements OnInit {
   @ViewChild('main') mainRef: ElementRef;
   @ViewChild('matrix') matrixRef: ElementRef;
-
-
+  utils = Utils;
   private characters = '田由甲申甴电甶男甸甹町画甼甽甾甿畀畁畂畃畄畅畆畇畈畉畊畋界畍畎畏畐畑'.split('');
   private fontSize = 10;
   private drops;
 
-  utils = Utils;
-
-  constructor() { }
+  constructor() {
+  }
 
   ngOnInit() {
     setInterval(this.draw.bind(this), 50);
@@ -51,8 +49,7 @@ export class PageNotFoundComponent implements OnInit {
     ctx.fillStyle = '#0F0';
     ctx.font = `${this.fontSize}px arial`;
 
-    for(let i = 0; i < this.drops.length; i++)
-    {
+    for (let i = 0; i < this.drops.length; i++) {
       if (this.drops[i] === -1 && Math.random() < 0.975) {
         // When starting out, don't let all the characters fall at once
         continue;
@@ -62,7 +59,7 @@ export class PageNotFoundComponent implements OnInit {
       ctx.fillText(letter, i * this.fontSize, this.drops[i] * this.fontSize);
 
       // Randomly send drop back to top
-      if(this.drops[i] * this.fontSize > c.height && Math.random() > 0.975) {
+      if (this.drops[i] * this.fontSize > c.height && Math.random() > 0.975) {
         this.drops[i] = 0;
       }
 

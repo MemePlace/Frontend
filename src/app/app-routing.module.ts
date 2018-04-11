@@ -1,6 +1,6 @@
-import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
-import { BrowseComponent } from './community/browse/browse.component';
+import {NgModule} from '@angular/core';
+import {RouterModule, Routes} from '@angular/router';
+import {BrowseComponent} from './community/browse/browse.component';
 import {CreateComponent} from './community/create/create.component';
 import {PageNotFoundComponent} from './page-not-found/page-not-found.component';
 
