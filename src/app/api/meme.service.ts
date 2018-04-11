@@ -1,5 +1,5 @@
-import { Injectable } from '@angular/core';
-import { BaseApiService, Version } from './base-api.service';
+import {Injectable} from '@angular/core';
+import {BaseApiService, Version} from './base-api.service';
 
 export interface Meme {
   id: number;
