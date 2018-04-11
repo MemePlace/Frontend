@@ -1,7 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {Utils} from '../../utils';
-import {ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {Subscription} from 'rxjs/Subscription';
+import {CommunityService} from '../../api/community.service';
 
 @Component({
   selector: 'app-browse',
@@ -12,9 +13,11 @@ export class BrowseComponent implements OnInit {
   routeSubscription: Subscription;
   utils = Utils;
 
-  communityName: string;
+  community: Community;
 
-  constructor(private route: ActivatedRoute) { }
+  constructor(private route: ActivatedRoute,
+              private router: Router,
+              private communityServioce: CommunityService) { }
 
   user1 = {height: '300', memeId: 8};
   user2 = {height: '300', memeId: 9};
@@ -30,7 +33,11 @@ export class BrowseComponent implements OnInit {
   ngOnInit() {
     this.routeSubscription = this.route.params.subscribe((params) => {
       if (params.name) {
-        this.communityName = params.name;
+        this.communityServioce.getCommunityDetails(params.name).then((community) => {
+          this.community = community;
+        }).catch((err) => {
+          this.router.navigate(['/404']);
+        });
       }
     });
   }

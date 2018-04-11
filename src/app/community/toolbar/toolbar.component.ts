@@ -1,5 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {CommunityService} from '../../api/community.service';
+import {Community, CommunityService} from '../../api/community.service';
 
 @Component({
   selector: 'app-community-toolbar',
@@ -7,7 +7,7 @@ import {CommunityService} from '../../api/community.service';
   styleUrls: ['./toolbar.component.scss']
 })
 export class ToolbarComponent implements OnInit {
-  @Input() communityName: string;
+  @Input() community: Community;
 
   constructor(private communityService: CommunityService) { }
 
