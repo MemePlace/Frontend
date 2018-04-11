@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BaseApiService, Version } from './base-api.service';
+import {BaseApiService, MessageReply, Version} from './base-api.service';
 
 export interface Meme {
   id: number,
@@ -15,16 +15,7 @@ export interface Meme {
   }
   Community: string,
   totalVote: number,
-  myVote: number
-}
-
-export interface MemeVote {
-  id: number,
-  diff: number,
-  MemeId: number,
-  UserId: number,
-  createdAt: string,
-  updatedAt: string
+  myVote: number;
 }
 
 @Injectable()
@@ -69,24 +60,20 @@ export class MemeService {
    * Upvote a meme
    * @param {number} memeId
    */
-  upvoteMeme(memeId: number): Promise<MemeVote> {
+  upvoteMeme(memeId: number): Promise<MessageReply> {
     return this.baseApiService.put(Version.v1, `memes/${memeId}/vote`, {
       vote: 1
-    }).then( (memeVote: MemeVote) => {
-      return memeVote;
-    });
+    }) as Promise<MessageReply>;
   }
 
   /**
    * Downvote a meme
    * @param {number} memeId
    */
-  downvoteMeme(memeId: number): Promise<MemeVote> {
+  downvoteMeme(memeId: number): Promise<MessageReply> {
     return this.baseApiService.put(Version.v1, `memes/${memeId}/vote`, {
       vote: -1
-    }).then( (memeVote: MemeVote) => {
-      return memeVote;
-    });
+    }) as Promise<MessageReply>;
   }
 
   /**
