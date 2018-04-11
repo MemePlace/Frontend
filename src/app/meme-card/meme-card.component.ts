@@ -10,13 +10,31 @@ import {MemeDialogComponent} from '../meme-dialog/meme-dialog.component';
   styleUrls: ['./meme-card.component.scss']
 })
 export class MemeCardComponent implements OnInit {
+  dialogInstance: MemeDialogComponent;
+  dialogOpen = false;
   @Input() imageHeight: number;
   @Input() memeId: number;
 
   imageLink = 'data:image/png;base64,ffff';  // ensures no null request being sent
   username: string;
-  totalVote = 0;
-  myVote = 0;
+
+  private _totalVote = 0;
+
+  set totalVote(value: number) {
+    this._totalVote = value;
+    if (this.dialogOpen) {
+      this.dialogInstance.totalVote = value;
+    }
+  }
+
+  private _myVote = 0;
+
+  set myVote(value: number) {
+    this._myVote = value;
+    if (this.dialogOpen) {
+      this.dialogInstance.myVote = value;
+    }
+  }
 
   constructor(private memeService: MemeService,
               public dialog: MatDialog) {
@@ -26,9 +44,9 @@ export class MemeCardComponent implements OnInit {
     this.memeService.getMemeDetails(this.memeId).then((meme) => {
       this.imageLink = meme.link;
       this.username = meme.creator['username'];
-      this.totalVote = meme.totalVote || 0;
+      this._totalVote = meme.totalVote || 0;
       if (meme.myVote) {
-        this.myVote = meme.myVote['diff'];
+        this._myVote = meme.myVote['diff'];
       }
     });
   }
@@ -36,12 +54,22 @@ export class MemeCardComponent implements OnInit {
   dialogPage() {
     if (!Utils.isMobile) {
       const dialogRef = this.dialog.open(MemeDialogComponent);
-      const instance = dialogRef.componentInstance;
-      instance.username = this.username;
-      instance.image = this.imageLink;
-      instance.parent = this;
-      instance.totalVote = this.totalVote;
-      instance.myVote = this.myVote;
+      this.dialogInstance = dialogRef.componentInstance;
+      this.dialogOpen = true;
+      this.dialogInstance.notifyCard.subscribe((event: number) => {
+        if (event === 1) {
+          this.onClickUpVote();
+        } else { // event === -1 {
+          this.onClickDownVote();
+        }
+      });
+      dialogRef.afterClosed().subscribe(result => {
+        this.dialogOpen = false;
+      });
+      this.dialogInstance.username = this.username;
+      this.dialogInstance.image = this.imageLink;
+      this.dialogInstance.totalVote = this._totalVote;
+      this.dialogInstance.myVote = this._myVote;
     }
   }
 
@@ -70,17 +98,17 @@ export class MemeCardComponent implements OnInit {
   }
 
   onClickUpVote() {
-    if (this.myVote === 1) {
+    if (this._myVote === 1) {
       this.memeService.deleteMemeVote(this.memeId).then((value) => {
         this.myVote = value;
-        this.totalVote = this.totalVote - 1;
+        this.totalVote = this._totalVote - 1;
       });
     } else {
       this.memeService.upvoteMeme(this.memeId).then((memeVote) => {
-        if (this.myVote !== 0) {
-          this.totalVote = this.totalVote + 2;
+        if (this._myVote !== 0) {
+          this.totalVote = this._totalVote + 2;
         } else {
-          this.totalVote = this.totalVote + 1;
+          this.totalVote = this._totalVote + 1;
         }
         this.myVote = memeVote.diff;
       }).catch((err) => {
@@ -90,17 +118,17 @@ export class MemeCardComponent implements OnInit {
   }
 
   onClickDownVote() {
-    if (this.myVote === -1) {
+    if (this._myVote === -1) {
       this.memeService.deleteMemeVote(this.memeId).then((value) => {
         this.myVote = 0;
-        this.totalVote = this.totalVote + 1;
+        this.totalVote = this._totalVote + 1;
       });
     } else {
       this.memeService.downvoteMeme(this.memeId).then((memeVote) => {
-        if (this.myVote !== 0) {
-          this.totalVote = this.totalVote - 2;
+        if (this._myVote !== 0) {
+          this.totalVote = this._totalVote - 2;
         } else {
-          this.totalVote = this.totalVote - 1;
+          this.totalVote = this._totalVote - 1;
         }
         this.myVote = memeVote.diff;
       }).catch((err) => {

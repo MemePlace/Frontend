@@ -14,7 +14,7 @@ import {LoginFormModule} from './login-form/login-form.module';
 import {SearchModule} from './search/search.module';
 import {PageNotFoundComponent} from './page-not-found/page-not-found.component';
 import {MemeDialogComponent} from './meme-dialog/meme-dialog.component';
-import {MemeService} from "./api/meme.service";
+import {MemeService} from './api/meme.service';
 
 @NgModule({
   declarations: [

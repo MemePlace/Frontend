@@ -1,8 +1,6 @@
-import {Component, Input, OnInit} from '@angular/core';
-
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {MatDialogModule} from '@angular/material';
 import {Utils} from '../utils';
-import {MemeCardComponent} from '../meme-card/meme-card.component';
 
 @Component({
   selector: 'app-meme-dialog',
@@ -13,9 +11,10 @@ import {MemeCardComponent} from '../meme-card/meme-card.component';
 export class MemeDialogComponent implements OnInit {
   @Input() username: string;
   @Input() image: string;
-  @Input() parent: MemeCardComponent;
   @Input() totalVote: number;
   @Input() myVote: number;
+
+  @Output() notifyCard: EventEmitter<number> = new EventEmitter<number>();
 
   constructor() {
   }
@@ -37,15 +36,11 @@ export class MemeDialogComponent implements OnInit {
 
   // I'd rather do these in a more natural way, e.g. property binding but I can't seem to get it to work properly
   onClickUpVote() {
-    this.parent.onClickUpVote();
-    this.totalVote = this.parent.totalVote;
-    this.myVote = this.parent.myVote;
+    this.notifyCard.emit(1);
   }
 
   onClickDownVote() {
-    this.parent.onClickDownVote();
-    this.totalVote = this.parent.totalVote;
-    this.myVote = this.parent.myVote;
+    this.notifyCard.emit(-1);
   }
 
 }
