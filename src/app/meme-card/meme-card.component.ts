@@ -1,4 +1,4 @@
-import {Component, ElementRef, Input, OnInit} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {Utils} from '../utils';
 import {MemeService} from '../api/meme.service';
 import {MatDialog} from '@angular/material';
@@ -19,8 +19,8 @@ export class MemeCardComponent implements OnInit {
   myVote = 0;
 
   constructor(private memeService: MemeService,
-              public dialog: MatDialog,
-              public element: ElementRef) { }
+              public dialog: MatDialog) {
+  }
 
   ngOnInit() {
     this.memeService.getMemeDetails(this.memeId).then((meme) => {
