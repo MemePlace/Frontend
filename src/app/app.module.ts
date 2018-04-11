@@ -12,6 +12,7 @@ import {CommunityModule} from './community/community.module';
 import {ApiModule} from './api/api.module';
 import {LoginFormModule} from './login-form/login-form.module';
 import {SearchModule} from './search/search.module';
+import {PageNotFoundComponent} from './page-not-found/page-not-found.component';
 import {MemeDialogComponent} from './meme-dialog/meme-dialog.component';
 
 @NgModule({
@@ -19,6 +20,7 @@ import {MemeDialogComponent} from './meme-dialog/meme-dialog.component';
     AppComponent,
     SidenavComponent,
     HeaderComponent,
+    PageNotFoundComponent,
     MemeDialogComponent,
   ],
   imports: [
