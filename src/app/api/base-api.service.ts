@@ -12,6 +12,10 @@ export interface Error {
   error: string;
 }
 
+export interface MessageReply {
+  message: string;
+}
+
 const prodBase = 'http://api.meme.place';
 const devBase = 'http://localhost:3000/api';
 
