@@ -15,7 +15,9 @@ export interface Meme {
   }
   Community: string,
   totalVote: number,
-  myVote: number;
+  myVote: {
+    diff: number;
+  };
 }
 
 @Injectable()
