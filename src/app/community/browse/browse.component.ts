@@ -1,5 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {Utils} from '../../utils';
+import {ActivatedRoute} from '@angular/router';
+import {Subscription} from 'rxjs/Subscription';
 
 @Component({
   selector: 'app-browse',
@@ -7,10 +9,12 @@ import {Utils} from '../../utils';
   styleUrls: ['./browse.component.scss']
 })
 export class BrowseComponent implements OnInit {
-
+  routeSubscription: Subscription;
   utils = Utils;
 
-  constructor() { }
+  communityName: string;
+
+  constructor(private route: ActivatedRoute) { }
 
   user1 = {height: '300', memeId: 8};
   user2 = {height: '300', memeId: 9};
@@ -24,6 +28,11 @@ export class BrowseComponent implements OnInit {
   users = [this.user1, this.user2, this.user3, this.user4, this.user5, this.user6, this.user7, this.user8];
 
   ngOnInit() {
+    this.routeSubscription = this.route.params.subscribe((params) => {
+      if (params.name) {
+        this.communityName = params.name;
+      }
+    });
   }
 
   getMemes() {

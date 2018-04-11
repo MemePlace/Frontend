@@ -18,6 +18,10 @@ const routes: Routes = [
     canActivate: [AuthGuard]
   },
   {
+    path: 'c/:name',
+    component: BrowseComponent
+  },
+  {
     path: '404',
     component: PageNotFoundComponent
   },

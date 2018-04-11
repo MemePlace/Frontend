@@ -7,7 +7,7 @@ import {CommunityService} from '../../api/community.service';
   styleUrls: ['./toolbar.component.scss']
 })
 export class ToolbarComponent implements OnInit {
-  @Input('communityName') communityName: string;
+  @Input() communityName: string;
 
   constructor(private communityService: CommunityService) { }
 
