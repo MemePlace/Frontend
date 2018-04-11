@@ -2,6 +2,7 @@ import {Injectable} from '@angular/core';
 import {BaseApiService, Version} from './base-api.service';
 import {StorageService, StorageType} from './storage.service';
 import {Subject} from 'rxjs/Subject';
+import 'rxjs/add/operator/distinctUntilChanged';
 
 export interface User {
   id: number;
@@ -14,7 +15,7 @@ export class UserService {
   private user_: User;
 
   private loggedInSource = new Subject<boolean>();
-  loggedIn$ = this.loggedInSource.asObservable();
+  loggedIn$ = this.loggedInSource.distinctUntilChanged().asObservable();
 
   set user(value) {
     this.loggedInSource.next(value !== null);
