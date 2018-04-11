@@ -1,6 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {Utils} from '../utils';
-import { MemeService } from '../api/meme.service';
 
 @Component({
   selector: 'app-meme-card',
@@ -9,25 +8,15 @@ import { MemeService } from '../api/meme.service';
 })
 export class MemeCardComponent implements OnInit {
   @Input() imageHeight: number;
-  @Input() memeId: number;
+  @Input() username: string;
+  @Input() image: string;
 
-  imageLink: string= "data:image/png;base64,ffff";  // ensures no null request being sent
-  username: string;
-  totalVote = 0;
-  myVote = 0;
+  voteCount = 0;
+  voted = 0;
 
-  constructor(private memeService: MemeService) { }
+  constructor() { }
 
   ngOnInit() {
-    this.memeService.getMemeDetails(this.memeId).then((meme) => {
-      this.imageLink = meme.link;
-      this.username = meme.creator["username"];
-      console.log(this.imageLink);
-      this.totalVote = meme.totalVote || 0;
-      if (meme.myVote) {
-        this.myVote =  meme.myVote["diff"];
-      }
-    });
   }
 
   maxCardWidth(height: number): number {
@@ -54,47 +43,25 @@ export class MemeCardComponent implements OnInit {
     }
   }
 
-  onClickMeme() {
-    // TODO
-  }
-
   onClickUpVote() {
-    if (this.myVote === 1){
-      this.memeService.deleteMemeVote(this.memeId).then((value) => {
-        this.myVote = value;
-        this.totalVote = this.totalVote-1;
-      })
-    }else{
-      this.memeService.upvoteMeme(this.memeId).then((memeVote) => {
-        if (this.myVote !== 0) {
-          this.totalVote = this.totalVote+2;
-        }else{
-          this.totalVote = this.totalVote+1;
-        }
-        this.myVote = memeVote.diff;
-      }).catch((err) => {
-        console.log(err.toString());
-      });
+    this.voteCount -= this.voted; // negate a previous vote
+
+    if (this.voted !== 1) {
+      this.voteCount++;
+      this.voted = 1;
+    } else {
+      this.voted = 0;
     }
   }
 
   onClickDownVote() {
-    if (this.myVote === -1) {
-      this.memeService.deleteMemeVote(this.memeId).then((value) => {
-        this.myVote = 0;
-        this.totalVote = this.totalVote+1;
-      })
-    }else{
-      this.memeService.downvoteMeme(this.memeId).then((memeVote) => {
-        if (this.myVote !== 0) {
-          this.totalVote = this.totalVote-2;
-        }else{
-          this.totalVote = this.totalVote-1;
-        }
-        this.myVote = memeVote.diff;
-      }).catch((err) => {
-        console.log(err.toString());
-      });
+    this.voteCount -= this.voted; // negate a previous vote
+
+    if (this.voted !== -1) {
+      this.voteCount--;
+      this.voted = -1;
+    } else {
+      this.voted = 0;
     }
   }
 
