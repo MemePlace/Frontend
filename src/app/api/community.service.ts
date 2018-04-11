@@ -7,6 +7,10 @@ export interface Community {
   description?: string;
   sidebar?: string;
   nsfw?: boolean;
+  favourites?: number;
+  creator?: {
+    username: string;
+  };
 }
 
 export interface CommunityList {
