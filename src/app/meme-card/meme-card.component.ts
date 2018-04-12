@@ -23,7 +23,7 @@ export class MemeCardComponent implements OnInit {
       this.imageLink = meme.link;
       this.username = meme.creator["username"];
       console.log(this.imageLink);
-      this.totalVote = meme.netVote;
+      this.totalVote = meme.totalVote;
       if (meme.myVote) {
         this.myVote =  meme.myVote["diff"];
       }

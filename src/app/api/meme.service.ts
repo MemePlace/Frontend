@@ -14,7 +14,7 @@ export interface Meme {
     username: string,
   }
   Community: string,
-  netVote: number,
+  totalVote: number,
   myVote: number
 }
 
