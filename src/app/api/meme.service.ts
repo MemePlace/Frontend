@@ -1,30 +1,26 @@
 import { Injectable } from '@angular/core';
-import { BaseApiService, Version } from './base-api.service';
+import {BaseApiService, MessageReply, Version} from './base-api.service';
 
 export interface Meme {
   id: number;
   title: string;
-  link: string;
-  creatorId: number;
-  TemplateId: number;
-  CommunityId: number;
-  updatedAt: string;
-  createdAt: string;
-  creator: {
-    username: string,
+  Image: {
+    link: string,
+    width: number,
+    height: number
   };
-  Community: string;
-  totalVote: number;
-  myVote: number;
-}
-
-export interface MemeVote {
-  id: number;
-  diff: number;
-  MemeId: number;
-  UserId: number;
+  creator: {
+    username: string;
+  };
+  TemplateId: number;
+  Community: {
+    name: string;
+  };
   createdAt: string;
-  updatedAt: string;
+  totalVote: number;
+  myVote: {
+    diff: number;
+  };
 }
 
 @Injectable()
@@ -36,16 +32,18 @@ export class MemeService {
    * Creates a new meme
    * @param {string} title
    * @param {string} link
+   * @param {number} width
+   * @param {number} height
    * @param {number} templateId
-   * @param {number} communityId
+   * @param {string} communityName
    * @return {Promise<Meme>} New meme details
    */
-  createMeme(title: string, link: string, templateId: number, communityId: number): Promise<Meme> {
+  createMeme(title: string, link: string, width: number, height: number, templateId: number, communityName: string): Promise<Meme> {
     return this.baseApiService.post(Version.v1, `memes`, {
       title: title,
       link: link,
       templateId: templateId,
-      communityId: communityId
+      communityName: communityName
     }).then((meme: Meme) => {
       return meme;
     });
@@ -69,24 +67,20 @@ export class MemeService {
    * Upvote a meme
    * @param {number} memeId
    */
-  upvoteMeme(memeId: number): Promise<MemeVote> {
+  upvoteMeme(memeId: number): Promise<MessageReply> {
     return this.baseApiService.put(Version.v1, `memes/${memeId}/vote`, {
       vote: 1
-    }).then( (memeVote: MemeVote) => {
-      return memeVote;
-    });
+    }) as Promise<MessageReply>;
   }
 
   /**
    * Downvote a meme
    * @param {number} memeId
    */
-  downvoteMeme(memeId: number): Promise<MemeVote> {
+  downvoteMeme(memeId: number): Promise<MessageReply> {
     return this.baseApiService.put(Version.v1, `memes/${memeId}/vote`, {
       vote: -1
-    }).then( (memeVote: MemeVote) => {
-      return memeVote;
-    });
+    }) as Promise<MessageReply>;
   }
 
   /**
@@ -94,7 +88,7 @@ export class MemeService {
    * @param {number} memeId
    */
   deleteMemeVote(memeId: number) {
-    return this.baseApiService.delete(Version.v1, `memes/${memeId}/vote`).then((value: ({} | void)) => {
+    return this.baseApiService.delete(Version.v1, `memes/${memeId}/vote`).then((value: ({}|void)) => {
       return 0;
     });
   }
@@ -104,7 +98,7 @@ export class MemeService {
    * @param {number} memeId
    */
   deleteMeme(memeId: number) {
-    return this.baseApiService.delete(Version.v1, `memes/${memeId}`).then((value: ({} | void)) => {
+    return this.baseApiService.delete(Version.v1, `memes/${memeId}`).then((value: ({}|void)) => {
       return value;
     });
   }

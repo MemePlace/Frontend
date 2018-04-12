@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Utils } from '../utils';
 import { MemeService } from '../api/meme.service';
+import { MatSnackBar } from '@angular/material';
 import { MatDialog } from '@angular/material';
 import { MemeDialogComponent } from '../meme-dialog/meme-dialog.component';
 
@@ -37,17 +38,18 @@ export class MemeCardComponent implements OnInit {
   }
 
   constructor(private memeService: MemeService,
-              public dialog: MatDialog) {
-  }
+              private snackBar: MatSnackBar,
+              public dialog: MatDialog) { }
 
   ngOnInit() {
     this.memeService.getMemeDetails(this.memeId).then((meme) => {
-      this.imageLink = meme.link;
-      this.username = meme.creator['username'];
-      console.log(this.imageLink);
-      this._totalVote = meme.totalVote || 0;
+      this.imageLink = meme.Image.link;
+      this.username = meme.creator.username;
+      this.totalVote = meme.totalVote || 0;
+
       if (meme.myVote) {
-        this._myVote =  meme.myVote['diff'];
+        this.myVote =  meme.myVote.diff;
+        this.totalVote -= this.myVote; // we represent the total as myVote + totalVote
       }
     });
   }
@@ -98,43 +100,25 @@ export class MemeCardComponent implements OnInit {
     }
   }
 
-  onClickUpVote() {
-    if (this._myVote === 1) {
-      this.memeService.deleteMemeVote(this.memeId).then((value) => {
-        this.myVote = value;
-        this.totalVote = this._totalVote - 1;
-      });
-    } else {
-      this.memeService.upvoteMeme(this.memeId).then((memeVote) => {
-        if (this._myVote !== 0) {
-          this.totalVote = this._totalVote + 2;
-        } else {
-          this.totalVote = this._totalVote + 1;
-        }
-        this.myVote = memeVote.diff;
-      }).catch((err) => {
-        console.log(err.toString());
-      });
+  async onClickUpVote() {
+    try {
+      const promise = (this._myVote === 1) ? this.memeService.deleteMemeVote(this.memeId) : this.memeService.upvoteMeme(this.memeId);
+      await promise;
+
+      this.myVote = (this._myVote === 1) ? 0 : 1;
+    } catch (e) {
+      this.snackBar.open(`Failed to vote: ${e.message}`, 'Close');
     }
   }
 
-  onClickDownVote() {
-    if (this._myVote === -1) {
-      this.memeService.deleteMemeVote(this.memeId).then((value) => {
-        this.myVote = 0;
-        this.totalVote = this._totalVote + 1;
-      });
-    } else {
-      this.memeService.downvoteMeme(this.memeId).then((memeVote) => {
-        if (this._myVote !== 0) {
-          this.totalVote = this._totalVote - 2;
-        } else {
-          this.totalVote = this._totalVote - 1;
-        }
-        this.myVote = memeVote.diff;
-      }).catch((err) => {
-        console.log(err.toString());
-      });
+  async onClickDownVote() {
+    try {
+      const promise = (this._myVote === -1) ? this.memeService.deleteMemeVote(this.memeId) : this.memeService.downvoteMeme(this.memeId);
+      await promise;
+
+      this.myVote = (this._myVote === -1) ? 0 : -1;
+    } catch (e) {
+      this.snackBar.open(`Failed to vote: ${e.message}`, 'Close');
     }
   }
 

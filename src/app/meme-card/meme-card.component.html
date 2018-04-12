@@ -11,10 +11,9 @@
       <!-- Up vote button -->
       <button mat-icon-button (click)="onClickUpVote()" [color]="_myVote == 1 ? 'primary': 'basic'"><i
         class="material-icons">thumb_up</i></button>
-      <span>{{_totalVote}}</span>
+      <span>{{_totalVote + _myVote}}</span>
       <!-- Down vote button -->
-      <button mat-icon-button (click)="onClickDownVote()" [color]="_myVote == -1 ? 'warn': 'basic'"><i
-        class="material-icons">thumb_down</i></button>
+      <button mat-icon-button (click)="onClickDownVote()" [color]="_myVote == -1 ? 'warn': 'basic'"><i class="material-icons">thumb_down</i></button>
     </div>
 
     <div style="clear: both"></div>
