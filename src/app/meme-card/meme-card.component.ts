@@ -1,5 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {Utils} from '../utils';
+import { MemeService } from '../api/meme.service';
+import {MatSnackBar} from '@angular/material';
 
 @Component({
   selector: 'app-meme-card',
@@ -8,15 +10,27 @@ import {Utils} from '../utils';
 })
 export class MemeCardComponent implements OnInit {
   @Input() imageHeight: number;
-  @Input() username: string;
-  @Input() image: string;
+  @Input() memeId: number;
 
-  voteCount = 0;
-  voted = 0;
+  imageLink = 'data:image/png;base64,ffff';  // ensures no null request being sent
+  username: string;
+  totalVote = 0;
+  myVote = 0;
 
-  constructor() { }
+  constructor(private memeService: MemeService,
+              private snackBar: MatSnackBar) { }
 
   ngOnInit() {
+    this.memeService.getMemeDetails(this.memeId).then((meme) => {
+      this.imageLink = meme.Image.link;
+      this.username = meme.creator.username;
+      this.totalVote = meme.totalVote || 0;
+
+      if (meme.myVote) {
+        this.myVote =  meme.myVote.diff;
+        this.totalVote -= this.myVote; // we represent the total as myVote + totalVote
+      }
+    });
   }
 
   maxCardWidth(height: number): number {
@@ -43,25 +57,29 @@ export class MemeCardComponent implements OnInit {
     }
   }
 
-  onClickUpVote() {
-    this.voteCount -= this.voted; // negate a previous vote
+  onClickMeme() {
+    // TODO
+  }
 
-    if (this.voted !== 1) {
-      this.voteCount++;
-      this.voted = 1;
-    } else {
-      this.voted = 0;
+  async onClickUpVote() {
+    try {
+      const promise = (this.myVote === 1) ? this.memeService.deleteMemeVote(this.memeId): this.memeService.upvoteMeme(this.memeId);
+      await promise;
+
+      this.myVote = (this.myVote === 1) ? 0 : 1;
+    } catch(e) {
+      this.snackBar.open(`Failed to vote: ${e.message}`, 'Close');
     }
   }
 
-  onClickDownVote() {
-    this.voteCount -= this.voted; // negate a previous vote
+  async onClickDownVote() {
+    try {
+      const promise = (this.myVote === -1) ? this.memeService.deleteMemeVote(this.memeId): this.memeService.downvoteMeme(this.memeId);
+      await promise;
 
-    if (this.voted !== -1) {
-      this.voteCount--;
-      this.voted = -1;
-    } else {
-      this.voted = 0;
+      this.myVote = (this.myVote === -1) ? 0 : -1;
+    } catch(e) {
+      this.snackBar.open(`Failed to vote: ${e.message}`, 'Close');
     }
   }
 

@@ -14,7 +14,7 @@ import {Utils} from '../utils';
 })
 export class HeaderComponent implements OnInit {
   @Output() sidebarToggle: EventEmitter<null> = new EventEmitter();
-  private utils = Utils;
+  utils = Utils;
 
   constructor(public dialog: MatDialog,
               public userService: UserService,
