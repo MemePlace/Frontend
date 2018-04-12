@@ -60,7 +60,8 @@ export class ToolbarComponent implements OnInit {
 
   openDetails() {
     this.dialog.open(DetailsDialogComponent, {
-      data: this.community
+      data: this.community,
+      width: '500px'
     });
   }
 }
