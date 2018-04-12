@@ -1,7 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {Meme, MemeService} from '../../api/meme.service';
 import {Utils} from '../../utils';
-import {MatSnackBar} from '@angular/material';
+import {MatSnackBar, PageEvent} from '@angular/material';
 
 @Component({
   selector: 'app-meme-view',
@@ -14,6 +14,7 @@ export class MemeViewComponent implements OnInit {
 
   utils = Utils;
   totalCount = 0;
+  pageSize = 30;
 
   memes: Meme[] = [];
   loading = false;
@@ -22,7 +23,7 @@ export class MemeViewComponent implements OnInit {
               private snackBar: MatSnackBar) { }
 
   async ngOnInit() {
-    this.loadMemes(0, 30);
+    this.loadMemes(0, this.pageSize);
   }
 
   async loadMemes(offset: number, count: number) {
@@ -41,4 +42,7 @@ export class MemeViewComponent implements OnInit {
     }
   }
 
+  onPaginate(event: PageEvent) {
+      this.loadMemes(event.pageIndex * event.pageSize, event.pageSize);
+  }
 }

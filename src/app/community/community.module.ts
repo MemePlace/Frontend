@@ -5,7 +5,7 @@ import { MemeCardComponent } from '../meme-card/meme-card.component';
 import { CreateComponent } from './create/create.component';
 import {
   MatTabsModule, MatIconModule, MatCardModule, MatButtonModule, MatTooltipModule, MatSnackBarModule,
-  MatToolbarModule, MatChipsModule, MatDividerModule, MatDialogModule, MatProgressSpinnerModule
+  MatToolbarModule, MatChipsModule, MatDividerModule, MatDialogModule, MatProgressSpinnerModule, MatPaginatorModule
 } from '@angular/material';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -29,6 +29,7 @@ import { MemeViewComponent } from './meme-view/meme-view.component';
     MatFormFieldModule,
     MatInputModule,
     MatProgressSpinnerModule,
+    MatPaginatorModule,
     MatButtonModule,
     ReactiveFormsModule,
     FormsModule,
