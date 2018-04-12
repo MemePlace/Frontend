@@ -32,14 +32,15 @@ export class CommunityService {
 
   constructor(private api: BaseApiService) { }
 
-  createCommunity(community: Community): Promise<any> {
-    return this.api.post(Version.v1, 'communities', community);
+  createCommunity(community: Community): Promise<Community> {
+    return this.api.post(Version.v1, 'communities', community) as Promise<Community>;
   }
 
   getCommunities(sort: string, count: number, offset: number): Promise<CommunityList> {
-    return this.api.get(Version.v1, `communities?sort=${sort}&count=${count}&offset=${offset}`).then((communitiesList: CommunityList) => {
-      return communitiesList;
-    });
+    return this.api.get(Version.v1, `communities?sort=${sort}&count=${count}&offset=${offset}`)
+      .then((communitiesList: CommunityList) => {
+        return communitiesList;
+      });
   }
 
   getCommunityDetails(name: string): Promise<Community> {
@@ -66,14 +67,15 @@ export class CommunityService {
   }
 
   getCommunityTemplates(name: string, sort: string, offset: number, count: number): Promise<TemplateList> {
-    return this.api.get(Version.v1, `communities/${name}/templates?sort=${sort}&offset=${offset}&count=${count}`).then((templatesList: TemplateList) => {
-      return templatesList;
-    });
+    return this.api.get(Version.v1, `communities/${name}/templates?sort=${sort}&offset=${offset}&count=${count}`)
+      .then((templatesList: TemplateList) => {
+        return templatesList;
+      });
   }
 
   isCommunityNameAvailable(name: string): Promise<boolean> {
-    return this.api.get(Version.v1, `${name}/exists`).then((exists: boolean) => {
-      return exists;
+    return this.api.get(Version.v1, `communities/${name}/exists`).then((data: {exists: boolean}) => {
+      return data.exists;
     });
   }
 }

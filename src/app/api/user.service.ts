@@ -1,5 +1,6 @@
 import {Injectable} from '@angular/core';
 import {BaseApiService, Version} from './base-api.service';
+import {StorageService, StorageType} from './storage.service';
 
 export interface User {
   Favourites?: Array<{
@@ -13,19 +14,44 @@ export interface User {
 @Injectable()
 export class UserService {
   private loggedIn = false;
-  public user: User;
+  private user_: User;
 
-  constructor(private api: BaseApiService) {
+  set user(value) {
+    this.user_ = value as User;
+  }
+
+  get user(): User {
+    if (this.user_) {
+      return this.user_;
+    }
+
+    // Check localstorage and session storage
+    const user = this.storageService.getJSON(StorageType.local, 'user')
+      || this.storageService.getJSON(StorageType.session, 'user');
+
+    if (user) {
+      this.user_ = user as User;
+      return this.user_;
+    }
+
+    return null;
+  }
+
+  constructor(private api: BaseApiService, private storageService: StorageService) {
     // check if they are logged in
-    this.getDetails().then((user) => {
+    this.getDetails(true).then((user) => {
       console.log(user);
     }).catch((err) => {
       console.error('User is not logged in');
+
+      // delete storage if their cookies expired
+      this.storageService.remove(StorageType.local, 'user');
+      this.storageService.remove(StorageType.session, 'user');
     });
   }
 
   isLoggedIn() {
-    return this.loggedIn;
+    return this.user !== null;
   }
 
   isUsernameAvailable() {
@@ -36,7 +62,6 @@ export class UserService {
    * Logs out the currently logged in user
    */
   logout() {
-
     if (!this.isLoggedIn()) {
       return;
     }
@@ -44,6 +69,10 @@ export class UserService {
     return this.api.put(Version.v1, 'auth/logout', {}).then((user) => {
       this.user = null;
       this.loggedIn = false;
+
+      // remove in session storage
+      this.storageService.remove(StorageType.local, 'user');
+      this.storageService.remove(StorageType.session, 'user');
     });
   }
 
@@ -58,6 +87,14 @@ export class UserService {
     return this.api.post(Version.v1, 'auth', {username, password, rememberMe}).then((user: User) => {
       this.user = user;
       this.loggedIn = true;
+
+      if (rememberMe) {
+        this.storageService.setJSON(StorageType.local, 'user', user);
+      }
+      else {
+        this.storageService.setJSON(StorageType.session, 'user', user);
+      }
+
       return user;
     });
   }
@@ -80,6 +117,9 @@ export class UserService {
     return this.api.post(Version.v1, 'users', body).then((user: User) => {
       this.user = user;
       this.loggedIn = true;
+
+      this.storageService.setJSON(StorageType.session, 'user', user);
+
       return user;
     });
   }
