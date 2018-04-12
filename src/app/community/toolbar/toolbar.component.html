@@ -1,6 +1,12 @@
 <mat-toolbar>
   <span class="community-title">{{community.name}} - {{community.title}}</span>
   <mat-chip-list *ngIf="community.nsfw" class="nsfw-chip">
-    <mat-chip>NSFW</mat-chip>
+    <mat-chip matTooltip="Not Suitable For Work">NSFW</mat-chip>
   </mat-chip-list>
+  <span class="fill-remaining-space"></span>
+
+  <button mat-icon-button disabled>
+    <mat-icon matTooltip="Favourite Community">star_border</mat-icon>
+  </button>
+  <button mat-raised-button class="details-btn" color="primary">Details</button>
 </mat-toolbar>
