@@ -1,14 +1,16 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input, OnDestroy, OnInit} from '@angular/core';
 import {Utils} from '../utils';
-import { MemeService } from '../api/meme.service';
+import {MemeService} from '../api/meme.service';
 import {MatSnackBar} from '@angular/material';
+import {UserService} from '../api/user.service';
+import {Subscription} from 'rxjs/Subscription';
 
 @Component({
   selector: 'app-meme-card',
   templateUrl: './meme-card.component.html',
   styleUrls: ['./meme-card.component.scss']
 })
-export class MemeCardComponent implements OnInit {
+export class MemeCardComponent implements OnInit, OnDestroy {
   @Input() imageHeight: number;
   @Input() memeId: number;
 
@@ -17,10 +19,28 @@ export class MemeCardComponent implements OnInit {
   totalVote = 0;
   myVote = 0;
 
+  loggedInSubscription: Subscription;
+
   constructor(private memeService: MemeService,
+              private userService: UserService,
               private snackBar: MatSnackBar) { }
 
   ngOnInit() {
+    this.loggedInSubscription = this.userService.loggedIn$.subscribe((isLoggedIn) => {
+      if (isLoggedIn) {
+        // get new vote amount by refetching the meme
+        this.fetchMemeDetails();
+      } else if (this.myVote !== 0) {
+        // Reset my vote and add it to the total
+        this.totalVote += this.myVote;
+        this.myVote = 0;
+      }
+    });
+
+    this.fetchMemeDetails();
+  }
+
+  fetchMemeDetails() {
     this.memeService.getMemeDetails(this.memeId).then((meme) => {
       this.imageLink = meme.Image.link;
       this.username = meme.creator.username;
@@ -31,6 +51,10 @@ export class MemeCardComponent implements OnInit {
         this.totalVote -= this.myVote; // we represent the total as myVote + totalVote
       }
     });
+  }
+
+  ngOnDestroy() {
+    this.loggedInSubscription.unsubscribe();
   }
 
   maxCardWidth(height: number): number {
