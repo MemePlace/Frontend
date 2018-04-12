@@ -14,8 +14,6 @@ import {StorageService, StorageType} from '../api/storage.service';
 })
 export class SidenavComponent implements OnInit {
   @ViewChild('sidenav') sidenav: MatSidenav;
-  @Output('open') open: EventEmitter<any> = new EventEmitter();
-  @Output('close') close: EventEmitter<any> = new EventEmitter();
   communities: Array<Community> = [];
   communitiesFavourited: Array<Community> = [];
   sidebarState = true;
@@ -58,15 +56,13 @@ export class SidenavComponent implements OnInit {
 
   toggle() {
     this.sidenav.toggle();
-  }
-
-  openside() {
-    this.storageService.set(StorageType.local, 'sidebarState', 'open');
-    this.sidebarState = true;
-  }
-  closeside() {
-    this.storageService.set(StorageType.local, 'sidebarState', 'close');
-    this.sidebarState = false;
+    if (this.sidenav.opened === true) {
+      this.storageService.set(StorageType.local, 'sidebarState', 'open');
+      this.sidebarState = true;
+    } else { 
+      this.storageService.set(StorageType.local, 'sidebarState', 'close');
+      this.sidebarState = false; 
+    }
   }
 
   toggleFavourite(community: Community) {
