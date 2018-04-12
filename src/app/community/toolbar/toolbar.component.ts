@@ -1,6 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {Community, CommunityService} from '../../api/community.service';
-import {MatSnackBar} from '@angular/material';
+import {MatDialog, MatSnackBar} from '@angular/material';
+import {DetailsDialogComponent} from '../details-dialog/details-dialog.component';
 
 @Component({
   selector: 'app-community-toolbar',
@@ -31,7 +32,8 @@ export class ToolbarComponent implements OnInit {
   }
 
   constructor(private communityService: CommunityService,
-              private snackBar: MatSnackBar) { }
+              private snackBar: MatSnackBar,
+              private dialog: MatDialog) { }
 
   ngOnInit() {
     let fav = this.community.favourites;
@@ -54,6 +56,11 @@ export class ToolbarComponent implements OnInit {
     } catch(err) {
       this.snackBar.open(`Failed to favourite: ${err.message}`, 'Close');
     }
+  }
 
+  openDetails() {
+    this.dialog.open(DetailsDialogComponent, {
+      data: this.community
+    });
   }
 }

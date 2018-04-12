@@ -5,7 +5,7 @@ import { MemeCardComponent } from '../meme-card/meme-card.component';
 import { CreateComponent } from './create/create.component';
 import {
   MatTabsModule, MatIconModule, MatCardModule, MatButtonModule, MatTooltipModule, MatSnackBarModule,
-  MatToolbarModule, MatChipsModule
+  MatToolbarModule, MatChipsModule, MatDividerModule, MatDialogModule
 } from '@angular/material';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -13,6 +13,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { FormsModule } from '@angular/forms';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { ToolbarComponent } from './toolbar/toolbar.component';
+import { DetailsDialogComponent } from './details-dialog/details-dialog.component';
 
 @NgModule({
   imports: [
@@ -20,6 +21,8 @@ import { ToolbarComponent } from './toolbar/toolbar.component';
     MatTabsModule,
     MatCardModule,
     MatChipsModule,
+    MatDividerModule,
+    MatDialogModule,
     MatToolbarModule,
     MatIconModule,
     MatFormFieldModule,
@@ -31,6 +34,7 @@ import { ToolbarComponent } from './toolbar/toolbar.component';
     MatTooltipModule,
     MatSnackBarModule
   ],
-  declarations: [BrowseComponent, MemeCardComponent, CreateComponent, ToolbarComponent]
+  declarations: [BrowseComponent, MemeCardComponent, CreateComponent, ToolbarComponent, DetailsDialogComponent],
+  entryComponents: [DetailsDialogComponent]
 })
 export class CommunityModule { }
