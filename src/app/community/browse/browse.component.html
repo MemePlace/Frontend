@@ -1,9 +1,9 @@
 <app-community-toolbar *ngIf="community" [community]="community"></app-community-toolbar>
 <mat-tab-group>
   <mat-tab label="Top">
-    <app-meme-view [communityName]="community && community.name" sort="top"></app-meme-view>
+    <app-meme-view *ngIf="retrieved" [communityName]="community && community.name" sort="top"></app-meme-view>
   </mat-tab>
   <mat-tab label="New">
-    <app-meme-view [communityName]="community && community.name" sort="new"></app-meme-view>
+    <app-meme-view *ngIf="retrieved" [communityName]="community && community.name" sort="new"></app-meme-view>
   </mat-tab>
 </mat-tab-group>

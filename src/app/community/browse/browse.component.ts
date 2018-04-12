@@ -14,6 +14,7 @@ export class BrowseComponent implements OnInit {
   utils = Utils;
 
   community: Community;
+  retrieved = false;
 
   constructor(private route: ActivatedRoute,
               private router: Router,
@@ -35,9 +36,12 @@ export class BrowseComponent implements OnInit {
       if (params.name) {
         this.communityService.getCommunityDetails(params.name).then((community) => {
           this.community = community;
+          this.retrieved = true;
         }).catch((err) => {
           this.router.navigate(['/404']);
         });
+      } else {
+        this.retrieved = true;
       }
     });
   }
