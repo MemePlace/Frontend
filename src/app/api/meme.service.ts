@@ -38,7 +38,7 @@ export class MemeService {
    * @param {string} communityName
    * @return {Promise<Meme>} New meme details
    */
-  createMeme(title: string, link: string, width: number, height: number, templateId: number, communityName: string): Promise<Meme>{
+  createMeme(title: string, link: string, width: number, height: number, templateId: number, communityName: string): Promise<Meme> {
     return this.baseApiService.post(Version.v1, `memes`, {
       title: title,
       link: link,
@@ -88,7 +88,7 @@ export class MemeService {
    * @param {number} memeId
    */
   deleteMemeVote(memeId: number) {
-    return this.baseApiService.delete(Version.v1, `memes/${memeId}/vote`).then((value:({}|void)) => {
+    return this.baseApiService.delete(Version.v1, `memes/${memeId}/vote`).then((value: ({}|void)) => {
       return 0;
     });
   }
@@ -98,7 +98,7 @@ export class MemeService {
    * @param {number} memeId
    */
   deleteMeme(memeId: number) {
-    return this.baseApiService.delete(Version.v1, `memes/${memeId}`).then((value:({}|void)) => {
+    return this.baseApiService.delete(Version.v1, `memes/${memeId}`).then((value: ({}|void)) => {
       return value;
     });
   }

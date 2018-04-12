@@ -18,7 +18,7 @@ export class SidenavComponent implements OnInit {
   @Output('close') close: EventEmitter<any> = new EventEmitter();
   communities: Array<Community> = [];
   communitiesFavourited: Array<Community> = [];
-  sidebarState: boolean = true;
+  sidebarState = true;
 
   get sidebarWidth(): number {
     return 300;
@@ -27,14 +27,14 @@ export class SidenavComponent implements OnInit {
   utils = Utils;
 
   constructor(
-    private userService: UserService, 
-    private communityService: CommunityService, 
+    private userService: UserService,
+    private communityService: CommunityService,
     private storageService: StorageService
   ) { }
 
   async ngOnInit() {
 
-    if(this.storageService.get(StorageType.local, 'sidebarState') === 'close') {
+    if (this.storageService.get(StorageType.local, 'sidebarState') === 'close') {
       this.sidebarState = false;
     } else { this.sidebarState = true; }
 
@@ -61,16 +61,16 @@ export class SidenavComponent implements OnInit {
   }
 
   openside() {
-    this.storageService.set(StorageType.local,'sidebarState', 'open');
+    this.storageService.set(StorageType.local, 'sidebarState', 'open');
     this.sidebarState = true;
   }
   closeside() {
-    this.storageService.set(StorageType.local,'sidebarState', 'close');
+    this.storageService.set(StorageType.local, 'sidebarState', 'close');
     this.sidebarState = false;
   }
 
   toggleFavourite(community: Community) {
-    if(this.userService.isLoggedIn()) {
+    if (this.userService.isLoggedIn()) {
       if (community.isFavourited === false) {
         // favourite community
         this.communityService.favouriteCommunity(community.name);
