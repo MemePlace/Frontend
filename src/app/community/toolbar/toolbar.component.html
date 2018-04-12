@@ -1,3 +1,6 @@
 <mat-toolbar>
-  <span>c/{{community.name}} - {{community.title}}</span>
+  <span class="community-title">{{community.name}} - {{community.title}}</span>
+  <mat-chip-list *ngIf="community.nsfw" class="nsfw-chip">
+    <mat-chip>NSFW</mat-chip>
+  </mat-chip-list>
 </mat-toolbar>

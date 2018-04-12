@@ -5,7 +5,7 @@ import { MemeCardComponent } from '../meme-card/meme-card.component';
 import { CreateComponent } from './create/create.component';
 import {
   MatTabsModule, MatIconModule, MatCardModule, MatButtonModule, MatTooltipModule, MatSnackBarModule,
-  MatToolbarModule
+  MatToolbarModule, MatChipsModule
 } from '@angular/material';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -19,6 +19,7 @@ import { ToolbarComponent } from './toolbar/toolbar.component';
     CommonModule,
     MatTabsModule,
     MatCardModule,
+    MatChipsModule,
     MatToolbarModule,
     MatIconModule,
     MatFormFieldModule,
