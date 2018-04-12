@@ -40,7 +40,7 @@ export class UserService {
 
   constructor(private api: BaseApiService, private storageService: StorageService) {
     // check if they are logged in
-    this.getDetails().then((user) => {
+    this.getDetails(true).then((user) => {
       console.log(user);
     }).catch((err) => {
       console.error('User is not logged in');
