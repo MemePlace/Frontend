@@ -5,8 +5,11 @@
   </mat-chip-list>
   <span class="fill-remaining-space"></span>
 
-  <button mat-icon-button disabled>
-    <mat-icon matTooltip="Favourite Community">star_border</mat-icon>
+  {{totalFavourites}}
+  <button mat-icon-button (click)="toggleFavourite()">
+    <mat-icon matTooltip="Favourite Community" [style.color]="isFavourited ? '#FFD700': ''">
+      {{isFavourited ? 'star': 'star_border'}}
+    </mat-icon>
   </button>
   <button mat-raised-button class="details-btn" color="primary">Details</button>
 </mat-toolbar>
