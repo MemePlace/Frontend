@@ -1,45 +1,14 @@
-textarea.mat-input-element {
-  resize: none;
-  overflow: auto;
-}
-
-mat-card-content {
-  display: flex;
-  flex-direction: column;
-}
-
 .communityCreationForm {
   margin: 30px;
-  height: 65vh;
-  min-height: 500px;
-  display: flex;
-  flex-direction: column;
-  position: relative;
 }
 
-.mat-card-actions {
-  margin-left: 0px;
-  margin-right: 0px;
-  padding: 30px 0;
-}
-
-#communityNameField {
-  border-top: 10px solid transparent;
-}
-
-#communityTitleField {
-  border-top: 10px solid transparent;
-}
-
-#comDescriptionField {
-  border-top: 10px solid transparent;
-}
-
-#sidebarTextField {
-  border-top: 10px solid transparent;
+mat-form-field {
+  display: inherit;
+  margin-top: 10px;
 }
 
 #submitButton {
-  width: 160px;
   float: right;
 }
+
+
