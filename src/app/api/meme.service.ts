@@ -2,19 +2,22 @@ import { Injectable } from '@angular/core';
 import {BaseApiService, MessageReply, Version} from './base-api.service';
 
 export interface Meme {
-  id: number,
-  title: string,
-  link: string,
-  creatorId: number,
-  TemplateId: number,
-  CommunityId: number,
-  updatedAt: string,
-  createdAt: string,
+  id: number;
+  title: string;
+  Image: {
+    link: string,
+    width: number,
+    height: number
+  };
   creator: {
-    username: string,
-  }
-  Community: string,
-  totalVote: number,
+    username: string;
+  };
+  TemplateId: number;
+  Community: {
+    name: string;
+  };
+  createdAt: string;
+  totalVote: number;
   myVote: {
     diff: number;
   };
@@ -29,16 +32,18 @@ export class MemeService {
    * Creates a new meme
    * @param {string} title
    * @param {string} link
+   * @param {number} width
+   * @param {number} height
    * @param {number} templateId
-   * @param {number} communityId
+   * @param {string} communityName
    * @return {Promise<Meme>} New meme details
    */
-  createMeme(title: string, link: string, templateId: number, communityId: number): Promise<Meme>{
+  createMeme(title: string, link: string, width: number, height: number, templateId: number, communityName: string): Promise<Meme>{
     return this.baseApiService.post(Version.v1, `memes`, {
       title: title,
       link: link,
       templateId: templateId,
-      communityId: communityId
+      communityName: communityName
     }).then((meme: Meme) => {
       return meme;
     });

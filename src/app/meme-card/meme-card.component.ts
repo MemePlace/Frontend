@@ -14,7 +14,7 @@ export class MemeCardComponent implements OnInit, OnDestroy {
   @Input() imageHeight: number;
   @Input() memeId: number;
 
-  imageLink: string= "data:image/png;base64,ffff";  // ensures no null request being sent
+  imageLink = 'data:image/png;base64,ffff';  // ensures no null request being sent
   username: string;
   totalVote = 0;
   myVote = 0;
@@ -42,7 +42,7 @@ export class MemeCardComponent implements OnInit, OnDestroy {
 
   fetchMemeDetails() {
     this.memeService.getMemeDetails(this.memeId).then((meme) => {
-      this.imageLink = meme.link;
+      this.imageLink = meme.Image.link;
       this.username = meme.creator.username;
       this.totalVote = meme.totalVote || 0;
 
