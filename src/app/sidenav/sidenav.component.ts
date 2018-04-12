@@ -1,9 +1,10 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {Component, Output, OnInit, ViewChild, EventEmitter} from '@angular/core';
 import {MatSidenav} from '@angular/material';
 import {Utils} from '../utils';
 import {UserService} from '../api/user.service';
 import {CommunityService} from '../api/community.service';
 import {Community} from '../api/community.service';
+import {StorageService, StorageType} from '../api/storage.service';
 
 
 @Component({
@@ -13,8 +14,11 @@ import {Community} from '../api/community.service';
 })
 export class SidenavComponent implements OnInit {
   @ViewChild('sidenav') sidenav: MatSidenav;
+  @Output('open') open: EventEmitter<any> = new EventEmitter();
+  @Output('close') close: EventEmitter<any> = new EventEmitter();
   communities: Array<Community> = [];
   communitiesFavourited: Array<Community> = [];
+  sidebarState: boolean = true;
 
   get sidebarWidth(): number {
     return 300;
@@ -22,9 +26,17 @@ export class SidenavComponent implements OnInit {
 
   utils = Utils;
 
-  constructor(private userService: UserService, private communityService: CommunityService) { }
+  constructor(
+    private userService: UserService, 
+    private communityService: CommunityService, 
+    private storageService: StorageService
+  ) { }
 
   async ngOnInit() {
+
+    if(this.storageService.get(StorageType.local, 'sidebarState') === 'close') {
+      this.sidebarState = false;
+    } else { this.sidebarState = true; }
 
     const communityList = await this.communityService.getCommunities('top', 10, 0);
 
@@ -46,6 +58,15 @@ export class SidenavComponent implements OnInit {
 
   toggle() {
     this.sidenav.toggle();
+  }
+
+  openside() {
+    this.storageService.set(StorageType.local,'sidebarState', 'open');
+    this.sidebarState = true;
+  }
+  closeside() {
+    this.storageService.set(StorageType.local,'sidebarState', 'close');
+    this.sidebarState = false;
   }
 
   toggleFavourite(community: Community) {
