@@ -38,7 +38,7 @@ export class BrowseComponent implements OnInit {
           this.community = community;
           this.retrieved = true;
         }).catch((err) => {
-          this.router.navigate(['/404']);
+          this.router.navigate(['/404'], {skipLocationChange: true});
         });
       } else {
         this.retrieved = true;
