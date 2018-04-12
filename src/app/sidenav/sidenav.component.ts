@@ -59,9 +59,9 @@ export class SidenavComponent implements OnInit {
     if (this.sidenav.opened === true) {
       this.storageService.set(StorageType.local, 'sidebarState', 'open');
       this.sidebarState = true;
-    } else { 
+    } else {
       this.storageService.set(StorageType.local, 'sidebarState', 'close');
-      this.sidebarState = false; 
+      this.sidebarState = false;
     }
   }
 
