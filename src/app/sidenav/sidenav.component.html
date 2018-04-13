@@ -1,7 +1,20 @@
-<mat-sidenav-container fullscreen [style.top.px]="utils.screenWidth <= 599 ? 56 : 64">
-
+<mat-sidenav-container fullscreen [style.top.px]="utils.screenWidth <= 599 ? 56 : 64">     
   <mat-sidenav #sidenav [mode]="utils.isMobile ? 'over': 'side'" [opened]="!utils.isMobile && sidebarState" [style.width.px]="sidebarWidth">
     <mat-nav-list>
+          <mat-expansion-panel>
+              <mat-expansion-panel-header>
+                <mat-panel-title>
+                  Community X
+                </mat-panel-title>
+                <mat-panel-description>
+                  Click for Details
+                </mat-panel-description>
+              </mat-expansion-panel-header>
+              <div>
+                hello
+              </div>
+            </mat-expansion-panel> 
+      <mat-divider></mat-divider>
       <a mat-list-item [routerLink]="['/create-community']">Create Community</a>
       <mat-divider></mat-divider>
       <mat-list-item *ngFor="let communityFav of communitiesFavourited; let j = index">

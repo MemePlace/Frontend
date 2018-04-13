@@ -1,4 +1,5 @@
-import {Component, Output, OnInit, ViewChild, EventEmitter} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
+import {MatExpansionModule} from '@angular/material/expansion';
 import {MatSidenav} from '@angular/material';
 import {Utils} from '../utils';
 import {UserService} from '../api/user.service';
@@ -13,6 +14,7 @@ import {StorageService, StorageType} from '../api/storage.service';
   styleUrls: ['./sidenav.component.scss']
 })
 export class SidenavComponent implements OnInit {
+  @ViewChild('expansion') expansion: MatExpansionModule;
   @ViewChild('sidenav') sidenav: MatSidenav;
   communities: Array<Community> = [];
   communitiesFavourited: Array<Community> = [];
@@ -51,7 +53,6 @@ export class SidenavComponent implements OnInit {
       });
     }
     this.communities = communityList.communities;
-    console.log(this.communities);
   }
 
   toggle() {
