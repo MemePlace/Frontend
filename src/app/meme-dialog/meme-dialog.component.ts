@@ -1,5 +1,5 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { MatDialogModule, MatSnackBar } from '@angular/material';
+import { Component, Inject, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { MatDialogModule, MAT_DIALOG_DATA, MatSnackBar } from '@angular/material';
 import { Utils } from '../utils';
 import { MemeService } from '../api/meme.service';
 
@@ -10,16 +10,23 @@ import { MemeService } from '../api/meme.service';
   styleUrls: ['./meme-dialog.component.scss']
 })
 export class MemeDialogComponent implements OnInit {
-  @Input() username: string;
-  @Input() imageLink: string;
-  @Input() totalVote: number;
-  @Input() myVote: number;
-  @Input() memeId: number;
+  username: string;
+  imageLink: string;
+  totalVote: number;
+  myVote: number;
+  memeId: number;
 
   @Output() notifyCard: EventEmitter<number> = new EventEmitter<number>();
 
   constructor(private memeService: MemeService,
-              private snackBar: MatSnackBar) { }
+              private snackBar: MatSnackBar,
+              @Inject(MAT_DIALOG_DATA) public data: any) {
+    this.username = data.username;
+    this.imageLink = data.imageLink;
+    this.totalVote = data.totalVote;
+    this.myVote = data.myVote;
+    this.memeId = data.memeId;
+  }
 
   ngOnInit() {
   }

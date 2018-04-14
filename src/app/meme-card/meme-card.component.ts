@@ -62,16 +62,22 @@ export class MemeCardComponent implements OnInit, OnDestroy {
 
   dialogPage() {
     if (!Utils.isMobile) {
-      const dialogRef = this.dialog.open(MemeDialogComponent);
+      const dialogRef = this.dialog.open(MemeDialogComponent, {
+        data: { username: this.username,
+                imageLink: this.imageLink,
+                totalVote: this.totalVote,
+                myVote: this.myVote,
+                memeId: this.memeId },
+      });
       const dialogInstance = dialogRef.componentInstance;
       dialogInstance.notifyCard.subscribe((vote: number) => {
         this.myVote = vote;
       });
-      dialogInstance.username = this.username;
-      dialogInstance.imageLink = this.imageLink;
-      dialogInstance.totalVote = this.totalVote;
-      dialogInstance.myVote = this.myVote;
-      dialogInstance.memeId = this.memeId;
+      // dialogInstance.username = this.username;
+      // dialogInstance.imageLink = this.imageLink;
+      // dialogInstance.totalVote = this.totalVote;
+      // dialogInstance.myVote = this.myVote;
+      // dialogInstance.memeId = this.memeId;
     }
   }
 
