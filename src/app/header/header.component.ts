@@ -29,12 +29,16 @@ export class HeaderComponent implements OnInit {
 
   registerPage() {
     // Open dialog box to Register page
-    const openRegister = this.dialog.open(LoginFormRegisterComponent);
+    const openRegister = this.dialog.open(LoginFormRegisterComponent, {
+      width: '360px',
+    });
   }
 
   loginPage() {
     // Open dialog box to Login page
-    const openLogin = this.dialog.open(LoginFormComponent);
+    const openLogin = this.dialog.open(LoginFormComponent, {
+      width: '360px',
+    });
   }
 
   gotoProfile() {
