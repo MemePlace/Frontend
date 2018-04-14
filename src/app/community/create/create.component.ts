@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {Community, CommunityService} from '../../api/community.service';
 import {MatSnackBar} from '@angular/material';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-community-create',
@@ -13,7 +14,10 @@ export class CreateComponent {
   form: FormGroup;
   submitting = false;
 
-  constructor(private fb: FormBuilder, private communityService: CommunityService, private snackBar: MatSnackBar) {
+  constructor(private fb: FormBuilder,
+              private router: Router,
+              private communityService: CommunityService,
+              private snackBar: MatSnackBar) {
     this.createForm();
   }
 
@@ -51,7 +55,7 @@ export class CreateComponent {
         duration: 5000
       });
 
-      // TODO: Redirect to new community
+      this.router.navigate([`/c/${community.name}`])
     }).catch((err) => {
       this.snackBar.open(`Creation Failed: ${err.message}`, 'Close');
     }).then(() => {
