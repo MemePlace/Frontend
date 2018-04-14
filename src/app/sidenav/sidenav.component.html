@@ -21,7 +21,7 @@
       <mat-divider></mat-divider>
       <mat-list-item *ngFor="let communityFavourite of communitiesFavourited; let j = index">
         <a mat-line [routerLink]="['/']">
-           {{ communityFavourite.title }}
+           {{ communityFavourite.sidebar ? communityFavourite.sidebar : communityFavourite.title }}
         </a>
         <button mat-icon-button (click)="toggleFavourite(communityFavourite)" ><mat-icon class="Favourited">star</mat-icon></button>
       </mat-list-item>
@@ -29,7 +29,7 @@
       <ng-container *ngFor="let community of communities">
         <mat-list-item *ngIf="!community.favourited">
           <a mat-line [routerLink]="['/']">
-             {{ community.title }}
+             {{ community.sidebar ? community.sidebar : community.title }}
           </a>
           <button mat-icon-button (click)="toggleFavourite(community)"><mat-icon>star_border</mat-icon></button>
         </mat-list-item>
