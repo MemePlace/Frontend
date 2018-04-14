@@ -61,8 +61,15 @@ export class UserService {
     return this.user !== null;
   }
 
-  isUsernameAvailable() {
-    throw new Error('Method not implemented');
+  /**
+   * Retrieves if username in register exist
+   * @param {string} username
+   * @return {Promise<boolean>} exists boolean
+   */
+  isUsernameAvailable(username: string): Promise<boolean> {
+    return this.api.get(Version.v1, `users/${username}/exists`).then((data: {exists: boolean}) => {
+      return data.exists;
+    });
   }
 
   isCommunityFavourited(name: string): boolean {
