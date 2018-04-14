@@ -16,10 +16,11 @@ export class MemeCardComponent implements OnInit, OnDestroy {
   @Input() imageHeight: number;
   @Input() memeId: number;
 
-  imageLink = 'data:imageLink/png;base64,ffff';  // ensures no null request being sent
+  imageLink = 'data:image/png;base64,ffff';  // ensures no null request being sent
   username: string;
   totalVote = 0;
   myVote = 0;
+
   loggedInSubscription: Subscription;
 
   constructor(private memeService: MemeService,
@@ -47,6 +48,7 @@ export class MemeCardComponent implements OnInit, OnDestroy {
       this.imageLink = meme.Image.link;
       this.username = meme.creator.username;
       this.totalVote = meme.totalVote || 0;
+
       if (meme.myVote) {
         this.myVote =  meme.myVote.diff;
         this.totalVote -= this.myVote; // we represent the total as myVote + totalVote
