@@ -1,6 +1,7 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {MatDialogModule} from '@angular/material';
-import {Utils} from '../utils';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { MatDialogModule, MatSnackBar } from '@angular/material';
+import { Utils } from '../utils';
+import { MemeService } from '../api/meme.service';
 
 @Component({
   selector: 'app-meme-dialog',
@@ -10,14 +11,15 @@ import {Utils} from '../utils';
 })
 export class MemeDialogComponent implements OnInit {
   @Input() username: string;
-  @Input() image: string;
+  @Input() imageLink: string;
   @Input() totalVote: number;
   @Input() myVote: number;
+  @Input() memeId: number;
 
   @Output() notifyCard: EventEmitter<number> = new EventEmitter<number>();
 
-  constructor() {
-  }
+  constructor(private memeService: MemeService,
+              private snackBar: MatSnackBar) { }
 
   ngOnInit() {
   }
@@ -34,13 +36,28 @@ export class MemeDialogComponent implements OnInit {
     return Utils.screenHeight * 0.9;
   }
 
-  // I'd rather do these in a more natural way, e.g. property binding but I can't seem to get it to work properly
-  onClickUpVote() {
-    this.notifyCard.emit(1);
+  async onClickUpVote() {
+    try {
+      const promise = (this.myVote === 1) ? this.memeService.deleteMemeVote(this.memeId) : this.memeService.upvoteMeme(this.memeId);
+      await promise;
+
+      this.myVote = (this.myVote === 1) ? 0 : 1;
+      this.notifyCard.emit(this.myVote);
+    } catch (e) {
+      this.snackBar.open(`Failed to vote: ${e.message}`, 'Close');
+    }
   }
 
-  onClickDownVote() {
-    this.notifyCard.emit(-1);
+  async onClickDownVote() {
+    try {
+      const promise = (this.myVote === -1) ? this.memeService.deleteMemeVote(this.memeId) : this.memeService.downvoteMeme(this.memeId);
+      await promise;
+
+      this.myVote = (this.myVote === -1) ? 0 : -1;
+      this.notifyCard.emit(this.myVote);
+    } catch (e) {
+      this.snackBar.open(`Failed to vote: ${e.message}`, 'Close');
+    }
   }
 
 }

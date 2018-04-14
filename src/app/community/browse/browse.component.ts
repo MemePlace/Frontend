@@ -13,8 +13,9 @@ export class BrowseComponent implements OnInit {
   constructor() { }
 
   user1 = {height: '300', memeId: 1};
+  user2 = {height: '300', memeId: 2};
 
-  users = [this.user1];
+  users = [this.user1, this.user2];
 
   ngOnInit() {
   }

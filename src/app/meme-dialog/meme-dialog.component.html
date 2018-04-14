@@ -1,5 +1,5 @@
 <div class="meme-dialog" [style.maxHeight.px]="maxDialogHeight()">
-  <img class="meme-img" [style.minWidth.px]="minCardWidth()" [style.maxWidth.px]="maxCardWidth()" [src]="image">
+  <img class="meme-img" [style.minWidth.px]="minCardWidth()" [style.maxWidth.px]="maxCardWidth()" [src]="imageLink">
   <!--This is obviously copied and pasted from MemeCard. Is there a nicer way to do this?-->
   <!-- Actions that are appended to the bottom of the card: show author name, up vote, down vote-->
   <mat-dialog-content class="actions" style="margin-top: -3px;">
@@ -12,7 +12,7 @@
       <!-- Up vote button -->
       <button mat-icon-button (click)="onClickUpVote()" [color]="myVote == 1 ? 'primary': 'basic'"><i
         class="material-icons">thumb_up</i></button>
-      <span>{{totalVote}}</span>
+      <span>{{totalVote + myVote}}</span>
       <!-- Down vote button -->
       <button mat-icon-button (click)="onClickDownVote()" [color]="myVote == -1 ? 'warn': 'basic'"><i
         class="material-icons">thumb_down</i></button>
