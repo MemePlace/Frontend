@@ -41,8 +41,7 @@ export class MemeService {
       if (isLoggedIn) {
         // destroy cache, we don't know how we voted on stuff
         this.memes = {};
-      }
-      else {
+      } else {
         // remove our votes
         Object.keys(this.memes).forEach((id) => {
           if (this.memes[id].myVote) {
@@ -63,7 +62,7 @@ export class MemeService {
    * @param {string} communityName
    * @return {Promise<Meme>} New meme details
    */
-  createMeme(title: string, link: string, width: number, height: number, templateId: number, communityName: string): Promise<Meme>{
+  createMeme(title: string, link: string, width: number, height: number, templateId: number, communityName: string): Promise<Meme> {
     return this.api.post(Version.v1, `memes`, {
       title: title,
       link: link,
@@ -80,8 +79,7 @@ export class MemeService {
     if (communityName) {
       result = await this.api.get(Version.v1,
         `communities/${communityName}/memes?sort=${sort}&offset=${offset}&count=${count}`) as Promise<MemeList>;
-    }
-    else {
+    } else {
       result = await this.api.get(Version.v1, `memes?sort=${sort}&offset=${offset}&count=${count}`) as Promise<MemeList>;
     }
 
@@ -98,7 +96,7 @@ export class MemeService {
    */
   async getMemeDetails(memeId: number): Promise<Meme> {
     if (this.memes[memeId]) {
-      return Promise.resolve(this.memes[memeId])
+      return Promise.resolve(this.memes[memeId]);
     }
 
     return this.api.get(Version.v1, `memes/${memeId}`).then( (meme: Meme) => {
@@ -144,7 +142,7 @@ export class MemeService {
    * @param {number} memeId
    */
   deleteMemeVote(memeId: number) {
-    return this.api.delete(Version.v1, `memes/${memeId}/vote`).then((value:({}|void)) => {
+    return this.api.delete(Version.v1, `memes/${memeId}/vote`).then((value: ({}|void)) => {
       if (this.memes[memeId]) {
         delete this.memes[memeId].myVote;
       }
@@ -156,7 +154,7 @@ export class MemeService {
    * @param {number} memeId
    */
   deleteMeme(memeId: number) {
-    return this.api.delete(Version.v1, `memes/${memeId}`).then((value:({}|void)) => {
+    return this.api.delete(Version.v1, `memes/${memeId}`).then((value: ({}|void)) => {
       if (this.memes[memeId]) {
         delete this.memes[memeId];
       }
