@@ -22,6 +22,7 @@ export class LoginFormRegisterComponent {
   emailText: string;
   hideInvalidText = true;
   errorMessage: string;
+  private nameTimeout;
 
   usernameFormControl = new FormControl('', [
     Validators.required,
@@ -30,6 +31,23 @@ export class LoginFormRegisterComponent {
   passwordFormControl = new FormControl('', [
     Validators.required,
   ]);
+
+/*  nameExists(control: FormControl) {
+    clearTimeout(this.nameTimeout);
+
+    return new Promise((resolve, reject) => {
+      this.nameTimeout = setTimeout(() => {
+        this.userService.isUsernameAvailable(control.value).then((exists) => {
+          if (exists) {
+            resolve({nameExists: true});
+          } else {
+            resolve(null);
+          }
+        }).catch((err) => resolve(null));
+      }, 250);
+    });
+  }
+*/
 
   registerValidate() {
       // Validate user registration by calling signup from UserService

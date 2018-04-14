@@ -15,7 +15,7 @@ export class UserService {
   private user_: User;
 
   private loggedInSource = new Subject<boolean>();
-  loggedIn$ = this.loggedInSource.distinctUntilChanged().asObservable();
+  loggedIn$ = this.loggedInSource.asObservable().distinctUntilChanged();
 
   set user(value) {
     this.loggedInSource.next(value !== null);
@@ -56,8 +56,15 @@ export class UserService {
     return this.user !== null;
   }
 
-  isUsernameAvailable() {
-    throw new Error('Method not implemented');
+  /**
+   * Retrieves if username in register exist
+   * @param {string} username
+   * @return {Promise<boolean>} exists boolean
+   */
+  isUsernameAvailable(username: string): Promise<boolean> {
+    return this.api.get(Version.v1, 'username/${username}/exists').then((data: {exists: boolean}) => {
+      return data.exists;
+    });
   }
 
   /**
