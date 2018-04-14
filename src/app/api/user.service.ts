@@ -1,12 +1,17 @@
 import {Injectable} from '@angular/core';
-import {BaseApiService, Version} from './base-api.service';
+import {BaseApiService, MessageReply, Version} from './base-api.service';
 import {StorageService, StorageType} from './storage.service';
+import {Community} from './community.service';
 import {Subject} from 'rxjs/Subject';
 import 'rxjs/add/operator/distinctUntilChanged';
 
 export interface User {
   id: number;
   username: string;
+  Favourites?: Array<{
+    name: string;
+    title: string;
+  }>;
 }
 
 @Injectable()
@@ -15,7 +20,7 @@ export class UserService {
   private user_: User;
 
   private loggedInSource = new Subject<boolean>();
-  loggedIn$ = this.loggedInSource.distinctUntilChanged().asObservable();
+  loggedIn$ = this.loggedInSource.asObservable().distinctUntilChanged();
 
   set user(value) {
     this.loggedInSource.next(value !== null);
@@ -58,6 +63,37 @@ export class UserService {
 
   isUsernameAvailable() {
     throw new Error('Method not implemented');
+  }
+
+  isCommunityFavourited(name: string): boolean {
+    if (!this.isLoggedIn()) {
+      return false;
+    }
+
+    return this.user.Favourites.findIndex((community) => {
+      return community.name === name;
+    }) > -1;
+  }
+
+  favouriteCommunity(community: Community): Promise<MessageReply> {
+    return this.api.put(Version.v1, `communities/${community.name}/favourite`, {}).then((reply: MessageReply) => {
+      this.user.Favourites.push(community);
+      return reply;
+    });
+  }
+
+  unfavouriteCommunity(community: Community): Promise<MessageReply> {
+    return this.api.delete(Version.v1, `communities/${community.name}/favourite`).then((reply: MessageReply) => {
+      const index = this.user.Favourites.findIndex((c) => {
+        return c.name === community.name;
+      });
+
+      if (index > -1) {
+        this.user.Favourites.splice(index, 1);
+      }
+
+      return reply;
+    });
   }
 
   /**
