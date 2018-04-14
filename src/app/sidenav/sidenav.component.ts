@@ -43,13 +43,10 @@ export class SidenavComponent implements OnInit {
     if (this.userService.isLoggedIn()) {
       const user = await this.userService.getDetails(true);
       this.communitiesFavourited = user.Favourites as Community[];
-      this.communitiesFavourited.forEach((communityFav) => {
-        communityFav.isFavourited = true;
-      });
       communityList.communities.forEach((community: any) => {
         if (user.Favourites.filter(c => c.name === community.name).length > 0) {
-          community.isFavourited = true;
-        } else { community.isFavourited = false; }
+          community.favourited = true;
+        } else { community.favourited = false; }
       });
     }
     this.communities = communityList.communities;
@@ -66,21 +63,19 @@ export class SidenavComponent implements OnInit {
     }
   }
 
-  toggleFavourite(community: Community) {
+  async toggleFavourite(community: Community) {
     if (this.userService.isLoggedIn()) {
-      if (community.isFavourited === false) {
+      if (community.favourited === false) {
         // favourite community
-        this.communityService.favouriteCommunity(community.name);
-        community.isFavourited = true;
-        this.communitiesFavourited.push(community);
+        this.userService.favouriteCommunity(community);
+        community.favourited = true;
+        const user = await this.userService.getDetails(true);
+        this.communitiesFavourited = user.Favourites as Community[];
       } else {
         // unfavourite community
-        this.communityService.deleteFavourite(community.name);
-        this.communities[
-          this.communities.map((c) => {
-            return c.name;
-          }).indexOf(community.name)].isFavourited = false;
-        community.isFavourited = false;
+        this.userService.unfavouriteCommunity(community);
+        this.communities[this.communities.map((c) => c.name).indexOf(community.name)].favourited = false;
+        community.favourited = false;
         this.communitiesFavourited = this.communitiesFavourited.filter((com) => {
           return com !== community;
         });
