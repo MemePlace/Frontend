@@ -45,7 +45,7 @@ export class MemeService {
    * @param {string} communityName
    * @return {Promise<Meme>} New meme details
    */
-  createMeme(title: string, link: string, width: number, height: number, templateId: number, communityName: string): Promise<Meme>{
+  createMeme(title: string, link: string, width: number, height: number, templateId: number, communityName: string): Promise<Meme> {
     return this.api.post(Version.v1, `memes`, {
       title: title,
       link: link,
@@ -60,8 +60,7 @@ export class MemeService {
     if (communityName) {
       return this.api.get(Version.v1,
         `communities/${communityName}/memes?sort=${sort}&offset=${offset}&count=${count}`) as Promise<MemeList>;
-    }
-    else {
+    } else {
       return this.api.get(Version.v1, `memes?sort=${sort}&offset=${offset}&count=${count}`) as Promise<MemeList>;
     }
   }
@@ -101,7 +100,7 @@ export class MemeService {
    * @param {number} memeId
    */
   deleteMemeVote(memeId: number) {
-    return this.api.delete(Version.v1, `memes/${memeId}/vote`).then((value:({}|void)) => {
+    return this.api.delete(Version.v1, `memes/${memeId}/vote`).then((value: ({}|void)) => {
       return 0;
     });
   }
@@ -111,7 +110,7 @@ export class MemeService {
    * @param {number} memeId
    */
   deleteMeme(memeId: number) {
-    return this.api.delete(Version.v1, `memes/${memeId}`).then((value:({}|void)) => {
+    return this.api.delete(Version.v1, `memes/${memeId}`).then((value: ({}|void)) => {
       return value;
     });
   }
