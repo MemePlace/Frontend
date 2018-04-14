@@ -74,13 +74,13 @@
   <form id="newSize">
     <mat-action-row>
       <mat-form-field class="sizeInput">
-        <input matInput #height type="number" placeholder="Height" value="{{sHeight}}" (change)="checkAR('h', height.value)">
+        <input matInput #height type="number" placeholder="Height" value="{{sHeight}}" (change)="checkAR('h', height.value)" min="1">
       </mat-form-field>
       <button mat-icon-button class="tiny" (click)="toggleAspectRatio()">
         <mat-icon class="tiny">{{aspectIcon}}</mat-icon>
       </button>
       <mat-form-field class="sizeInput">
-        <input matInput #width type="number" placeholder="Width" value="{{sWidth}}" (change)="checkAR('w', width.value)">
+        <input matInput #width type="number" placeholder="Width" value="{{sWidth}}" (change)="checkAR('w', width.value)" min="1">
       </mat-form-field>
       <button mat-raised-button color="accent" (click)="changeSize([height.value, width.value])">Submit</button>
     </mat-action-row>
@@ -101,7 +101,7 @@
       <mat-divider></mat-divider>
       <mat-action-row mat-menu-item [disableRipple]="true">
         <button mat-raised-button color="accent" (click)="uploadFile()">Upload File</button>
-        <button mat-raised-button color="accent" (click)="uploadUrl()">URL</button>
+        <button mat-raised-button color="accent" (click)="uploadUrl()" disabled>URL</button>
       </mat-action-row>
       <span mat-menu-item [disableRipple]="true">
         <mat-checkbox #resize [checked]="true" (change)="toggleSize()">Fit to Image?</mat-checkbox>
@@ -135,15 +135,20 @@
         <mat-button-toggle #underline><mat-icon>format_underline</mat-icon></mat-button-toggle>
       </mat-button-toggle-group>
       <mat-divider></mat-divider>
-      <mat-form-field>
-        <mat-select  #fontOption [(value)]="selected" placeholder="Font">
-          <mat-option *ngFor="let font of fonts"  [value]="font.name">{{font.name}}</mat-option>
-        </mat-select>
-      </mat-form-field>
+      <mat-action-row>
+        <mat-form-field>
+          <mat-select  #fontOption [(value)]="selected" placeholder="Font">
+            <mat-option *ngFor="let font of fonts"  [value]="font.name" style="font-family: {{font.name}}">{{font.name}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field style="width:15%; margin-left: 20px;">
+          <input matInput #fontSizeIn id="fontSize" type="number" placeholder="Font Size" value="{{fontSize}}" min="0"><span>px</span>
+        </mat-form-field>
+      </mat-action-row>
 
       <mat-divider></mat-divider>
       <mat-action-row mat-menu-item [disableRipple]="true">
-        <button mat-raised-button color="accent" (click)="addTxt(bold.value, italic.value, underline.value)">Add New Text</button>
+        <button mat-raised-button color="accent" (click)="addTxt(bold.checked, italic.checked, underline.checked, fontOption.value, fontSizeIn.value)">Add New Text</button>
       </mat-action-row>
       <span mat-menu-item [disableRipple]="true">
       </span>
@@ -155,7 +160,7 @@
   <span (click)="$event.stopPropagation()">
     <form>
       <mat-action-row mat-menu-item [disableRipple]="true">
-        <input matInput #imgURL type="url" placeholder="Please enter a URL..." value="{{hardCodeURL}}" (paste)="test()">
+        <input matInput #imgURL type="url" placeholder="Please enter a URL..." (paste)="test()">
       </mat-action-row>
       <mat-divider></mat-divider>
       <mat-action-row mat-menu-item [disableRipple]="true">

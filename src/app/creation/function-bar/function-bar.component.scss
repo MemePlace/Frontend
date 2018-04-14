@@ -1,6 +1,12 @@
+@import url('https://fonts.googleapis.com/css?family=Pacifico|VT323|Quicksand|Inconsolata|Impact');
+
 .sizeInput {
   width: 80px;
   margin-left: 15px;
+}
+
+#fontSize {
+  width: 40px;
 }
 
 .little-spacer {
@@ -24,6 +30,3 @@
 }
 
 
-.mat-button-toggle-checked {
-  background-color: #686868;
-}

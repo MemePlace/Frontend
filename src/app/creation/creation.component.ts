@@ -58,8 +58,8 @@ export class CreationComponent implements OnInit {
     this.fab.delete();
   }
 
-  addTxt(b: boolean, i: boolean, u: boolean, font: string) {
-    this.fab.addTxt(b, i, u, font);
+  addTxt(b: boolean, i: boolean, u: boolean, font: string, size: number) {
+    this.fab.addTxt(b, i, u, font, size);
   }
 
   clear() {

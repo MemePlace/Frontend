@@ -20,10 +20,16 @@ export class FunctionBarComponent {
   public aspectIcon: string;
   public arToggle: boolean;
   public aspectRatio: number;
-  selected = 'Arial';
+  public fontSize: number;
+  public selected = 'Impact';
+  public fontColour; // TODO: Implement font color UI
 
+  // TODO: Not all fonts are loaded into FabricJS immediately, pre-loading is needed
   public fonts: Array<any> = [
+    { name: 'Impact' },
     { name: 'Arial' },
+    { name: 'Pacifico' },
+    { name: 'Roboto' },
     { name: 'Lora' },
     { name: 'Croissant One' },
     { name: 'Architects Daughter' },
@@ -62,9 +68,8 @@ export class FunctionBarComponent {
     this.parent.uploadImgUrl(url, this.resizeCheck);
   }
 
-  addTxt(bold: boolean, italic: boolean, underline: boolean) {
-    const font = this.fontOption.value);
-    this.parent.addTxt(bold, italic, underline, font);
+  addTxt(bold: boolean, italic: boolean, underline: boolean, font: string, size: number) {
+    this.parent.addTxt(bold, italic, underline, font, size);
   }
 
   moveObj(val: number) {
@@ -107,11 +112,9 @@ export class FunctionBarComponent {
     if (axis === 'h' && this.arToggle === true) {
       this.sHeight = value;
       this.sWidth = this.sHeight / this.aspectRatio;
-      console.log('gotta change w: ' + (this.sHeight));
     } else if (axis === 'w' && this.arToggle === true) {
       this.sWidth = value;
       this.sHeight = this.sWidth * this.aspectRatio;
-      console.log('gotta mess up h: ' + (this.sWidth * this.aspectRatio));
     }
   }
 
@@ -119,6 +122,7 @@ export class FunctionBarComponent {
   initBar(par: CreationComponent, size: [number, number]): void {
     this.arToggle = false;
     this.aspectIcon = 'lock_open';
+    this.fontSize = 72;
     this.resizeCheck = true;
     this.parent = par;
     this.setSize(size);

@@ -22,9 +22,10 @@ interface FileReaderEvent extends Event {
 })
 
 export class FabricComponent {
+  @ViewChild('canvCont') canvCont;
   private parent: CreationComponent;
 
-  private canvas: Canvas;
+  private canvas;
   public height: number; width: number;
   private zoomVal: number; scaledHeight: number; scaledWidth: number;
 
@@ -160,9 +161,6 @@ export class FabricComponent {
     const add = (obj: fabric.Object) => (this.canvas.add(obj));
     const setSize = ([height, width]: [number, number]) => (this.parent.setSize([height, width]));
 
-    console.log('deep');
-    console.log(file);
-
     const reader = new FileReader();
     reader.onload = function (event: FileReaderEvent) {
       const imgObj = new Image();
@@ -199,17 +197,24 @@ export class FabricComponent {
   }
 
 
-  addTxt(bold: boolean, italic: boolean, underline: boolean, font: string) {
-    const newTxt = new fabric.Textbox('New Text', {
-      fontFamily: font,
-    });
-    if (bold) {
-      newTxt.set('fontWeight', 'bold');
-    }
-    if (italic) {
-      newTxt.set('fontStyle', 'italic');
-    }
+  addTxt(bold: boolean, italic: boolean, underline: boolean, font: string, size: number) {
+//    y = (y != undefined) ? y : x;
 
+    const fontWeight = bold ? 'bold' : 'normal';
+    const fontStyle = italic ? 'italic' : 'normal';
+
+    const newTxt = new fabric.Textbox('New Text', {
+      fontSize: size,
+      fontFamily: font,
+      fontWeight: fontWeight,
+      fontStyle: fontStyle,
+      underline: underline,
+      fill: '#fff',
+      stroke: '#000',
+      _strokeWidth: 2,
+    });
+    console.log(newTxt);
+    if (bold) {console.log('its true');}
 
 
     this.canvas.add(newTxt);
@@ -218,18 +223,32 @@ export class FabricComponent {
   }
 
   delete() {
-    let obj: fabric.Object;
+    const sel = this.canvas.getActiveObjects();
+    if (sel) {
+      this.canvas.remove(...sel);
+    }
+    this.canvas.discardActiveObject().renderAll();
+  }
+ //   console.log(sel.type);
+   // let item;
+    //console.log(sel.getObject().type);
+    //for (item in sel.getObjects()) {
+    //}
+    /*    let obj: fabric.Object;
     obj = this.canvas.getActiveObject();
     if (obj) {
       this.canvas.remove(obj);
     }
   }
-
+*/
   selectAll() {
+    this.canvas.discardActiveObject();
     const selection = new fabric.ActiveSelection(this.canvas.getObjects(), {
       canvas: this.canvas
     });
     this.canvas.setActiveObject(selection).renderAll();
+    console.log(this.canvCont.nativeElement);
+    this.canvCont.nativeElement.focus();
   }
 
   clearCanvas() {
