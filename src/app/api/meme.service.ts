@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import {BaseApiService, MessageReply, Version} from './base-api.service';
+import {UserService} from './user.service';
 
 export interface Meme {
   id: number;
@@ -34,7 +35,23 @@ export interface MemeList {
 export class MemeService {
   private memes: {[id: number]: Meme} = {};
 
-  constructor(private api: BaseApiService) {}
+  constructor(private api: BaseApiService,
+              private userService: UserService) {
+    userService.loggedIn$.subscribe((isLoggedIn) => {
+      if (isLoggedIn) {
+        // destroy cache, we don't know how we voted on stuff
+        this.memes = {};
+      }
+      else {
+        // remove our votes
+        Object.keys(this.memes).forEach((id) => {
+          if (this.memes[id].myVote) {
+            delete this.memes[id].myVote;
+          }
+        });
+      }
+    });
+  }
 
   /**
    * Creates a new meme
