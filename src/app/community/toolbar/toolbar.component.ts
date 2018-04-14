@@ -53,7 +53,7 @@ export class ToolbarComponent implements OnInit {
         this.communityService.favourite(this.community);
 
       await promise;
-    } catch(err) {
+    } catch (err) {
       this.snackBar.open(`Failed to favourite: ${err.message}`, 'Close');
     }
   }
