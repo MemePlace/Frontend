@@ -12,8 +12,8 @@ import { MemeService } from '../api/meme.service';
 export class MemeDialogComponent implements OnInit {
   username: string;
   imageLink: string;
-  totalVote: number;
-  myVote: number;
+  totalVote = 0;
+  myVote = 0;
   memeId: number;
 
   @Output() notifyCard: EventEmitter<number> = new EventEmitter<number>();
@@ -21,14 +21,24 @@ export class MemeDialogComponent implements OnInit {
   constructor(private memeService: MemeService,
               private snackBar: MatSnackBar,
               @Inject(MAT_DIALOG_DATA) public data: any) {
-    this.username = data.username;
-    this.imageLink = data.imageLink;
-    this.totalVote = data.totalVote;
-    this.myVote = data.myVote;
     this.memeId = data.memeId;
+    this.fetchMemeDetails();
   }
 
   ngOnInit() {
+  }
+
+  fetchMemeDetails() {
+    this.memeService.getMemeDetails(this.memeId).then((meme) => {
+      this.imageLink = meme.Image.link;
+      this.username = meme.creator.username;
+      this.totalVote = meme.totalVote || 0;
+
+      if (meme.myVote) {
+        this.myVote =  meme.myVote.diff;
+        this.totalVote -= this.myVote; // we represent the total as myVote + totalVote
+      }
+    });
   }
 
   maxCardWidth(): number {
