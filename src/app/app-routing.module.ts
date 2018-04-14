@@ -18,9 +18,17 @@ const routes: Routes = [
     canActivate: [AuthGuard]
   },
   {
-    path: '**',
+    path: 'c/:name',
+    component: BrowseComponent
+  },
+  {
+    path: '404',
     component: PageNotFoundComponent
-  }
+  },
+  {
+    path: '**',
+    redirectTo: '/404'
+  },
 ];
 
 @NgModule({

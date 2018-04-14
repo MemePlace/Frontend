@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
-import { BaseApiService, Version } from './base-api.service';
+import {BaseApiService, MessageReply, Version} from './base-api.service';
+import {UserService} from './user.service';
 
 export interface Community {
   name: string;
@@ -7,8 +8,11 @@ export interface Community {
   description?: string;
   sidebar?: string;
   nsfw?: boolean;
-  creatorId: number;
-  isFavourited?: boolean;
+  favourites?: number;
+  favourited: boolean;
+  creator?: {
+    username: string;
+  };
 }
 
 export interface CommunityList {
@@ -29,8 +33,8 @@ export interface TemplateList {
 
 @Injectable()
 export class CommunityService {
-
-  constructor(private api: BaseApiService) { }
+  constructor(private api: BaseApiService,
+              private userService: UserService) { }
 
   createCommunity(community: Community): Promise<Community> {
     return this.api.post(Version.v1, 'communities', community) as Promise<Community>;
@@ -49,16 +53,16 @@ export class CommunityService {
     });
   }
 
-  favouriteCommunity(name: string): Promise<any> {
-    return this.api.put(Version.v1, `communities/${name}/favourite`, {} ).then((msg: string) => {
-      return msg;
-    });
+  favourite(community: Community): Promise<MessageReply> {
+    return this.userService.favouriteCommunity(community);
   }
 
-  deleteFavourite(name: string): Promise<any> {
-    return this.api.delete(Version.v1, `communities/${name}/favourite`).then((msg: string) => {
-      return msg;
-    });
+  unfavourite(community: Community): Promise<MessageReply> {
+    return this.userService.unfavouriteCommunity(community);
+  }
+
+  isFavourited(name: string) {
+    return this.userService.isCommunityFavourited(name);
   }
 
   getCommunityMemes(name: string): Promise<any> {
