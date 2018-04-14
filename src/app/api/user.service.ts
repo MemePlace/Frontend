@@ -135,8 +135,7 @@ export class UserService {
 
       if (rememberMe) {
         this.storageService.setJSON(StorageType.local, 'user', user);
-      }
-      else {
+      } else {
         this.storageService.setJSON(StorageType.session, 'user', user);
       }
 

@@ -51,8 +51,7 @@ export class PageNotFoundComponent implements OnInit {
     ctx.fillStyle = '#0F0';
     ctx.font = `${this.fontSize}px arial`;
 
-    for(let i = 0; i < this.drops.length; i++)
-    {
+    for (let i = 0; i < this.drops.length; i++) {
       if (this.drops[i] === -1 && Math.random() < 0.975) {
         // When starting out, don't let all the characters fall at once
         continue;
@@ -62,7 +61,7 @@ export class PageNotFoundComponent implements OnInit {
       ctx.fillText(letter, i * this.fontSize, this.drops[i] * this.fontSize);
 
       // Randomly send drop back to top
-      if(this.drops[i] * this.fontSize > c.height && Math.random() > 0.975) {
+      if (this.drops[i] * this.fontSize > c.height && Math.random() > 0.975) {
         this.drops[i] = 0;
       }
 
