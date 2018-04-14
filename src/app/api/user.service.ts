@@ -15,7 +15,7 @@ export class UserService {
   private user_: User;
 
   private loggedInSource = new Subject<boolean>();
-  loggedIn$ = this.loggedInSource.distinctUntilChanged().asObservable();
+  loggedIn$ = this.loggedInSource.asObservable().distinctUntilChanged();
 
   set user(value) {
     this.loggedInSource.next(value !== null);
