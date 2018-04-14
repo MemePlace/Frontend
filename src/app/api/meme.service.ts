@@ -146,6 +146,8 @@ export class MemeService {
       if (this.memes[memeId]) {
         delete this.memes[memeId].myVote;
       }
+
+      return 0;
     });
   }
 

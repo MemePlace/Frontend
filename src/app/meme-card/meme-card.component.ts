@@ -87,22 +87,22 @@ export class MemeCardComponent implements OnInit, OnDestroy {
 
   async onClickUpVote() {
     try {
-      const promise = (this.myVote === 1) ? this.memeService.deleteMemeVote(this.memeId): this.memeService.upvoteMeme(this.memeId);
+      const promise = (this.myVote === 1) ? this.memeService.deleteMemeVote(this.memeId) : this.memeService.upvoteMeme(this.memeId);
       await promise;
 
       this.myVote = (this.myVote === 1) ? 0 : 1;
-    } catch(e) {
+    } catch (e) {
       this.snackBar.open(`Failed to vote: ${e.message}`, 'Close');
     }
   }
 
   async onClickDownVote() {
     try {
-      const promise = (this.myVote === -1) ? this.memeService.deleteMemeVote(this.memeId): this.memeService.downvoteMeme(this.memeId);
+      const promise = (this.myVote === -1) ? this.memeService.deleteMemeVote(this.memeId) : this.memeService.downvoteMeme(this.memeId);
       await promise;
 
       this.myVote = (this.myVote === -1) ? 0 : -1;
-    } catch(e) {
+    } catch (e) {
       this.snackBar.open(`Failed to vote: ${e.message}`, 'Close');
     }
   }
