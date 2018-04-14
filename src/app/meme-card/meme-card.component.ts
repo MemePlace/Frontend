@@ -1,16 +1,18 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { Utils } from '../utils';
 import { MemeService } from '../api/meme.service';
 import { MatSnackBar } from '@angular/material';
 import { MatDialog } from '@angular/material';
 import { MemeDialogComponent } from '../meme-dialog/meme-dialog.component';
+import { UserService } from '../api/user.service';
+import { Subscription } from 'rxjs/Subscription';
 
 @Component({
   selector: 'app-meme-card',
   templateUrl: './meme-card.component.html',
   styleUrls: ['./meme-card.component.scss']
 })
-export class MemeCardComponent implements OnInit {
+export class MemeCardComponent implements OnInit, OnDestroy {
   dialogInstance: MemeDialogComponent;
   dialogOpen = false;
   @Input() imageHeight: number;
@@ -18,6 +20,7 @@ export class MemeCardComponent implements OnInit {
 
   imageLink = 'data:image/png;base64,ffff';  // ensures no null request being sent
   username: string;
+  loggedInSubscription: Subscription;
 
   private _totalVote = 0;
 
@@ -38,20 +41,39 @@ export class MemeCardComponent implements OnInit {
   }
 
   constructor(private memeService: MemeService,
+              private userService: UserService,
               private snackBar: MatSnackBar,
               public dialog: MatDialog) { }
 
   ngOnInit() {
+    this.loggedInSubscription = this.userService.loggedIn$.subscribe((isLoggedIn) => {
+      if (isLoggedIn) {
+        // get new vote amount by refetching the meme
+        this.fetchMemeDetails();
+      } else if (this._myVote !== 0) {
+        // Reset my vote and add it to the total
+        this.totalVote += this._myVote;
+        this.myVote = 0;
+      }
+    });
+
+    this.fetchMemeDetails();
+  }
+
+  fetchMemeDetails() {
     this.memeService.getMemeDetails(this.memeId).then((meme) => {
       this.imageLink = meme.Image.link;
       this.username = meme.creator.username;
       this.totalVote = meme.totalVote || 0;
-
       if (meme.myVote) {
         this.myVote =  meme.myVote.diff;
-        this.totalVote -= this.myVote; // we represent the total as myVote + totalVote
+        this.totalVote = this._totalVote - this._myVote; // we represent the total as myVote + totalVote
       }
     });
+  }
+
+  ngOnDestroy() {
+    this.loggedInSubscription.unsubscribe();
   }
 
   dialogPage() {
