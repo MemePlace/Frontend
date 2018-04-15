@@ -66,6 +66,8 @@ export class MemeService {
     return this.api.post(Version.v1, `memes`, {
       title: title,
       link: link,
+      width: width,
+      height: height,
       templateId: templateId,
       communityName: communityName
     }).then((meme: Meme) => {

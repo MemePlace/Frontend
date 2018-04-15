@@ -1,5 +1,6 @@
 import {Component, OnInit, ViewChild } from '@angular/core';
 import 'fabric';
+import {MatAutocompleteSelectedEvent} from '@angular/material';
 import {FabricComponent} from './fabric/fabric.component';
 import {FunctionBarComponent} from './function-bar/function-bar.component';
 import {MatSnackBar} from '@angular/material';
@@ -14,6 +15,8 @@ export class CreationComponent implements OnInit {
   @ViewChild('fab') fab;
 
   public zoomVal: number;
+  title: string;
+  communityName: string;
 
   constructor(public snackBar: MatSnackBar) {
     const paste = (file) => (this.fab.uploadFile(file, true));
@@ -47,13 +50,27 @@ export class CreationComponent implements OnInit {
     this.fab.delete();
   }
 
-
-
-
   ngOnInit() {
     this.zoomVal = 1;
     const initSize = 500;
     this.fab.initCanv(this, this.functs, initSize, initSize);
     this.functs.initBar(this, this.fab, [initSize, initSize]);
+  }
+
+  onMouseWheel(event: MouseWheelEvent) {
+    if (event.deltaY > 0) {
+      this.zoomVal -= 0.10;
+    } else if (event.deltaY < 0) {
+      this.zoomVal += 0.10;
+    }
+
+    event.preventDefault();
+    this.fab.setZoom(this.zoomVal);
+  }
+
+  onCommunitySelect(event: MatAutocompleteSelectedEvent) {
+    this.communityName = event.option.value.name;
+
+    console.log(event.option.value.name);
   }
 }

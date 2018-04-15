@@ -9,14 +9,19 @@ app-size {
   margin: 0 25px 0 25px;
 }
 
-app-fabric {
-  width: 100%;
+#creation-body {
+  height: calc(100% - (4em + 0px) + 0px);
+  background: lightgrey;
+  overflow: auto;
+  text-align: center;
 }
 
-#creation-body {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
+#community-bar {
+  width: 60%;
+}
+
+#meme-create {
+  margin-left: 10px;
 }
 
 #fabricBody {
@@ -24,15 +29,15 @@ app-fabric {
 }
 
 #functionBar {
-  flex-grow: 5;
+  position: absolute;
+  top: calc((4em + 0px) + 10px);
+  right: 10px;
 }
 
 #zoom-container {
   display: flex;
-  //flex-direction: row;
   flex-wrap: wrap;
   justify-content: center;
-  //align-items: center;
 }
 
 
