@@ -12,11 +12,6 @@ export class CreationComponent implements OnInit {
 
   public zoomVal: number;
 
-  moveZoom(slide: any) {
-    this.zoomVal = slide.value;
-    this.fab.setZoom(slide.value);
-  }
-
   resetZoom() {
     this.zoomVal = 1;
     this.fab.resetZoom();
@@ -56,6 +51,7 @@ export class CreationComponent implements OnInit {
       this.zoomVal += 0.10;
     }
 
+    event.preventDefault();
     this.fab.setZoom(this.zoomVal);
   }
 }
