@@ -15,6 +15,7 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { ToolbarComponent } from './toolbar/toolbar.component';
 import { DetailsDialogComponent } from './details-dialog/details-dialog.component';
 import { MemeViewComponent } from './meme-view/meme-view.component';
+import {RouterModule} from '@angular/router';
 
 @NgModule({
   imports: [
@@ -35,7 +36,8 @@ import { MemeViewComponent } from './meme-view/meme-view.component';
     FormsModule,
     MatCheckboxModule,
     MatTooltipModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    RouterModule
   ],
   declarations: [BrowseComponent, MemeCardComponent, CreateComponent, ToolbarComponent, DetailsDialogComponent, MemeViewComponent],
   entryComponents: [DetailsDialogComponent]
