@@ -1,11 +1,9 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
-import { Utils } from '../utils';
-import { MemeService } from '../api/meme.service';
-import { MatSnackBar } from '@angular/material';
-import { MatDialog } from '@angular/material';
-import { MemeDialogComponent } from '../meme-dialog/meme-dialog.component';
-import { UserService } from '../api/user.service';
-import { Subscription } from 'rxjs/Subscription';
+import {Component, Input, OnDestroy, OnInit} from '@angular/core';
+import {Utils} from '../utils';
+import {MemeService} from '../api/meme.service';
+import {MatSnackBar} from '@angular/material';
+import {UserService} from '../api/user.service';
+import {Subscription} from 'rxjs/Subscription';
 
 @Component({
   selector: 'app-meme-card',
@@ -25,8 +23,7 @@ export class MemeCardComponent implements OnInit, OnDestroy {
 
   constructor(private memeService: MemeService,
               private userService: UserService,
-              private snackBar: MatSnackBar,
-              public dialog: MatDialog) { }
+              private snackBar: MatSnackBar) { }
 
   ngOnInit() {
     this.loggedInSubscription = this.userService.loggedIn$.subscribe((isLoggedIn) => {
@@ -60,18 +57,6 @@ export class MemeCardComponent implements OnInit, OnDestroy {
     this.loggedInSubscription.unsubscribe();
   }
 
-  dialogPage() {
-    if (!Utils.isMobile) {
-      const dialogRef = this.dialog.open(MemeDialogComponent, {
-        data: { memeId: this.memeId },
-      });
-      const dialogInstance = dialogRef.componentInstance;
-      dialogInstance.notifyCard.subscribe((vote: number) => {
-        this.myVote = vote;
-      });
-    }
-  }
-
   maxCardWidth(height: number): number {
     if (Utils.isMobile) {
       return Utils.screenWidth * 0.95;
@@ -80,7 +65,7 @@ export class MemeCardComponent implements OnInit, OnDestroy {
     }
   }
 
-  minCardWidth(): number {
+  minCardWidth(height: number): number {
     if (Utils.isMobile) {
       return Utils.screenWidth * 0.95;
     } else {
@@ -96,24 +81,28 @@ export class MemeCardComponent implements OnInit, OnDestroy {
     }
   }
 
+  onClickMeme() {
+    // TODO
+  }
+
   async onClickUpVote() {
     try {
-      const promise = (this.myVote === 1) ? this.memeService.deleteMemeVote(this.memeId) : this.memeService.upvoteMeme(this.memeId);
+      const promise = (this.myVote === 1) ? this.memeService.deleteMemeVote(this.memeId): this.memeService.upvoteMeme(this.memeId);
       await promise;
 
       this.myVote = (this.myVote === 1) ? 0 : 1;
-    } catch (e) {
+    } catch(e) {
       this.snackBar.open(`Failed to vote: ${e.message}`, 'Close');
     }
   }
 
   async onClickDownVote() {
     try {
-      const promise = (this.myVote === -1) ? this.memeService.deleteMemeVote(this.memeId) : this.memeService.downvoteMeme(this.memeId);
+      const promise = (this.myVote === -1) ? this.memeService.deleteMemeVote(this.memeId): this.memeService.downvoteMeme(this.memeId);
       await promise;
 
       this.myVote = (this.myVote === -1) ? 0 : -1;
-    } catch (e) {
+    } catch(e) {
       this.snackBar.open(`Failed to vote: ${e.message}`, 'Close');
     }
   }

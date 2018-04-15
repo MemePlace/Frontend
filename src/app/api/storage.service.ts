@@ -22,7 +22,8 @@ export class StorageService {
   getJSON(type: StorageType, key: string): {} {
     try {
       return JSON.parse(typeMap[type].getItem(key));
-    } catch (e) {
+    }
+    catch(e) {
       return null;
     }
   }

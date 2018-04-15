@@ -11,32 +11,7 @@ mat-card-content {
 .mat-card-actions {
   margin-left: 0px;
   margin-right: 0px;
-  padding: 10px 0;
-  float: right;
-}
-
-.divider {
-  height: auto;
-  width: 5px;
-  display: inline-block;
-}
-#registerUsernameField {
-  width: 100%;
-  padding-bottom: 10px;
-}
-
-#registerPasswordField {
-  width: 100%;
-  padding-bottom: 10px;
-}
-
-#registerEmailField {
-  width: 100%;
-  padding-bottom: 10px;
-}
-
-#loginPasswordField {
-  padding-bottom: 10px;
+  padding: 20px 0;
 }
 
 #invalidText {
@@ -44,14 +19,12 @@ mat-card-content {
   color: darkred;
 }
 
-#cancelButton {
-  width: 60px;
-}
-
 #loginButton {
-  width: 60px;
+  width: 80px;
+  float: right;
 }
 
 #registerButton{
   width: 80px;
+  float: right;
 }

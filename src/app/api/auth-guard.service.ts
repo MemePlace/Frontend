@@ -13,7 +13,8 @@ export class AuthGuardService implements CanActivate {
   canActivate(): boolean {
     if (this.userService.isLoggedIn()) {
       return true;
-    } else {
+    }
+    else {
       this.router.navigate(['/']);
       this.snackBar.open('You must be logged in to go there!', 'Close');
       return false;
