@@ -1,12 +1,13 @@
 import { Injectable } from '@angular/core';
 import {HttpClient, HttpHeaders, HttpResponse} from '@angular/common/http';
 
-export interface MemeInfo {
+export interface ImgurUploadResponse {
   link: string;
   deleteHash: string;
   id: string;
   width: number;
   height: number;
+  type: string;
 }
 
 @Injectable()
@@ -18,7 +19,7 @@ export class ImgurService {
 
   constructor(private http: HttpClient) { }
 
-  uploadImg(dataURL: string): Promise<MemeInfo> {
+  uploadImg(dataURL: string): Promise<ImgurUploadResponse> {
     // TODO: Get the community that the meme is going into
     const httpHeader = new HttpHeaders({
       'Authorization' : 'Client-ID ' + this.clientID
@@ -29,8 +30,7 @@ export class ImgurService {
     };
 
     return this.http.post((this.url + 'image'), body, options).toPromise()
-      .catch((err) => alert ('Upload failed!')) // TODO: Make snackbar
-      .then((res: any) => res.data);
+      .then((res: {data: ImgurUploadResponse}) => res.data);
   }
 
 }
