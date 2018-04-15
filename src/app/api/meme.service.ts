@@ -109,7 +109,7 @@ export class MemeService {
    * @param {number} memeId
    */
   async getMemeDetails(memeId: number): Promise<Meme> {
-    if (this.memes[memeId]) {
+    if (this.memes[memeId] && (this.memes[memeId].myVote !== undefined)) {
       return Promise.resolve(this.memes[memeId]);
     }
 
@@ -172,6 +172,19 @@ export class MemeService {
   getMemeComments(memeId: number): Promise<CommentList> {
     return this.api.get(Version.v1, `memes/${memeId}/comments`).then((list: CommentList) => {
       return list;
+    });
+  }
+
+  /**
+   * Add a comment to a meme
+   * @param {number} memeId
+   * @param {string} text
+   */
+  addMemeComment(memeId: number, text: string): Promise<MessageReply> {
+    return this.api.post(Version.v1, `memes/${memeId}/comments`, {
+      text: text
+    }).then((reply: MessageReply) => {
+      return reply;
     });
   }
 

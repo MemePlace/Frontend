@@ -1,7 +1,9 @@
-import { Component, Inject, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, Inject, EventEmitter, OnInit, Output } from '@angular/core';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { MatDialogModule, MAT_DIALOG_DATA, MatSnackBar } from '@angular/material';
 import { Utils } from '../utils';
 import { CommentList, Comment, MemeService } from '../api/meme.service';
+import { UserService } from '../api/user.service';
 
 @Component({
   selector: 'app-meme-dialog',
@@ -16,14 +18,20 @@ export class MemeDialogComponent implements OnInit {
   myVote = 0;
   memeId: number;
   comments: Comment[] = [];
+  form: FormGroup;
 
   @Output() notifyCard: EventEmitter<number> = new EventEmitter<number>();
 
   constructor(private memeService: MemeService,
               private snackBar: MatSnackBar,
-              @Inject(MAT_DIALOG_DATA) public data: any) {
+              @Inject(MAT_DIALOG_DATA) public data: any,
+              public userService: UserService,
+              private fb: FormBuilder) {
     this.memeId = data.memeId;
     this.fetchMemeDetails();
+    if (this.userService.isLoggedIn()) {
+      this.createForm();
+    }
   }
 
   ngOnInit() {
@@ -40,9 +48,28 @@ export class MemeDialogComponent implements OnInit {
         this.totalVote -= this.myVote; // we represent the total as myVote + totalVote
       }
     });
+    this.getComments();
+  }
+
+  getComments() {
     this.memeService.getMemeComments(this.memeId).then((list: CommentList) => {
       this.comments = list.comments;
     });
+  }
+
+  createForm() {
+    this.form = this.fb.group({
+      commentText: ['']
+    });
+  }
+
+  submitComment() {
+    if (this.form.value.commentTest !== '') {
+      this.memeService.addMemeComment(this.memeId, this.form.value.commentText).then((reply) => {
+        this.getComments();
+      });
+      this.createForm(); // reset the form
+    }
   }
 
   maxCardWidth(): number {

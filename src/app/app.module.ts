@@ -5,7 +5,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { MaterialModule } from './material/material.module';
-import { MatDialogModule } from '@angular/material';
+import { MatDialogModule, MatFormFieldModule, MatInputModule } from '@angular/material';
 import { SidenavComponent } from './sidenav/sidenav.component';
 import { HeaderComponent } from './header/header.component';
 import { CommunityModule } from './community/community.module';
@@ -30,6 +30,8 @@ import { MemeService } from './api/meme.service';
     AppRoutingModule,
     MaterialModule,
     MatDialogModule,
+    MatFormFieldModule,
+    MatInputModule,
     CommunityModule,
     ApiModule,
     SearchModule,

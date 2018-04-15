@@ -3,6 +3,11 @@
   overflow-y: scroll;
 }
 
+.meme-img {
+  display: block;
+  margin: auto;
+}
+
 .cardActionButtons {
   float: right;
 }
@@ -15,4 +20,32 @@
 
 mat-list {
   clear: both;
+  word-wrap: break-word;
+}
+
+mat-list .comment-info {
+  font-size: small;
+  font-weight: bold;
+}
+
+::ng-deep .mat-list .mat-list-item .mat-line{
+  word-wrap: break-word;
+  white-space: pre-wrap;
+  height: auto;
+}
+
+::ng-deep .mat-list-item-content {
+  padding: 0!important;
+}
+
+::ng-deep  .mat-list .mat-list-item{
+  height:initial!important;
+}
+
+.comment {
+  padding: 10px 0;
+}
+
+mat-form-field {
+  display: inherit;
 }

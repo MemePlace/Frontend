@@ -16,12 +16,20 @@
     </div>
     <br />
     <mat-list>
-      <mat-list-item *ngFor="let comment of comments">
-        {{ comment.User.username }}: {{ comment.text }}
-        <mat-divider [inset]="true" *ngIf="!last"></mat-divider>
-      </mat-list-item>
       <mat-divider></mat-divider>
+      <mat-list-item *ngFor="let comment of comments">
+        <div class="comment">
+          <div class="comment-info" matLine>{{ comment.User.username }}</div>
+          <div matLine>{{ comment.text }}</div>
+        </div>
+        <mat-divider></mat-divider>
+      </mat-list-item>
     </mat-list>
+    <form [formGroup]="form" (ngSubmit)="submitComment()" *ngIf="userService.isLoggedIn()">
+      <mat-form-field>
+        <input matInput type="text" placeholder="Add a comment" formControlName="commentText" maxLength="1000">
+      </mat-form-field>
+    </form>
     <div style="clear: both"></div>
   </mat-dialog-content>
 </div>
