@@ -2,6 +2,7 @@ import {Component, OnInit, ViewChild } from '@angular/core';
 import 'fabric';
 import {FabricComponent} from './fabric/fabric.component';
 import {FunctionBarComponent} from './function-bar/function-bar.component';
+import {MatSnackBar} from '@angular/material';
 
 @Component({
   selector: 'app-creation',
@@ -13,6 +14,24 @@ export class CreationComponent implements OnInit {
   @ViewChild('fab') fab;
 
   public zoomVal: number;
+
+  constructor(public snackBar: MatSnackBar) {
+    const paste = (file) => (this.fab.uploadFile(file, true));
+    window.addEventListener('paste', function(e: ClipboardEvent) {
+      paste(e.clipboardData.files[0]);
+    });
+
+    const myDel = () => (this.delete());
+    document.addEventListener('keypress', function(e: KeyboardEvent) {
+      if (document.activeElement.id === 'canvCont' && e.key === 'Delete') {
+        myDel();
+      }
+    });
+  }
+
+  err(mssg: string) {
+    this.snackBar.open(mssg, 'close', { duration: 2000 });
+  }
 
   moveZoom(slide: any) {
     this.zoomVal = slide.value;
@@ -28,19 +47,7 @@ export class CreationComponent implements OnInit {
     this.fab.delete();
   }
 
-  constructor() {
-    const paste = (file) => (this.fab.uploadFile(file, true));
-    window.addEventListener('paste', function(e: ClipboardEvent) {
-      paste(e.clipboardData.files[0]);
-    });
 
-    const myDel = () => (this.delete());
-    document.addEventListener('keypress', function(e: KeyboardEvent) {
-      if (document.activeElement.id === 'canvCont' && e.key === 'Delete') {
-        myDel();
-      }
-    });
-  }
 
 
   ngOnInit() {

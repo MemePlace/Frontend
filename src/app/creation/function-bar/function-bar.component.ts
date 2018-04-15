@@ -1,6 +1,7 @@
 import {Component, ViewChild, ViewEncapsulation} from '@angular/core';
 import {CreationComponent} from '../creation.component';
 import {FabricComponent} from '../fabric/fabric.component';
+import {MatSnackBar} from '@angular/material';
 
 
 @Component({
@@ -72,7 +73,7 @@ export class FunctionBarComponent {
   uploadUrl(): void {
     const url = this.urlIn.nativeElement.value;
     if (url === '') {
-      // this.fab.upImg(this.sampleUrls[Math.floor(Math.random() * this.sampleUrls.length)], resize);
+      this.parent.err('Invalid URL');
     } else {
       this.fabComp.upImg(url, this.resizeCheck);
     }

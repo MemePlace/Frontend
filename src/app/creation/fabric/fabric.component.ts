@@ -3,6 +3,7 @@ import 'fabric';
 import {CreationComponent} from '../creation.component';
 import {FunctionBarComponent} from '../function-bar/function-bar.component';
 import {ImgurService} from '../imgur.service';
+import {MatSnackBar} from '@angular/material';
 
 declare let fabric;
 
@@ -50,8 +51,6 @@ export class FabricComponent {
 
     this.setSize([h, w]);
   }
-
-
 
 
   setSize([nheight, nwidth]: [number, number]) {
@@ -170,7 +169,8 @@ export class FabricComponent {
 
   upImg(targeturl: string, resize: boolean) {
     this.imgurService.uploadImg(targeturl)
-      .then((val) => this.upURL(val.link, resize));
+      .then((val) => this.upURL(val.link, resize))
+      .catch((err) => this.parent.err(err.toString()));
   }
 
 
@@ -248,8 +248,9 @@ export class FabricComponent {
       width: this.width
     });
     const data = pic.replace('data:image/png;base64,', '');
-    const test  = this.imgurService.uploadImg(data);
-    test.then((val) => console.log(val));
+    this.imgurService.uploadImg(data)
+      .then((val) => console.log(val))
+      .catch((err) => this.parent.err('Cannot publish! ' + err.toString()));
   }
 
 }
