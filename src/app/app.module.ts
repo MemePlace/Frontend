@@ -5,11 +5,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { MaterialModule } from './material/material.module';
-import 'hammerjs';
-
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatDialogModule } from '@angular/material';
->>>>>>> dc882d3968e0433b5fb360cbd5fc7f1f06a06f8d
 import { SidenavComponent } from './sidenav/sidenav.component';
 import { HeaderComponent } from './header/header.component';
 import { CommunityModule } from './community/community.module';
@@ -19,8 +15,6 @@ import { SearchModule } from './search/search.module';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { MemeDialogComponent } from './meme-dialog/meme-dialog.component';
 import { MemeService } from './api/meme.service';
-
-import { CreationModule } from './creation/creation.module';
 
 @NgModule({
   declarations: [
@@ -37,7 +31,6 @@ import { CreationModule } from './creation/creation.module';
     MaterialModule,
     MatDialogModule,
     CommunityModule,
-    CreationModule,
     ApiModule,
     SearchModule,
     FormsModule,

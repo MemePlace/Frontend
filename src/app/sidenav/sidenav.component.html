@@ -2,8 +2,6 @@
 
   <mat-sidenav #sidenav [mode]="utils.isMobile ? 'over': 'side'" [opened]="!utils.isMobile" [style.width.px]="sidebarWidth">
     <mat-nav-list>
-      <a mat-list-item [routerLink]="['creation']">Creation Center</a>
-      <a mat-list-item [routerLink]="['/']">Settings</a>
       <a mat-list-item [routerLink]="['/create-community']">Create Community</a>
       <mat-divider></mat-divider>
       <mat-list-item *ngFor="let communityFav of communitiesFavourited; let j = index">
