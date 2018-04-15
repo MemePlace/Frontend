@@ -55,7 +55,7 @@ export class CreateComponent {
         duration: 5000
       });
 
-      this.router.navigate([`/c/${community.name}`])
+      this.router.navigate([`/c/${community.name}`]);
     }).catch((err) => {
       this.snackBar.open(`Creation Failed: ${err.message}`, 'Close');
     }).then(() => {

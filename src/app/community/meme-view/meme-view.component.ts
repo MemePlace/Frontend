@@ -36,7 +36,7 @@ export class MemeViewComponent implements OnInit {
       this.loading = false;
       this.totalCount = memeData.totalCount;
       this.memes = memeData.memes;
-    } catch(err) {
+    } catch (err) {
       this.loading = false;
       this.snackBar.open(`Failed to retrieve memes: ${err.message}`, 'Close');
     }

@@ -1,28 +1,44 @@
   <h1 matDialogTitle>Register</h1> <span id='invalidText' *ngIf="!hideInvalidText" [(ngModel)]="errorMessage" ngDefaultControl><h2>{{errorMessage}}</h2></span>
   <mat-card-content>
-    <mat-form-field id="registerUsernameField">
-      <input matInput placeholder="Username" type="text" [formControl]="usernameFormControl" [(ngModel)]="usernameRegisterText" maxLength="25" >
-      <mat-error *ngIf="usernameFormControl.hasError('required')">
-        Username is <strong>required</strong>
-      </mat-error>
-    </mat-form-field>
+    <form [formGroup]="form">
 
-    <mat-form-field id="registerPasswordField">
-      <input matInput placeholder="Password" type="password" [formControl]="passwordFormControl" [(ngModel)]="passwordRegisterText" maxLength="25">
-      <mat-error *ngIf="passwordFormControl.hasError('required')">
-        Password is <strong>required</strong>
-      </mat-error>
-    </mat-form-field>
+      <mat-form-field id="registerUsernameField">
+        <input matInput type="text" placeholder="Username" formControlName="username" maxLength="25" pattern="[a-zA-Z0-9-]*" >
+        <mat-error *ngIf="form.get('username').hasError('required')">
+          Username is <strong>required</strong>
+        </mat-error>
+        <mat-error *ngIf="form.get('username').hasError('pattern')">
+          Username can only contain alphanumeric characters and hyphens
+        </mat-error>
+        <mat-error *ngIf="form.get('username').hasError('nameExists')">
+          That username is already taken
+        </mat-error>
+        <mat-hint *ngIf="form.get('username').valid">{{form.get('username').value}} is available!</mat-hint>
+        <mat-hint align="end">Required</mat-hint>
+      </mat-form-field>
+
+      <br>
+
+      <mat-form-field id="registerPasswordField">
+        <input matInput placeholder="Password" type="password" formControlName="password" maxLength="35">
+        <mat-error *ngIf="form.get('password').hasError('required')">
+          Password is <strong>required</strong>
+        </mat-error>
+        <mat-hint align="end">Required</mat-hint>
+      </mat-form-field>
 
 
-    <mat-form-field id="registerEmailField">
-      <input matInput placeholder="Email (Optional)" type="text" [(ngModel)]="emailText" maxLength="25">
-    </mat-form-field>
+      <mat-form-field id="registerEmailField">
+        <input matInput placeholder="Email (Optional)" type="text" formControlName="email" maxLength="45">
+      </mat-form-field>
+
+    </form>
 
   </mat-card-content>
 
   <mat-card-actions>
-    <button mat-button type="cancel" (click)="cancel()">Cancel</button>
-    <button mat-button id="registerButton" color="primary"  (click)="registerValidate()" [disabled]="!(!usernameFormControl.hasError('required') && !passwordFormControl.hasError('required'))" cdkFocusInitial>Register</button>
+    <button mat-raised-button id="cancelButton" type="cancel" (click)="cancel()">Cancel</button>
+    <div class="divider"></div>
+    <button mat-raised-button id="registerButton" color="primary"  (click)="registerValidate()" [disabled]="form.status != 'VALID'" cdkFocusInitial>Register</button>
   </mat-card-actions>
 
