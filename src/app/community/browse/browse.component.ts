@@ -30,7 +30,9 @@ export class BrowseComponent implements OnInit {
           this.router.navigate(['/404'], {skipLocationChange: true});
         });
       } else {
-        this.retrieved = true;
+        setTimeout(() => {
+          this.retrieved = true;
+        });
       }
     });
   }
