@@ -9,15 +9,13 @@ import {Utils} from '../utils';
 export class PageNotFoundComponent implements OnInit {
   @ViewChild('main') mainRef: ElementRef;
   @ViewChild('matrix') matrixRef: ElementRef;
-
-
+  utils = Utils;
   private characters = '田由甲申甴电甶男甸甹町画甼甽甾甿畀畁畂畃畄畅畆畇畈畉畊畋界畍畎畏畐畑'.split('');
   private fontSize = 10;
   private drops;
 
-  utils = Utils;
-
-  constructor() { }
+  constructor() {
+  }
 
   ngOnInit() {
     setInterval(this.draw.bind(this), 50);
