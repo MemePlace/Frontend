@@ -1,22 +1,27 @@
-<mat-sidenav-container fullscreen [style.top.px]="utils.screenWidth <= 599 ? 56 : 64">
-
-  <mat-sidenav #sidenav [mode]="utils.isMobile ? 'over': 'side'" [opened]="!utils.isMobile" [style.width.px]="sidebarWidth">
+<mat-sidenav-container fullscreen [style.top.px]="utils.screenWidth <= 599 ? 56 : 64">     
+  <mat-sidenav #sidenav [mode]="utils.isMobile ? 'over': 'side'" [opened]="!utils.isMobile && sidebarState" [style.width.px]="sidebarWidth">
     <mat-nav-list>
+      <!-- Community Display : TODO -->
+
+      <!-- Community Display : TODO --> 
+      <mat-divider></mat-divider>
       <a mat-list-item [routerLink]="['/create-community']">Create Community</a>
       <mat-divider></mat-divider>
-      <mat-list-item *ngFor="let communityFav of communitiesFavourited; let j = index">
-        <a mat-line *ngIf="communityFav.isFavourited" [routerLink]="['/']">
-           {{ communityFav.communityname }}
+      <mat-list-item *ngFor="let communityFavourite of communitiesFavourited; let j = index">
+        <a mat-line [routerLink]="['/c/', communityFavourite.name]">
+           {{ communityFavourite.title }}
         </a>
-        <button mat-icon-button (click)="toggleFavourite(communityFav)" ><mat-icon class="Favourited">star</mat-icon></button>
+        <button mat-icon-button (click)="toggleFavourite(communityFavourite)" ><mat-icon class="Favourited">star</mat-icon></button>
       </mat-list-item>
       <mat-divider></mat-divider>
-      <mat-list-item *ngFor="let community of communities">
-        <a mat-line [routerLink]="['/']">
-           {{ community.communityname }}
-        </a>
-        <button mat-icon-button (click)="toggleFavourite(community)"><mat-icon [style.color]="community.isFavourited ? '#FFD700': ''">star_border</mat-icon></button>
-      </mat-list-item>
+      <ng-container *ngFor="let community of communities">
+        <mat-list-item *ngIf="!community.favourited">
+          <a mat-line [routerLink]="['/c/', community.name]">
+             {{ community.title }}
+          </a>
+          <button mat-icon-button (click)="toggleFavourite(community)"><mat-icon>star_border</mat-icon></button>
+        </mat-list-item>
+      </ng-container>
     </mat-nav-list>
   </mat-sidenav>
   <mat-sidenav-content>
