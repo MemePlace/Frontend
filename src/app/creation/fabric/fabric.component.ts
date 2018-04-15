@@ -2,6 +2,7 @@ import {Component, ViewChild} from '@angular/core';
 import 'fabric';
 import {Canvas} from 'fabric/fabric-impl';
 import {CreationComponent} from '../creation.component';
+import {FunctionBarComponent} from '../function-bar/function-bar.component';
 
 declare let fabric;
 
@@ -26,37 +27,28 @@ export class FabricComponent {
   private parent: CreationComponent;
 
   private canvas;
+  private functComp: FunctionBarComponent;
   public height: number; width: number;
   private zoomVal: number; scaledHeight: number; scaledWidth: number;
 
 
   constructor() { }
 
-  initCanv(par: CreationComponent, h: number, w: number) {
+  initCanv(par: CreationComponent, funct: FunctionBarComponent, h: number, w: number) {
     this.height = h;
     this.width = w;
     this.zoomVal = 1;
     this.scaledHeight = h;
     this.scaledWidth = w;
     this.parent = par;
+    this.functComp = funct;
+
     this.canvas = new fabric.Canvas('fabric', {
       backgroundColor: 'white',
       preserveObjectStacking: true
     });
 
     this.setSize([h, w]);
-
-    this.canvas.on('selection:created', function(e) {
-      console.log('created event happened: ' + e);
-    });
-
-    this.canvas.on('selection:updated', function(e) {
-      console.log('update event happened: ' + e);
-    });
-
-    this.canvas.on('selection:cleared', function(e) {
-      console.log('cleared event happened: ' + e);
-    });
   }
 
 
@@ -82,7 +74,6 @@ export class FabricComponent {
     this.zoomVal = val;
     this.scaledHeight = this.zoomVal * this.height;
     this.scaledWidth = this.zoomVal * this.width;
-    console.log(this.scaledHeight + ' x ' + this.scaledWidth);
     this.adjustSize([this.scaledHeight, this.scaledWidth]);
     this.canvas.setZoom(this.zoomVal);
   }
@@ -108,9 +99,7 @@ export class FabricComponent {
   }
 
   getObjects() {
-    console.log('reached');
     console.log(this.canvas.getObjects());
-    this.canvas.getObjects();
   }
 
 /* CREDIT TO https://github.com/michaeljcalkins/angular-fabric/blob/master/assets/fabric.js */
@@ -159,7 +148,8 @@ export class FabricComponent {
 
   uploadFile(file, resize) {
     const add = (obj: fabric.Object) => (this.canvas.add(obj));
-    const setSize = ([height, width]: [number, number]) => (this.parent.setSize([height, width]));
+    const setSize = (val: [number, number]) => (this.setSize(val));
+    const setFBSize = (val: [number, number]) => (this.functComp.setSize(val));
 
     const reader = new FileReader();
     reader.onload = function (event: FileReaderEvent) {
@@ -170,6 +160,7 @@ export class FabricComponent {
         const image = new fabric.Image(imgObj);
         if (resize) {
           setSize([image.height, image.width]);
+          setFBSize([image.height, image.width]);
         }
         add(image);
       };
@@ -177,11 +168,12 @@ export class FabricComponent {
     reader.readAsDataURL(file);
   }
 
-
+// TODO: Deal with CORS, until then this functionality is disabled
   upImg(targeturl: string, resize: boolean) {
     const add = (obj: fabric.Object) => (this.canvas.add(obj));
-    const setSize = ([height, width]: [number, number]) => (this.parent.setSize([height, width]));
-// TODO: Hadle bad URL's and other failures
+    const setSize = (val: [number, number]) => (this.setSize(val));
+    const setFBSize = (val: [number, number]) => (this.functComp.setSize(val));
+    // TODO: Hadle bad URL's and other failures
     fabric.util.loadImage(targeturl, function (oImg, err) {
       if (err) {
         alert('Better error handling needed');
@@ -190,6 +182,7 @@ export class FabricComponent {
         const image = new fabric.Image(oImg);
         if (resize) {
           setSize([image.height, image.width]);
+          setFBSize([image.height, image.width]);
         }
         add(image);
       }
@@ -197,9 +190,7 @@ export class FabricComponent {
   }
 
 
-  addTxt(bold: boolean, italic: boolean, underline: boolean, font: string, size: number) {
-//    y = (y != undefined) ? y : x;
-
+  addTxt(bold: boolean, italic: boolean, underline: boolean, font: string, size: number, align: string) {
     const fontWeight = bold ? 'bold' : 'normal';
     const fontStyle = italic ? 'italic' : 'normal';
 
@@ -208,13 +199,12 @@ export class FabricComponent {
       fontFamily: font,
       fontWeight: fontWeight,
       fontStyle: fontStyle,
+      textAlign: align,
       underline: underline,
       fill: '#fff',
       stroke: '#000',
       _strokeWidth: 2,
     });
-    console.log(newTxt);
-    if (bold) {console.log('its true');}
 
 
     this.canvas.add(newTxt);
@@ -229,18 +219,7 @@ export class FabricComponent {
     }
     this.canvas.discardActiveObject().renderAll();
   }
- //   console.log(sel.type);
-   // let item;
-    //console.log(sel.getObject().type);
-    //for (item in sel.getObjects()) {
-    //}
-    /*    let obj: fabric.Object;
-    obj = this.canvas.getActiveObject();
-    if (obj) {
-      this.canvas.remove(obj);
-    }
-  }
-*/
+
   selectAll() {
     this.canvas.discardActiveObject();
     const selection = new fabric.ActiveSelection(this.canvas.getObjects(), {
@@ -255,8 +234,9 @@ export class FabricComponent {
     this.canvas.clear();
   }
 
-  toJSON() {
+  toJSON(): string {
     console.log(JSON.stringify(this.canvas));
+    return JSON.stringify(this.canvas);
   }
 
 }

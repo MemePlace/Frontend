@@ -1,5 +1,6 @@
 import {Component, ViewChild, ViewEncapsulation} from '@angular/core';
 import {CreationComponent} from '../creation.component';
+import {FabricComponent} from '../fabric/fabric.component';
 
 
 @Component({
@@ -13,7 +14,9 @@ export class FunctionBarComponent {
   @ViewChild('imgURL') urlIn;
   @ViewChild('fileIn') fileIn;
   @ViewChild('fontOption') fontOption;
+  @ViewChild('fontAlignTG') fontAlignTG;
   private parent: CreationComponent;
+  private fabComp: FabricComponent;
   public sHeight: number;
   public sWidth: number;
   public resizeCheck: boolean;
@@ -21,6 +24,7 @@ export class FunctionBarComponent {
   public arToggle: boolean;
   public aspectRatio: number;
   public fontSize: number;
+  public fontAlign: string;
   public selected = 'Impact';
   public fontColour; // TODO: Implement font color UI
 
@@ -50,7 +54,8 @@ export class FunctionBarComponent {
 
 
   changeSize(val: [number, number]): void {
-    this.parent.setSize(val);
+    this.setSize(val);
+    this.fabComp.setSize(val);
   }
 
   setSize([newHeight, newWidth]: [number, number]): void {
@@ -60,36 +65,53 @@ export class FunctionBarComponent {
 
   uploadFile() {
     const file = this.fileIn.nativeElement.files[0];
-    this.parent.uploadFile(file, this.resizeCheck);
+    this.fabComp.uploadFile(file, this.resizeCheck);
   }
 
+// Won't be reached until CORS is figured out (button disabled)
   uploadUrl(): void {
     const url = this.urlIn.nativeElement.value;
-    this.parent.uploadImgUrl(url, this.resizeCheck);
+    if (url === '') {
+      // this.fab.upImg(this.sampleUrls[Math.floor(Math.random() * this.sampleUrls.length)], resize);
+    } else {
+      this.fabComp.upImg(url, this.resizeCheck);
+    }
+  }
+
+  alignChange(e) {
+    this.fontAlign = e.value;
   }
 
   addTxt(bold: boolean, italic: boolean, underline: boolean, font: string, size: number) {
-    this.parent.addTxt(bold, italic, underline, font, size);
+    this.fabComp.addTxt(bold, italic, underline, font, size, this.fontAlign);
   }
 
   moveObj(val: number) {
-    this.parent.moveObj(val);
+    if (val === 2) {
+      this.fabComp.moveFront();
+    } else if (val === 1) {
+      this.fabComp.moveForward();
+    } else if (val === -1) {
+      this.fabComp.moveBackward();
+    } else if (val === -2) {
+      this.fabComp.moveBottom();
+    }
   }
 
   viewAll() {
-    console.log(this.parent.viewAllObjs());
+    console.log(this.fabComp.getObjects());
   }
 
   selectAll() {
-    this.parent.selectAll();
+    this.fabComp.selectAll();
   }
 
   download() {
-    this.parent.download();
+    this.fabComp.download();
   }
 
   clear() {
-    this.parent.clear();
+    this.fabComp.clearCanvas();
   }
 
   toggleSize() {
@@ -119,13 +141,17 @@ export class FunctionBarComponent {
   }
 
 
-  initBar(par: CreationComponent, size: [number, number]): void {
+  initBar(par: CreationComponent, fab: FabricComponent, size: [number, number]): void {
     this.arToggle = false;
     this.aspectIcon = 'lock_open';
     this.fontSize = 72;
+    this.fontAlign = 'center';
     this.resizeCheck = true;
     this.parent = par;
+    this.fabComp = fab;
     this.setSize(size);
   }
+
+
 
 }
