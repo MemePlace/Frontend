@@ -1,3 +1,15 @@
 .fill-remaining-space {
   flex: 1 1 auto;
 }
+
+p {
+  font-size: 14px;
+  padding-right: 14px;
+  padding-left: 14px;
+}
+
+.site-title {
+  cursor: pointer;
+  outline: none;
+  font-size: 22px;
+}

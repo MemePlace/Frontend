@@ -1,0 +1,26 @@
+<h1 mat-dialog-title>Login</h1> <span id='invalidText' *ngIf="!hideInvalidText" [(ngModel)]="errorMessage" ngDefaultControl><h2>{{errorMessage}}</h2></span>
+  <mat-card-content>
+    <mat-form-field id="loginUsernameField">
+      <input matInput placeholder="Username" [formControl]="usernameFormControl" [(ngModel)]="usernameLoginText" maxLength="25" >
+      <mat-error *ngIf="usernameFormControl.hasError('required')">
+        Username is <strong>required</strong>
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field id="loginPasswordField">
+      <input matInput placeholder="Password" type="password" [formControl]="passwordFormControl" [(ngModel)]="passwordLoginText" maxLength="25">
+      <mat-error *ngIf="passwordFormControl.hasError('required')">
+      Password is <strong>required</strong>
+      </mat-error>
+    </mat-form-field>
+
+    <mat-checkbox [(ngModel)]="rememberMeCheckbox">Remember Me</mat-checkbox>
+  </mat-card-content>
+
+  <mat-card-actions>
+    <button mat-raised-button type="cancel" (click)="cancel()">Cancel</button>
+    <div class="divider"></div>
+    <button mat-raised-button id="loginButton" color="primary" (click)="loginValidate()" [disabled]="!(!usernameFormControl.hasError('required') && !passwordFormControl.hasError('required'))" cdkFocusInitial>Login</button>
+  </mat-card-actions>
+
+

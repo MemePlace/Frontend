@@ -1,0 +1,50 @@
+<mat-card class="communityCreationForm">
+  <mat-card-title>Create Community</mat-card-title>
+
+  <mat-card-content>
+    <form [formGroup]="form">
+      <mat-form-field>
+        <input matInput type="text" placeholder="Name (shorthand form, used in URL)" formControlName="name" maxlength="25" pattern="[a-zA-Z0-9]*">
+        <mat-error *ngIf="form.get('name').hasError('required')">
+          Name is <strong>required</strong>
+        </mat-error>
+        <mat-error *ngIf="form.get('name').hasError('minlength')">
+          Name must be at least 3 characters
+        </mat-error>
+        <mat-error *ngIf="form.get('name').hasError('pattern')">
+          The name can only contain alphanumeric characters without spaces
+        </mat-error>
+        <mat-error *ngIf="form.get('name').hasError('nameExists')">
+          That name is already taken
+        </mat-error>
+        <mat-hint *ngIf="form.get('name').valid">meme.place/p/{{form.get('name').value}} is available!</mat-hint>
+        <mat-hint align="end">Required</mat-hint>
+      </mat-form-field>
+
+      <mat-form-field>
+        <input matInput placeholder="Title" formControlName="title" maxlength="100">
+        <mat-error *ngIf="form.get('title').hasError('required')">
+          Community Title is <strong>required</strong>
+        </mat-error>
+        <mat-hint align="end">Required</mat-hint>
+      </mat-form-field>
+
+      <mat-form-field>
+        <textarea matInput placeholder="Description" formControlName="description" rows="3"></textarea>
+      </mat-form-field>
+
+      <mat-form-field>
+        <textarea matInput placeholder="Sidebar Message" formControlName="sidebar" rows="3"></textarea>
+      </mat-form-field>
+
+       <mat-checkbox matTooltip="Not Suitable for Work" formControlName="nsfw">NSFW</mat-checkbox>
+    </form>
+  </mat-card-content>
+
+  <mat-card-actions>
+    <button mat-raised-button id="submitButton" color="primary" (click)="onCreateCommunity()"
+            [disabled]="form.status != 'VALID' || submitting">Create Community</button>
+    <div style="clear: both;"></div>
+  </mat-card-actions>
+
+</mat-card>
