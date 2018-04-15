@@ -1,13 +1,12 @@
-<mat-tab-group>
-  <mat-tab label="Top">
-    <div class="browseContentWrapper" [style.justify-content]="utils.isMobile ? 'center' : 'flex-start'">
-      <app-meme-card class="flexItem" *ngFor="let u of users"
-                     [imageHeight]="u.height"
-                     [memeId]="u.memeId"
-                     [style.marginLeft.px]="utils.isMobile ? 0 : 10"
-      ></app-meme-card>
-    </div>
+<app-community-toolbar *ngIf="community" [community]="community"></app-community-toolbar>
+<mat-tab-group #sortTabs>
+  <mat-tab label="Hot">
+    <app-meme-view *ngIf="retrieved && sortTabs.selectedIndex === 0" [communityName]="community && community.name" sort="hot"></app-meme-view>
   </mat-tab>
-  <mat-tab label="Hot"></mat-tab>
-  <mat-tab label="New">Content 3</mat-tab>
+  <mat-tab label="New">
+    <app-meme-view *ngIf="retrieved && sortTabs.selectedIndex === 1" [communityName]="community && community.name" sort="new"></app-meme-view>
+  </mat-tab>
+  <mat-tab label="Top">
+    <app-meme-view *ngIf="retrieved && sortTabs.selectedIndex === 2" [communityName]="community && community.name" sort="top"></app-meme-view>
+  </mat-tab>
 </mat-tab-group>
