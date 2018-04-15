@@ -1,0 +1,21 @@
+<div class="meme-dialog" [style.maxHeight.px]="maxDialogHeight()">
+  <img class="meme-img" [style.minWidth.px]="minCardWidth()" [style.maxWidth.px]="maxCardWidth()" [src]="imageLink">
+  <mat-dialog-content class="actions" style="margin-top: -3px;">
+    <span class="author">
+    <!--This gets automatically focused for some reason; not sure why-->
+      <a href="/">{{username}}</a>
+    </span>
+
+    <div class="cardActionButtons">
+      <!-- Up vote button -->
+      <button mat-icon-button (click)="onClickUpVote()" [color]="myVote == 1 ? 'primary': 'basic'"><i
+        class="material-icons">thumb_up</i></button>
+      <span>{{totalVote + myVote}}</span>
+      <!-- Down vote button -->
+      <button mat-icon-button (click)="onClickDownVote()" [color]="myVote == -1 ? 'warn': 'basic'"><i
+        class="material-icons">thumb_down</i></button>
+    </div>
+
+    <div style="clear: both"></div>
+  </mat-dialog-content>
+</div>
