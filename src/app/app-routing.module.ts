@@ -15,7 +15,8 @@ const routes: Routes = [
   },
   {
     path: 'creation',
-    component: CreationComponent
+    component: CreationComponent,
+    canActivate: [AuthGuard]
   },
   {
     path: 'create-community',
