@@ -3,6 +3,8 @@ import 'fabric';
 import {CreationComponent} from '../creation.component';
 import {FunctionBarComponent} from '../function-bar/function-bar.component';
 import {ImgurService} from '../imgur.service';
+import {MatSnackBar} from '@angular/material';
+import {MemeService} from '../../api/meme.service';
 
 declare let fabric;
 
@@ -31,7 +33,9 @@ export class FabricComponent {
   private zoomVal: number; scaledHeight: number; scaledWidth: number;
 
 
-  constructor(private imgurService: ImgurService) { }
+  constructor(private imgurService: ImgurService,
+              private memeService: MemeService,
+              private snackBar: MatSnackBar) { }
 
   initCanv(par: CreationComponent, funct: FunctionBarComponent, h: number, w: number) {
     this.height = h;
@@ -239,14 +243,29 @@ export class FabricComponent {
   }
 
   publish() {
-    this.parent.resetZoom();
+    const communityName = this.parent.communityName;
+
+    if (!communityName) {
+      this.snackBar.open('You must pick a community to post to!', 'Close');
+      return;
+    }
+
     const pic = this.canvas.toDataURL({
       height: this.height,
       width: this.width
     });
-    const data = pic.replace('data:image/png;base64,', '');
-    const test  = this.imgurService.uploadImg(data);
-    test.then((val) => console.log(val));
+
+    const imageData = pic.replace('data:image/png;base64,', '');
+    this.imgurService.uploadImg(imageData).then((response) => {
+      return this.memeService.createMeme(this.parent.title, response.link, response.width, response.height, null, communityName);
+    }).then((meme) => {
+      this.snackBar.open('Successfully created meme!');
+      this.parent.resetZoom();
+      this.parent.title = '';
+      this.parent.communityName = '';
+    }).catch((err) => {
+      this.snackBar.open(`Failed to create meme: ${err.message}`, 'Close');
+    });
   }
 
 }

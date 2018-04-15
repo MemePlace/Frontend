@@ -1,11 +1,17 @@
 <mat-grid-list id="header-row" cols="6" rowHeight="4em">
-
   <mat-grid-tile id="title-input-tile" [colspan]="2">
     <form style="width: 80%">
       <mat-form-field style="width: 80%">
-        <input style="width: 80%" matInput placeholder="Title.. (optional)">
+        <input style="width: 80%" matInput placeholder="Title.. (optional)" [(ngModel)]="title">
       </mat-form-field>
     </form>
+  </mat-grid-tile>
+  <mat-grid-tile [colspan]="2"></mat-grid-tile>
+  <mat-grid-tile [colspan]="2">
+    <app-search-bar id="community-bar" barWidth="100%" placeholder="Community" (optionSelected)="onCommunitySelect($event)"></app-search-bar>
+    <button id="meme-create" mat-raised-button color="primary" (click)="fab.publish()">
+      Create Meme
+    </button>
   </mat-grid-tile>
 </mat-grid-list>
 

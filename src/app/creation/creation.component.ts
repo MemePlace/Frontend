@@ -1,5 +1,6 @@
 import {Component, OnInit, ViewChild } from '@angular/core';
 import 'fabric';
+import {MatAutocompleteSelectedEvent} from '@angular/material';
 
 @Component({
   selector: 'app-creation',
@@ -11,6 +12,8 @@ export class CreationComponent implements OnInit {
   @ViewChild('fab') fab;
 
   public zoomVal: number;
+  title: string;
+  communityName: string;
 
   resetZoom() {
     this.zoomVal = 1;
@@ -46,12 +49,17 @@ export class CreationComponent implements OnInit {
   onMouseWheel(event: MouseWheelEvent) {
     if (event.deltaY > 0) {
       this.zoomVal -= 0.10;
-    }
-    else if (event.deltaY < 0) {
+    } else if (event.deltaY < 0) {
       this.zoomVal += 0.10;
     }
 
     event.preventDefault();
     this.fab.setZoom(this.zoomVal);
+  }
+
+  onCommunitySelect(event: MatAutocompleteSelectedEvent) {
+    this.communityName = event.option.value.name;
+
+    console.log(event.option.value.name);
   }
 }
