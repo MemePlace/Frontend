@@ -176,7 +176,7 @@
       <mat-divider></mat-divider>
       <mat-action-row mat-menu-item [disableRipple]="true">
         <button mat-raised-button color="accent">Upload File</button>
-        <button mat-raised-button color="accent" (click)="uploadUrl(imgURL.value, resize.checked)">URL</button>
+        <button mat-raised-button color="accent" (click)="uploadUrl()">URL</button>
       </mat-action-row>
       <span mat-menu-item [disableRipple]="true">
         <mat-checkbox #resize [checked]="true">Fit to Image?</mat-checkbox>
