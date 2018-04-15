@@ -246,8 +246,8 @@ export class FabricComponent {
       width: this.width
     });
     const data = pic.replace('data:image/png;base64,', '');
-
-    this.imgurService.uploadImg(data);
+    const test  = this.imgurService.uploadImg(data);
+    test.then((val) => console.log(val));
   }
 
 }
