@@ -2,25 +2,13 @@
   <mat-sidenav #sidenav [mode]="utils.isMobile ? 'over': 'side'" [opened]="!utils.isMobile && sidebarState" [style.width.px]="sidebarWidth">
     <mat-nav-list>
       <!-- Community Display : TODO -->
-      <mat-expansion-panel>
-        <mat-expansion-panel-header>
-          <mat-panel-title>
-            Community X
-          </mat-panel-title>
-          <mat-panel-description>
-            Click for Details
-          </mat-panel-description>
-        </mat-expansion-panel-header>
-        <div>
-          hello
-        </div>
-      </mat-expansion-panel>
+
       <!-- Community Display : TODO --> 
       <mat-divider></mat-divider>
       <a mat-list-item [routerLink]="['/create-community']">Create Community</a>
       <mat-divider></mat-divider>
       <mat-list-item *ngFor="let communityFavourite of communitiesFavourited; let j = index">
-        <a mat-line [routerLink]="['/']">
+        <a mat-line [routerLink]="['/c/', communityFavourite.name]">
            {{ communityFavourite.title }}
         </a>
         <button mat-icon-button (click)="toggleFavourite(communityFavourite)" ><mat-icon class="Favourited">star</mat-icon></button>
@@ -28,7 +16,7 @@
       <mat-divider></mat-divider>
       <ng-container *ngFor="let community of communities">
         <mat-list-item *ngIf="!community.favourited">
-          <a mat-line [routerLink]="['/']">
+          <a mat-line [routerLink]="['/c/', community.name]">
              {{ community.title }}
           </a>
           <button mat-icon-button (click)="toggleFavourite(community)"><mat-icon>star_border</mat-icon></button>
