@@ -51,6 +51,7 @@ export class UserService {
     }).catch((err) => {
       console.error('User is not logged in');
 
+      this.user = null;
       // delete storage if their cookies expired
       this.storageService.remove(StorageType.local, 'user');
       this.storageService.remove(StorageType.session, 'user');
