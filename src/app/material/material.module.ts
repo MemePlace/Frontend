@@ -1,9 +1,10 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+
 import {
-  MatToolbarModule, MatButtonModule, MatIconModule, MatSidenavModule, MatTabsModule, MatListModule, MatSnackBarModule,
+  MatToolbarModule, MatButtonModule, MatIconModule, MatSidenavModule, MatTabsModule, MatListModule,
+  MatExpansionModule, MatCheckboxModule, MatMenuModule, MatTooltipModule, MatButtonToggleModule, MatOptionModule, MatSelectModule
 } from '@angular/material';
-import { MatCardModule } from '@angular/material/card';
 
 @NgModule({
   declarations: [],
@@ -11,22 +12,32 @@ import { MatCardModule } from '@angular/material/card';
     CommonModule,
     MatToolbarModule,
     MatButtonModule,
+    MatButtonToggleModule,
     MatIconModule,
     MatSidenavModule,
     MatTabsModule,
     MatListModule,
-    MatCardModule,
-    MatSnackBarModule,
+    MatExpansionModule,
+    MatCheckboxModule,
+    MatMenuModule,
+    MatTooltipModule,
+    MatOptionModule,
+    MatSelectModule,
   ],
   exports: [
     MatToolbarModule,
     MatButtonModule,
+    MatButtonToggleModule,
     MatIconModule,
     MatSidenavModule,
     MatTabsModule,
     MatListModule,
-    MatCardModule,
-    MatSnackBarModule,
+    MatExpansionModule,
+    MatCheckboxModule,
+    MatMenuModule,
+    MatTooltipModule,
+    MatOptionModule,
+    MatSelectModule,
   ]
 })
 export class MaterialModule { }
