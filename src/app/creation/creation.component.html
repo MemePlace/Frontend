@@ -13,21 +13,13 @@
     <p id="zoomDisplay">{{(zoomVal * 100).toFixed(2)}}%</p>
     <button mat-button (click)="resetZoom()">Reset Zoom</button>
   </mat-grid-tile>
-
-
 </mat-grid-list>
 
 
-<div id="creation-body" cols="20">
-  <div id="fabricBody">
-    <app-fabric #fab></app-fabric>
-  </div>
+<div id="creation-body">
+  <app-fabric #fab></app-fabric>
 
   <div id="functionBar">
     <app-function-bar #functs></app-function-bar>
   </div>
-</div>
-
-<div id="undercanvas">
-  <p>After Fabric!</p>
 </div>
