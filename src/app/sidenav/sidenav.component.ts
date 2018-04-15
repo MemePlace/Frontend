@@ -74,7 +74,7 @@ export class SidenavComponent implements OnInit {
           community.favourited = true;
           const user = await this.userService.getDetails(true);
           this.communitiesFavourited = user.Favourites as Community[];
-        } catch(err) {
+        } catch (err) {
           this.snackBar.open(`Failed to favourite: ${err.message}`, 'Close');
         }
       } else {
@@ -86,7 +86,7 @@ export class SidenavComponent implements OnInit {
           this.communitiesFavourited = this.communitiesFavourited.filter((com) => {
             return com !== community;
           });
-          } catch(err) {
+          } catch (err) {
           this.snackBar.open(`Failed to unfavourite: ${err.message}`, 'Close');
         }
       }
