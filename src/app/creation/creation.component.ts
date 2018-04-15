@@ -1,7 +1,5 @@
 import {Component, OnInit, ViewChild } from '@angular/core';
 import 'fabric';
-import {FabricComponent} from './fabric/fabric.component';
-import {FunctionBarComponent} from './function-bar/function-bar.component';
 
 @Component({
   selector: 'app-creation',
@@ -48,5 +46,16 @@ export class CreationComponent implements OnInit {
     const initSize = 500;
     this.fab.initCanv(this, this.functs, initSize, initSize);
     this.functs.initBar(this, this.fab, [initSize, initSize]);
+  }
+
+  onMouseWheel(event: MouseWheelEvent) {
+    if (event.deltaY > 0) {
+      this.zoomVal -= 0.10;
+    }
+    else if (event.deltaY < 0) {
+      this.zoomVal += 0.10;
+    }
+
+    this.fab.setZoom(this.zoomVal);
   }
 }

@@ -16,7 +16,7 @@
 </mat-grid-list>
 
 
-<div id="creation-body">
+<div id="creation-body" (mousewheel)="onMouseWheel($event)">
   <app-fabric #fab></app-fabric>
 
   <div id="functionBar">
