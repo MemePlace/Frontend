@@ -32,6 +32,7 @@ export class FabricComponent {
   public height: number; width: number;
   private zoomVal: number; scaledHeight: number; scaledWidth: number;
 
+  private badURL = 'https://fthmb.tqn.com/i5PTJXJQGb5Kg64f2T1mMDt2ULg=/768x0/filters:no_upscale():max_bytes(150000):strip_icc()/ggg-580734603df78cbc28f46d37.PNG';
 
   constructor(private imgurService: ImgurService,
               private memeService: MemeService,
@@ -53,8 +54,6 @@ export class FabricComponent {
 
     this.setSize([h, w]);
   }
-
-
 
 
   setSize([nheight, nwidth]: [number, number]) {
@@ -153,7 +152,7 @@ export class FabricComponent {
     const add = (obj: fabric.Object) => (this.canvas.add(obj));
     const setSize = (val: [number, number]) => (this.setSize(val));
     const setFBSize = (val: [number, number]) => (this.functComp.setSize(val));
-
+    if (!(file)) { return; }
     const reader = new FileReader();
     reader.onload = function (event: FileReaderEvent) {
       const imgObj = new Image();
@@ -171,25 +170,28 @@ export class FabricComponent {
     reader.readAsDataURL(file);
   }
 
-// TODO: Deal with CORS, until then this functionality is disabled
   upImg(targeturl: string, resize: boolean) {
-    const add = (obj: fabric.Object) => (this.canvas.add(obj));
+    this.imgurService.uploadImg(targeturl)
+      .then((val) => this.upURL(val.link, resize))
+      .catch((err) => this.parent.err(err.toString()));
+  }
+
+
+  upURL(url, resize: boolean){
+    const add = (obj: fabric.Object) => {
+      this.canvas.add(obj);
+      this.canvas.renderAll();
+    };
     const setSize = (val: [number, number]) => (this.setSize(val));
     const setFBSize = (val: [number, number]) => (this.functComp.setSize(val));
     // TODO: Handle bad URL's and other failures
-    fabric.util.loadImage(targeturl, function (oImg, err) {
-      if (err) {
-        alert('Better error handling needed');
-        throw new Error('Failed Image Load');
-      } else {
-        const image = new fabric.Image(oImg);
-        if (resize) {
-          setSize([image.height, image.width]);
-          setFBSize([image.height, image.width]);
-        }
-        add(image);
+    fabric.Image.fromURL(url, (oImg) => {
+      if (resize) {
+        setSize([oImg.height, oImg.width]);
+        setFBSize([oImg.height, oImg.width]);
       }
-    }, { crossOrigin: 'anonymous' });
+      this.canvas.add(oImg);
+    }, {crossOrigin: 'Anonymous'});
   }
 
 

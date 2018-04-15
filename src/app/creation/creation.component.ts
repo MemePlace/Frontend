@@ -1,6 +1,9 @@
 import {Component, OnInit, ViewChild } from '@angular/core';
 import 'fabric';
 import {MatAutocompleteSelectedEvent} from '@angular/material';
+import {FabricComponent} from './fabric/fabric.component';
+import {FunctionBarComponent} from './function-bar/function-bar.component';
+import {MatSnackBar} from '@angular/material';
 
 @Component({
   selector: 'app-creation',
@@ -15,16 +18,7 @@ export class CreationComponent implements OnInit {
   title: string;
   communityName: string;
 
-  resetZoom() {
-    this.zoomVal = 1;
-    this.fab.resetZoom();
-  }
-
-  delete() {
-    this.fab.delete();
-  }
-
-  constructor() {
+  constructor(public snackBar: MatSnackBar) {
     const paste = (file) => (this.fab.uploadFile(file, true));
     window.addEventListener('paste', function(e: ClipboardEvent) {
       paste(e.clipboardData.files[0]);
@@ -38,6 +32,23 @@ export class CreationComponent implements OnInit {
     });
   }
 
+  err(mssg: string) {
+    this.snackBar.open(mssg, 'close', { duration: 2000 });
+  }
+
+  moveZoom(slide: any) {
+    this.zoomVal = slide.value;
+    this.fab.setZoom(slide.value);
+  }
+
+  resetZoom() {
+    this.zoomVal = 1;
+    this.fab.resetZoom();
+  }
+
+  delete() {
+    this.fab.delete();
+  }
 
   ngOnInit() {
     this.zoomVal = 1;
