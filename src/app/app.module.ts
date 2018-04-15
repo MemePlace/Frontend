@@ -15,6 +15,10 @@ import { SearchModule } from './search/search.module';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { MemeDialogComponent } from './meme-dialog/meme-dialog.component';
 import { MemeService } from './api/meme.service';
+import { CreationModule } from './creation/creation.module';
+
+import 'hammerjs';
+
 
 @NgModule({
   declarations: [
@@ -31,6 +35,7 @@ import { MemeService } from './api/meme.service';
     MaterialModule,
     MatDialogModule,
     CommunityModule,
+    CreationModule,
     ApiModule,
     SearchModule,
     FormsModule,

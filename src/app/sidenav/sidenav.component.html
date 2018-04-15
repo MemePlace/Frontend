@@ -4,6 +4,8 @@
     <mat-nav-list>
       <a mat-list-item [routerLink]="['/create-community']">Create Community</a>
       <mat-divider></mat-divider>
+      <a mat-list-item [routerLink]="['/creation']">Create Memes</a>
+      <mat-divider></mat-divider>
       <mat-list-item *ngFor="let communityFav of communitiesFavourited; let j = index">
         <a mat-line *ngIf="communityFav.isFavourited" [routerLink]="['/']">
            {{ communityFav.communityname }}

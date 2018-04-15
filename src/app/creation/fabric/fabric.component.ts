@@ -6,7 +6,6 @@ import {ImgurService} from '../imgur.service';
 
 declare let fabric;
 
-/* Credit to: https://stackoverflow.com/questions/35789498/new-typescript-1-8-4-build-error-build-property-result-does-not-exist-on-t */
 interface FileReaderEventTarget extends EventTarget {
   result: string;
 }
@@ -173,7 +172,7 @@ export class FabricComponent {
     const add = (obj: fabric.Object) => (this.canvas.add(obj));
     const setSize = (val: [number, number]) => (this.setSize(val));
     const setFBSize = (val: [number, number]) => (this.functComp.setSize(val));
-    // TODO: Hadle bad URL's and other failures
+    // TODO: Handle bad URL's and other failures
     fabric.util.loadImage(targeturl, function (oImg, err) {
       if (err) {
         alert('Better error handling needed');

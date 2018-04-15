@@ -106,7 +106,7 @@
       <mat-divider></mat-divider>
       <mat-action-row mat-menu-item [disableRipple]="true">
         <button mat-raised-button color="accent" (click)="uploadFile()">Upload File</button>
-        <button mat-raised-button color="accent" (click)="uploadUrl()" disabled>URL</button>
+        <button mat-raised-button color="accent" (click)="uploadUrl()">URL</button>
       </mat-action-row>
       <span mat-menu-item [disableRipple]="true">
         <mat-checkbox #resize [checked]="true" (change)="toggleSize()">Fit to Image?</mat-checkbox>
@@ -145,7 +145,7 @@
       <mat-action-row>
         <mat-form-field>
           <mat-select  #fontOption [(value)]="selected" placeholder="Font">
-            <mat-option *ngFor="let font of fonts"  [value]="font.name" style="font-family: {{font.name}}">{{font.name}}</mat-option>
+            <mat-option *ngFor="let font of fonts"  [value]="font.name">{{font.name}}</mat-option>
           </mat-select>
         </mat-form-field>
         <mat-form-field style="width:15%; margin-left: 20px;">
