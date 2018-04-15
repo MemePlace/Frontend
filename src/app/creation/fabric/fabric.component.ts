@@ -1,8 +1,8 @@
 import {Component, ViewChild} from '@angular/core';
 import 'fabric';
-import {Canvas} from 'fabric/fabric-impl';
 import {CreationComponent} from '../creation.component';
 import {FunctionBarComponent} from '../function-bar/function-bar.component';
+import {ImgurService} from '../imgur.service';
 
 declare let fabric;
 
@@ -32,7 +32,7 @@ export class FabricComponent {
   private zoomVal: number; scaledHeight: number; scaledWidth: number;
 
 
-  constructor() { }
+  constructor(private imgurService: ImgurService) { }
 
   initCanv(par: CreationComponent, funct: FunctionBarComponent, h: number, w: number) {
     this.height = h;
@@ -237,6 +237,17 @@ export class FabricComponent {
   toJSON(): string {
     console.log(JSON.stringify(this.canvas));
     return JSON.stringify(this.canvas);
+  }
+
+  publish() {
+    this.parent.resetZoom();
+    const pic = this.canvas.toDataURL({
+      height: this.height,
+      width: this.width
+    });
+    const data = pic.replace('data:image/png;base64,', '');
+
+    this.imgurService.uploadImg(data);
   }
 
 }

@@ -9,6 +9,8 @@ import { FormsModule } from '@angular/forms';
 import { CreationComponent } from './creation.component';
 import { FabricComponent } from './fabric/fabric.component';
 import { FunctionBarComponent } from './function-bar/function-bar.component';
+import {HttpClientModule} from '@angular/common/http';
+import {ImgurService} from './imgur.service';
 
 
 @NgModule({
@@ -20,6 +22,10 @@ import { FunctionBarComponent } from './function-bar/function-bar.component';
     MatGridListModule,
     MatSliderModule,
     FormsModule,
+    HttpClientModule,
+  ],
+  providers: [
+    ImgurService
   ],
   declarations: [CreationComponent, FabricComponent, FunctionBarComponent]
 })

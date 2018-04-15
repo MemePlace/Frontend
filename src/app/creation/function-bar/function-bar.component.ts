@@ -110,6 +110,10 @@ export class FunctionBarComponent {
     this.fabComp.download();
   }
 
+  publish() {
+    this.fabComp.publish();
+  }
+
   clear() {
     this.fabComp.clearCanvas();
   }
