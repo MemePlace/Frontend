@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import {BaseApiService, MessageReply, Version} from './base-api.service';
+import {UserService} from './user.service';
 
 export interface Meme {
   id: number;
@@ -32,8 +33,24 @@ export interface MemeList {
 
 @Injectable()
 export class MemeService {
+  private memes: {[id: number]: Meme} = {};
 
-  constructor(private api: BaseApiService) {}
+  constructor(private api: BaseApiService,
+              private userService: UserService) {
+    userService.loggedIn$.subscribe((isLoggedIn) => {
+      if (isLoggedIn) {
+        // destroy cache, we don't know how we voted on stuff
+        this.memes = {};
+      } else {
+        // remove our votes
+        Object.keys(this.memes).forEach((id) => {
+          if (this.memes[id].myVote) {
+            delete this.memes[id].myVote;
+          }
+        });
+      }
+    });
+  }
 
   /**
    * Creates a new meme
@@ -56,21 +73,34 @@ export class MemeService {
     });
   }
 
-  getMemes(sort: string, offset: number, count: number, communityName?: string): Promise<MemeList> {
+  async getMemes(sort: string, offset: number, count: number, communityName?: string): Promise<MemeList> {
+    let result;
+
     if (communityName) {
-      return this.api.get(Version.v1,
+      result = await this.api.get(Version.v1,
         `communities/${communityName}/memes?sort=${sort}&offset=${offset}&count=${count}`) as Promise<MemeList>;
     } else {
-      return this.api.get(Version.v1, `memes?sort=${sort}&offset=${offset}&count=${count}`) as Promise<MemeList>;
+      result = await this.api.get(Version.v1, `memes?sort=${sort}&offset=${offset}&count=${count}`) as Promise<MemeList>;
     }
+
+    result.memes.forEach((meme: Meme) => {
+      this.memes[meme.id] = meme;
+    });
+
+    return result;
   }
 
   /**
    * Gets a meme's detail using the meme's id
    * @param {number} memeId
    */
-  getMemeDetails(memeId: number): Promise<Meme> {
+  async getMemeDetails(memeId: number): Promise<Meme> {
+    if (this.memes[memeId]) {
+      return Promise.resolve(this.memes[memeId]);
+    }
+
     return this.api.get(Version.v1, `memes/${memeId}`).then( (meme: Meme) => {
+      this.memes[meme.id] = meme;
       return meme;
     });
   }
@@ -82,7 +112,13 @@ export class MemeService {
   upvoteMeme(memeId: number): Promise<MessageReply> {
     return this.api.put(Version.v1, `memes/${memeId}/vote`, {
       vote: 1
-    }) as Promise<MessageReply>;
+    }).then((reply: MessageReply) => {
+      if (this.memes[memeId]) {
+        this.memes[memeId].myVote = {diff: 1};
+      }
+
+      return reply;
+    });
   }
 
   /**
@@ -92,7 +128,13 @@ export class MemeService {
   downvoteMeme(memeId: number): Promise<MessageReply> {
     return this.api.put(Version.v1, `memes/${memeId}/vote`, {
       vote: -1
-    }) as Promise<MessageReply>;
+    }).then((reply: MessageReply) => {
+      if (this.memes[memeId]) {
+        this.memes[memeId].myVote = {diff: -1};
+      }
+
+      return reply;
+    });
   }
 
   /**
@@ -101,6 +143,10 @@ export class MemeService {
    */
   deleteMemeVote(memeId: number) {
     return this.api.delete(Version.v1, `memes/${memeId}/vote`).then((value: ({}|void)) => {
+      if (this.memes[memeId]) {
+        delete this.memes[memeId].myVote;
+      }
+
       return 0;
     });
   }
@@ -111,6 +157,10 @@ export class MemeService {
    */
   deleteMeme(memeId: number) {
     return this.api.delete(Version.v1, `memes/${memeId}`).then((value: ({}|void)) => {
+      if (this.memes[memeId]) {
+        delete this.memes[memeId];
+      }
+
       return value;
     });
   }
