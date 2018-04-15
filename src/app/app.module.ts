@@ -13,7 +13,6 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { LoginFormModule } from './login-form/login-form.module';
 import { SearchModule } from './search/search.module';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
-import {MatExpansionModule} from '@angular/material/expansion';
 
 @NgModule({
   declarations: [
@@ -33,7 +32,6 @@ import {MatExpansionModule} from '@angular/material/expansion';
     FormsModule,
     ReactiveFormsModule,
     LoginFormModule,
-    MatExpansionModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
