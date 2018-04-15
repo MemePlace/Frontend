@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {Component, OnInit, ViewChild, OnDestroy} from '@angular/core';
 import {MatExpansionModule} from '@angular/material/expansion';
 import {MatSidenav, MatSnackBar} from '@angular/material';
 import {Utils} from '../utils';
@@ -6,19 +6,21 @@ import {UserService} from '../api/user.service';
 import {CommunityService} from '../api/community.service';
 import {Community} from '../api/community.service';
 import {StorageService, StorageType} from '../api/storage.service';
-
+import { Subscription } from 'rxjs/Subscription';
 
 @Component({
   selector: 'app-sidenav',
   templateUrl: './sidenav.component.html',
   styleUrls: ['./sidenav.component.scss']
 })
-export class SidenavComponent implements OnInit {
+export class SidenavComponent implements OnInit, OnDestroy {
   @ViewChild('expansion') expansion: MatExpansionModule;
   @ViewChild('sidenav') sidenav: MatSidenav;
   communities: Array<Community> = [];
   communitiesFavourited: Array<Community> = [];
   sidebarState = true;
+  loggedInSubscription: Subscription;
+  userLoggedIn = false;
 
   get sidebarWidth(): number {
     return 300;
@@ -40,18 +42,26 @@ export class SidenavComponent implements OnInit {
     } else { this.sidebarState = true; }
 
     const communityList = await this.communityService.getCommunities('top', 10, 0);
-
+    // checks if user is logged in on page refresh
     if (this.userService.isLoggedIn()) {
+      // user's favourite communities
       const user = await this.userService.getDetails(true);
-      this.communitiesFavourited = user.Favourites as Community[];
-      // filter out favourited communities that are in the top 10 communities
-      communityList.communities.forEach((community: any) => {
-        if (user.Favourites.filter(c => c.name === community.name).length > 0) {
-          community.favourited = true;
-        } else { community.favourited = false; }
-      });
+    this.communitiesFavourited = await user.Favourites as Community[];
     }
+
+    this.loggedInSubscription = this.userService.loggedIn$.subscribe(async (isLoggedIn) => {
+      this.userLoggedIn = isLoggedIn;
+      if (this.userLoggedIn) {
+        // user's favourite communities
+        const user = await this.userService.getDetails(true);
+      this.communitiesFavourited = await user.Favourites as Community[];
+      }
+    });
     this.communities = communityList.communities;
+  }
+
+  ngOnDestroy() {
+    this.loggedInSubscription.unsubscribe();
   }
 
   toggle() {
@@ -65,31 +75,14 @@ export class SidenavComponent implements OnInit {
     }
   }
 
-  async toggleFavourite(community: Community) {
+  async Unfavourite(community: Community) {
     if (this.userService.isLoggedIn()) {
-      if (community.favourited === false) {
-        // favourite community
-        try {
-          await this.userService.favouriteCommunity(community);
-          community.favourited = true;
-          const user = await this.userService.getDetails(true);
-          this.communitiesFavourited = user.Favourites as Community[];
-        } catch (err) {
-          this.snackBar.open(`Failed to favourite: ${err.message}`, 'Close');
-        }
-      } else {
         // unfavourite community
         try {
           await this.userService.unfavouriteCommunity(community);
-          this.communities[this.communities.map((c) => c.name).indexOf(community.name)].favourited = false;
-          community.favourited = false;
-          this.communitiesFavourited = this.communitiesFavourited.filter((com) => {
-            return com !== community;
-          });
           } catch (err) {
           this.snackBar.open(`Failed to unfavourite: ${err.message}`, 'Close');
         }
-      }
     }
   }
 }
