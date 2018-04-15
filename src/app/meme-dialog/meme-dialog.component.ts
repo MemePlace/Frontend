@@ -1,7 +1,7 @@
 import { Component, Inject, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { MatDialogModule, MAT_DIALOG_DATA, MatSnackBar } from '@angular/material';
 import { Utils } from '../utils';
-import { MemeService } from '../api/meme.service';
+import { CommentList, Comment, MemeService } from '../api/meme.service';
 
 @Component({
   selector: 'app-meme-dialog',
@@ -15,6 +15,7 @@ export class MemeDialogComponent implements OnInit {
   totalVote = 0;
   myVote = 0;
   memeId: number;
+  comments: Comment[] = [];
 
   @Output() notifyCard: EventEmitter<number> = new EventEmitter<number>();
 
@@ -38,6 +39,9 @@ export class MemeDialogComponent implements OnInit {
         this.myVote =  meme.myVote.diff;
         this.totalVote -= this.myVote; // we represent the total as myVote + totalVote
       }
+    });
+    this.memeService.getMemeComments(this.memeId).then((list: CommentList) => {
+      this.comments = list.comments;
     });
   }
 

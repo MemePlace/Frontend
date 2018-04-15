@@ -22,6 +22,7 @@ export interface Meme {
   myVote: {
     diff: number;
   };
+  comments: CommentList;
 }
 
 export interface MemeList {
@@ -29,6 +30,19 @@ export interface MemeList {
   totalCount: number;
   offset: number;
   sort: string;
+}
+
+export interface Comment {
+  id: number;
+  User: {
+    id: number;
+    username: string;
+  };
+  text: string;
+}
+
+export interface CommentList {
+  comments: Array<Comment>;
 }
 
 @Injectable()
@@ -148,6 +162,16 @@ export class MemeService {
       }
 
       return 0;
+    });
+  }
+
+  /**
+   * Get comments for a meme
+   * @param {number} memeId
+   */
+  getMemeComments(memeId: number): Promise<CommentList> {
+    return this.api.get(Version.v1, `memes/${memeId}/comments`).then((list: CommentList) => {
+      return list;
     });
   }
 

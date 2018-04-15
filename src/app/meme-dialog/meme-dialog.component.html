@@ -2,7 +2,6 @@
   <img class="meme-img" [style.minWidth.px]="minCardWidth()" [style.maxWidth.px]="maxCardWidth()" [src]="imageLink">
   <mat-dialog-content class="actions" style="margin-top: -3px;">
     <span class="author">
-    <!--This gets automatically focused for some reason; not sure why-->
       <a href="/">{{username}}</a>
     </span>
 
@@ -15,7 +14,14 @@
       <button mat-icon-button (click)="onClickDownVote()" [color]="myVote == -1 ? 'warn': 'basic'"><i
         class="material-icons">thumb_down</i></button>
     </div>
-
+    <br />
+    <mat-list>
+      <mat-list-item *ngFor="let comment of comments">
+        {{ comment.User.username }}: {{ comment.text }}
+        <mat-divider [inset]="true" *ngIf="!last"></mat-divider>
+      </mat-list-item>
+      <mat-divider></mat-divider>
+    </mat-list>
     <div style="clear: both"></div>
   </mat-dialog-content>
 </div>
