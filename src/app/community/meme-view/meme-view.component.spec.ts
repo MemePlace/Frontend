@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { FunctionBarComponent } from './function-bar.component';
+import { MemeViewComponent } from './meme-view.component';
 
-describe('FunctionBarComponent', () => {
-  let component: FunctionBarComponent;
-  let fixture: ComponentFixture<FunctionBarComponent>;
+describe('MemeViewComponent', () => {
+  let component: MemeViewComponent;
+  let fixture: ComponentFixture<MemeViewComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ FunctionBarComponent ]
+      declarations: [ MemeViewComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(FunctionBarComponent);
+    fixture = TestBed.createComponent(MemeViewComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

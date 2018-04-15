@@ -1,0 +1,17 @@
+.search-card {
+  padding: 5px;
+  display: inline-flex;
+  width: inherit;
+}
+
+input {
+  border: solid 1px rgba(0, 0, 0, 0.1);
+  border-radius: 2px;
+  outline: none;
+  padding: 6px;
+
+  width: inherit;
+
+  font-size: 16px;
+  line-height: 20px;
+}

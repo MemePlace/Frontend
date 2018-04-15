@@ -1,0 +1,15 @@
+<mat-toolbar>
+  <span class="community-title">{{community.name}} - {{community.title}}</span>
+  <mat-chip-list *ngIf="community.nsfw" class="nsfw-chip">
+    <mat-chip matTooltip="Not Suitable For Work">NSFW</mat-chip>
+  </mat-chip-list>
+  <span class="fill-remaining-space"></span>
+
+  {{totalFavourites}}
+  <button mat-icon-button (click)="toggleFavourite()">
+    <mat-icon matTooltip="Favourite Community" [style.color]="isFavourited ? '#FFD700': ''">
+      {{isFavourited ? 'star': 'star_border'}}
+    </mat-icon>
+  </button>
+  <button mat-raised-button class="details-btn" color="primary" (click)="openDetails()">Details</button>
+</mat-toolbar>
