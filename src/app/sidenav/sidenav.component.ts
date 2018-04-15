@@ -1,6 +1,6 @@
 import {Component, OnInit, ViewChild, OnDestroy} from '@angular/core';
 import {MatExpansionModule} from '@angular/material/expansion';
-import {MatSidenav, MatSnackBar} from '@angular/material';
+import {MatSidenav, MatSnackBar, MatChip} from '@angular/material';
 import {Utils} from '../utils';
 import {UserService} from '../api/user.service';
 import {CommunityService} from '../api/community.service';
@@ -29,7 +29,7 @@ export class SidenavComponent implements OnInit, OnDestroy {
   utils = Utils;
 
   constructor(
-    private userService: UserService,
+    public userService: UserService,
     private communityService: CommunityService,
     private storageService: StorageService,
     private snackBar: MatSnackBar,
