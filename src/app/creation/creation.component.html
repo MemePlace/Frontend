@@ -1,0 +1,33 @@
+<mat-grid-list id="header-row" cols="6" rowHeight="4em">
+
+  <mat-grid-tile id="title-input-tile" [colspan]="2">
+    <form style="width: 80%">
+      <mat-form-field style="width: 80%">
+        <input style="width: 80%" matInput placeholder="Title.. (optional)">
+      </mat-form-field>
+    </form>
+  </mat-grid-tile>
+
+  <mat-grid-tile id="zoomer" [colspan]="3">
+    <mat-slider #zoomslider min="0.25" max="5" step="0.10" value="{{zoomVal}}" (input)="moveZoom($event)" style="width: 80%"></mat-slider>
+    <p id="zoomDisplay">{{(zoomVal * 100).toFixed(2)}}%</p>
+    <button mat-button (click)="resetZoom()">Reset Zoom</button>
+  </mat-grid-tile>
+
+
+</mat-grid-list>
+
+
+<div id="creation-body" cols="20">
+  <div id="fabricBody">
+    <app-fabric #fab></app-fabric>
+  </div>
+
+  <div id="functionBar">
+    <app-function-bar #functs></app-function-bar>
+  </div>
+</div>
+
+<div id="undercanvas">
+  <p>After Fabric!</p>
+</div>
