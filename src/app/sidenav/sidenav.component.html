@@ -3,10 +3,6 @@
     <mat-nav-list>
       <a mat-list-item [routerLink]="['/create-community']">Create Community</a>
       <mat-divider></mat-divider>
-      <mat-toolbar *ngIf="userLoggedIn || this.userService.isLoggedIn()">
-        Favourited Communities
-      </mat-toolbar>
-      <mat-divider></mat-divider>
       <ng-container *ngIf="userLoggedIn || this.userService.isLoggedIn()">
       <mat-list-item  *ngFor="let communityFavourite of communitiesFavourited; let j = index" >
         <a mat-line [routerLink]="['/c/', communityFavourite.name]">
@@ -20,10 +16,6 @@
         <button mat-icon-button (click)="Unfavourite(communityFavourite)" ><mat-icon class="Favourited">star</mat-icon></button>
       </mat-list-item>
       </ng-container>
-      <mat-divider></mat-divider>
-      <mat-toolbar>
-        Top Communities
-      </mat-toolbar>
       <mat-divider></mat-divider>
       <ng-container *ngFor="let community of communities" >
         <mat-list-item [routerLink]="['/c/', community.name]">
