@@ -12,6 +12,11 @@
         <a mat-line [routerLink]="['/c/', communityFavourite.name]">
            {{ communityFavourite.title }}
         </a>
+        <mat-chip-list  *ngIf="communityFavourite.nsfw">
+          <mat-chip selected="true" color="warn">
+            NSFW
+          </mat-chip>
+        </mat-chip-list>
         <button mat-icon-button (click)="Unfavourite(communityFavourite)" ><mat-icon class="Favourited">star</mat-icon></button>
       </mat-list-item>
       </ng-container>
@@ -25,6 +30,11 @@
           <a mat-line>
              {{ community.title }}
           </a>
+          <mat-chip-list *ngIf="community.nsfw">
+            <mat-chip selected="true" color="warn">
+              NSFW
+            </mat-chip>
+          </mat-chip-list>
         </mat-list-item>
       </ng-container>
     </mat-nav-list>
