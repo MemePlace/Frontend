@@ -10,8 +10,9 @@
 </div>
 
 <div class="browseContentWrapper" [style.justify-content]="utils.isMobile ? 'center' : 'flex-start'">
-  <app-meme-card class="flexItem" *ngFor="let meme of memes"
-                 [imageHeight]="300"
+  <app-meme-card class="flexItem" *ngFor="let meme of memes; let i = index"
+                 [imageHeight]="computedDimensions[i].height"
+                 [imageWidth]="computedDimensions[i].width"
                  [memeId]="meme.id"
                  [style.marginLeft.px]="utils.isMobile ? 0 : 10">
   </app-meme-card>
