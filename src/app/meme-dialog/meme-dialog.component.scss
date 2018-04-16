@@ -1,6 +1,12 @@
 .meme-dialog {
   overflow-x: hidden;
   overflow-y: scroll;
+  padding: 0 10px 0 0;
+}
+
+.meme-img {
+  display: block;
+  margin: auto;
 }
 
 .cardActionButtons {
@@ -11,4 +17,59 @@
   float: left;
   line-height: 40px; // Needed to vertical align
   vertical-align: middle;
+}
+
+mat-list {
+  clear: both;
+}
+
+mat-list .comment-info {
+  font-size: small;
+  font-weight: bold;
+}
+
+::ng-deep .mat-list .mat-list-item .mat-line{
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+  word-break: break-word;
+  white-space: pre-wrap;
+}
+
+::ng-deep .mat-list-item-content {
+  padding: 0!important;
+}
+
+::ng-deep .mat-list .mat-list-item{
+  height:initial!important;
+}
+
+.form-wrapper {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  padding: 0;
+}
+
+.line-wrapper {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  padding: 10px 0;
+}
+
+.text-wrapper {
+  flex: 10;
+  clear: both;
+}
+
+.button-wrapper {
+  flex: 1;
+}
+
+.side-button {
+  float: right;
+}
+
+mat-form-field {
+  display: inherit;
 }

@@ -1,11 +1,9 @@
-<div class="meme-dialog" [style.maxHeight.px]="maxDialogHeight()">
-  <img class="meme-img" [style.minWidth.px]="minCardWidth()" [style.maxWidth.px]="maxCardWidth()" [src]="imageLink">
-  <mat-dialog-content class="actions" style="margin-top: -3px;">
-    <span class="author">
-    <!--This gets automatically focused for some reason; not sure why-->
-      <a href="/">{{username}}</a>
-    </span>
+<div class="meme-dialog" [style.height.px]="maxDialogHeight()">
+    <img class="meme-img" [style.maxWidth.px]="maxImgWidth()" [style.minWidth.px]="minImgWidth()" [src]="imageLink">
 
+    <h1 class="author" mat-dialog-title>
+      {{username}} posted {{ createdAt | timeAgo }}
+    </h1>
     <div class="cardActionButtons">
       <!-- Up vote button -->
       <button mat-icon-button (click)="onClickUpVote()" [color]="myVote == 1 ? 'primary': 'basic'"><i
@@ -15,7 +13,30 @@
       <button mat-icon-button (click)="onClickDownVote()" [color]="myVote == -1 ? 'warn': 'basic'"><i
         class="material-icons">thumb_down</i></button>
     </div>
-
+    <div class="form-wrapper" *ngIf="userService.isLoggedIn()">
+      <form class="text-wrapper" [formGroup]="form">
+        <mat-form-field>
+          <textarea matInput type="text" placeholder="Add a comment" formControlName="commentText" maxLength="1000"></textarea>
+        </mat-form-field>
+      </form>
+      <div class="button-wrapper">
+        <button class="side-button" mat-icon-button (click)="submitComment()"><i class="material-icons">send</i></button>
+      </div>
+    </div>
+    <mat-list>
+      <mat-divider></mat-divider>
+      <mat-list-item *ngFor="let comment of comments">
+        <div class="line-wrapper">
+          <div class="text-wrapper">
+            <div class="comment-info" matLine>{{ comment.User.username }} commented {{ comment.createdAt | timeAgo }}</div>
+            <div matLine>{{ comment.text }}</div>
+          </div>
+          <div class="button-wrapper" *ngIf="userService.user && comment.User.username===userService.user.username">
+            <button class="side-button" mat-icon-button (click)="deleteComment(comment.id)"><i class="material-icons">delete</i></button>
+          </div>
+        </div>
+        <mat-divider [inset]="true"></mat-divider>
+      </mat-list-item>
+    </mat-list>
     <div style="clear: both"></div>
-  </mat-dialog-content>
 </div>
