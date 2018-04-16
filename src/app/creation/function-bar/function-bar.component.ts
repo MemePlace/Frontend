@@ -28,6 +28,7 @@ export class FunctionBarComponent {
   public fontAlign: string;
   public selected = 'Impact';
   public fontColour; // TODO: Implement font color UI
+  public selType;
 
   // TODO: Not all fonts are loaded into FabricJS immediately, pre-loading is needed
   public fonts: Array<any> = [
@@ -152,6 +153,7 @@ export class FunctionBarComponent {
     this.fontSize = 72;
     this.fontAlign = 'center';
     this.resizeCheck = true;
+    this.selType = 'None';
     this.parent = par;
     this.fabComp = fab;
     this.setSize(size);

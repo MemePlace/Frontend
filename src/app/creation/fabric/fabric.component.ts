@@ -57,6 +57,30 @@ export class FabricComponent {
     });
 
     this.setSize([h, w]);
+
+    this.canvas.on('selection:created', (e) => {
+      if (e.selected.length > 1) {
+        this.functComp.selType = 'Group';
+      } else if (e.target.text) {
+        this.functComp.selType = 'Text';
+      } else {
+        this.functComp.selType = 'Image';
+      }
+    });
+
+    this.canvas.on('selection:updated', (e) => {
+      if (e.selected.length > 1) {
+        this.functComp.selType = 'Group';
+      } else if (e.target.text) {
+        this.functComp.selType = 'Text';
+      } else {
+        this.functComp.selType = 'Image';
+      }
+    });
+
+    this.canvas.on('selection:cleared', (e) => {
+      this.functComp.selType = 'None';
+    });
   }
 
 
