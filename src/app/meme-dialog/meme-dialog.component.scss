@@ -35,11 +35,11 @@ mat-list .comment-info {
   white-space: pre-wrap;
 }
 
-::ng-deep app-meme-dialog .mat-list-item-content {
+::ng-deep .cdk-overlay-pane mat-dialog-container app-meme-dialog .meme-dialog mat-list mat-list-item .mat-list-item-content {
   padding: 0;
 }
 
-::ng-deep app-meme-dialog .mat-list .mat-list-item{
+::ng-deep .cdk-global-overlay-wrapper .cdk-overlay-pane mat-dialog-container app-meme-dialog .meme-dialog mat-list mat-list-item {
   height:initial;
 }
 
