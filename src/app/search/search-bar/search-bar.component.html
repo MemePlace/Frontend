@@ -1,18 +1,14 @@
 <input #query
        class="mat-elevation-z2"
        type="search"
-       placeholder="Search"
+       [placeholder]="placeholder"
        (keyup)="onKey(query.value)"
+       [style.width]="barWidth ? barWidth : ''"
        [matAutocomplete]="auto">
-<mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
+<mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn" (optionSelected)="optionSelected.emit($event)">
   <mat-optgroup *ngIf="options.communities && options.communities.length > 0" label="Communities">
     <mat-option *ngFor="let community of options.communities" [value]="community">
       {{ community.name }} - {{community.title}}
-    </mat-option>
-  </mat-optgroup>
-  <mat-optgroup *ngIf="options.users && options.users.length > 0" label="Users">
-    <mat-option *ngFor="let user of options.users" [value]="user">
-      {{ user.username }}
     </mat-option>
   </mat-optgroup>
 </mat-autocomplete>
