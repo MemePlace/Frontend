@@ -15,8 +15,11 @@ import { SearchModule } from './search/search.module';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { MemeDialogComponent } from './meme-dialog/meme-dialog.component';
 import { MemeService } from './api/meme.service';
+import { CreationModule } from './creation/creation.module';
 import { TimeAgoPipe } from 'time-ago-pipe';
 import { DeleteDialogComponent } from './meme-dialog/delete-dialog/delete-dialog.component';
+import 'hammerjs';
+
 
 @NgModule({
   declarations: [
@@ -37,6 +40,7 @@ import { DeleteDialogComponent } from './meme-dialog/delete-dialog/delete-dialog
     MatFormFieldModule,
     MatInputModule,
     CommunityModule,
+    CreationModule,
     ApiModule,
     SearchModule,
     FormsModule,

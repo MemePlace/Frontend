@@ -18,6 +18,6 @@ import { HeaderSearchComponent } from './header-search/header-search.component';
   ],
   declarations: [SearchBarComponent, MobileSearchDialogComponent, HeaderSearchComponent],
   entryComponents: [MobileSearchDialogComponent],
-  exports: [HeaderSearchComponent]
+  exports: [HeaderSearchComponent, SearchBarComponent]
 })
 export class SearchModule { }

@@ -3,6 +3,8 @@
     <mat-nav-list>
       <a mat-list-item [routerLink]="['/create-community']">Create Community</a>
       <mat-divider></mat-divider>
+      <a mat-list-item [routerLink]="['/creation']">Create Memes</a>
+      <mat-divider></mat-divider>
       <ng-container *ngIf="userLoggedIn || this.userService.isLoggedIn()">
       <mat-list-item  *ngFor="let communityFavourite of communitiesFavourited; let j = index" >
         <a mat-line [routerLink]="['/c/', communityFavourite.name]">
