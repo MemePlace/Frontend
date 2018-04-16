@@ -8,6 +8,7 @@ import { SearchService } from './search.service';
 import { MemeService } from './meme.service';
 import { StorageService } from './storage.service';
 import { AuthGuardService } from './auth-guard.service';
+import {SidebarService} from './sidebar.service';
 
 @NgModule({
   imports: [
@@ -21,7 +22,8 @@ import { AuthGuardService } from './auth-guard.service';
     MemeService,
     CommunityService,
     SearchService,
-    StorageService
+    StorageService,
+    SidebarService
   ]
 })
 export class ApiModule { }
