@@ -62,9 +62,6 @@ export class MemeViewComponent implements OnInit {
   displayMemes(memes) {
     this.computedDimensions = [];
     const mMemes = memes.slice();
-
-    console.log(this.el.nativeElement.offsetWidth);
-
     let row = [];
 
     while (mMemes.length > 0) {
@@ -85,8 +82,6 @@ export class MemeViewComponent implements OnInit {
       const rowHeight = Math.min(this.getRowHeight(row, this.el.nativeElement.offsetWidth - row.length * 20), this.maxRowHeight);
       this.computedDimensions.push(...this.computeImageHeights(row, rowHeight));
     }
-
-    console.log(this.computedDimensions);
   }
 
   getRowHeight(row, width): number {
