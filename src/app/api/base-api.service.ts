@@ -16,7 +16,7 @@ export interface MessageReply {
   message: string;
 }
 
-const prodBase = 'http://api.meme.place';
+const prodBase = 'http://api.meme.place:3001/api';
 const devBase = 'http://localhost:3000/api';
 
 const requestOptions = {
