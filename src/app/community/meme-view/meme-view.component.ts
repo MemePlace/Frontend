@@ -1,4 +1,4 @@
-import {Component, ElementRef, Input, OnInit, Self} from '@angular/core';
+import {Component, ElementRef, HostListener, Input, OnInit, Self} from '@angular/core';
 import {Meme, MemeService} from '../../api/meme.service';
 import {Utils} from '../../utils';
 import {MatSnackBar, PageEvent} from '@angular/material';
@@ -30,6 +30,13 @@ export class MemeViewComponent implements OnInit {
   constructor(@Self() private el: ElementRef,
               private memeService: MemeService,
               private snackBar: MatSnackBar) { }
+
+  @HostListener('window:resize', ['$event.target'])
+  onResize() {
+    if (this.memes.length > 0) {
+      this.displayMemes(this.memes);
+    }
+  }
 
   async ngOnInit() {
     this.loadMemes(0, this.pageSize);
