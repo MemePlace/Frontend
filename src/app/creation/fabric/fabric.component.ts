@@ -252,7 +252,7 @@ export class FabricComponent {
       return;
     }
 
-    if(!this.userService.isLoggedIn()) {
+    if (!this.userService.isLoggedIn()) {
       this.snackBar.open('You must be logged in to post your meme!', 'Close');
     }  else {
       const pic = this.canvas.toDataURL({

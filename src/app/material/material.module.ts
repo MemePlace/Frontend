@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 
 import {
   MatToolbarModule, MatButtonModule, MatIconModule, MatSidenavModule, MatTabsModule,
-  MatListModule, MatExpansionModule, MatCheckboxModule, MatMenuModule, 
+  MatListModule, MatExpansionModule, MatCheckboxModule, MatMenuModule,
   MatTooltipModule, MatButtonToggleModule, MatOptionModule, MatSelectModule,
   MatSnackBarModule,
 } from '@angular/material';
