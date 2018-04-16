@@ -51,7 +51,7 @@ export class FunctionBarComponent {
     ];
 
 
-  constructor() { }
+  constructor(private snackBar: MatSnackBar) { }
 
 
   changeSize(val: [number, number]): void {
@@ -158,5 +158,7 @@ export class FunctionBarComponent {
   }
 
 
-
+  coming() {
+    this.snackBar.open('This feature is coming soon!', 'Close');
+  }
 }

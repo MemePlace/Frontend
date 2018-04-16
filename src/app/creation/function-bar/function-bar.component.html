@@ -21,7 +21,7 @@
   </mat-list-item>
 
   <mat-list-item>
-    <button mat-raised-button matTooltip="Object Options">
+    <button mat-raised-button matTooltip="Object Options" (click)="coming()">
       <mat-icon>arrow_drop_down</mat-icon>
       <mat-icon>touch_app</mat-icon>
     </button>
@@ -34,7 +34,7 @@
   </mat-list-item>
 
   <mat-list-item>
-    <button mat-raised-button matTooltip="View All Layers" (click)="viewAll()">
+    <button mat-raised-button matTooltip="View All Layers" (click)="coming()">
       <mat-icon>menu</mat-icon>
     </button>
   </mat-list-item>
@@ -96,7 +96,7 @@
       </mat-action-row>
       <mat-divider></mat-divider>
       <mat-action-row mat-menu-item [disableRipple]="true">
-        <button mat-raised-button color="accent" (click)="uploadFile()">Upload File</button>
+        <button mat-raised-button  color="accent" (click)="uploadFile()">Upload File</button>
         <button mat-raised-button color="accent" (click)="uploadUrl()">URL</button>
       </mat-action-row>
       <span mat-menu-item [disableRipple]="true">

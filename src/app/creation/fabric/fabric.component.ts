@@ -273,5 +273,4 @@ export class FabricComponent {
       });
     }
   }
-
 }
