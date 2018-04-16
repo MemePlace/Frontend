@@ -22,3 +22,14 @@ deploy:
       branch: master # Build only from master
   local_dir: dist # Only copy the dist contents
   fqdn: meme.place
+
+deploy:
+  provider: pages
+  skip_cleanup: true # Prevent travis from cleaning out the branch before the deploy occurs
+  github_token: $GITHUB_TOKEN # Set in travis-ci.org dashboard
+  on:
+      branch: dev # Build only from master
+  local_dir: dist # Only copy the dist contents
+  repo: MemePlace/Frontend-Dev
+  target-branch: master
+  fqdn: dev.meme.place
