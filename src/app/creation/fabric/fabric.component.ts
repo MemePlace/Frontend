@@ -111,8 +111,7 @@ export class FabricComponent {
 /* CREDIT TO https://github.com/michaeljcalkins/angular-fabric/blob/master/assets/fabric.js */
   download() {
     const pic = this.canvas.toDataURL({
-      height: this.height,
-      width: this.width
+      multiplier: 1/this.zoomVal
     });
 
     const data = pic.replace('data:image/png;base64,', '');
@@ -160,7 +159,6 @@ export class FabricComponent {
     const reader = new FileReader();
     reader.onload = function (event: FileReaderEvent) {
       const imgObj = new Image();
-      console.log(event);
       imgObj.src = event.target.result;
       imgObj.onload = function () {
         const image = new fabric.Image(imgObj);
@@ -256,8 +254,7 @@ export class FabricComponent {
       this.snackBar.open('You must be logged in to post your meme!', 'Close');
     }  else {
       const pic = this.canvas.toDataURL({
-        height: this.height,
-        width: this.width
+        multiplier: 1/this.zoomVal
       });
 
       const imageData = pic.replace('data:image/png;base64,', '');
