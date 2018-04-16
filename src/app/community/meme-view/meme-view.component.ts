@@ -44,9 +44,11 @@ export class MemeViewComponent implements OnInit, OnDestroy {
 
   async ngOnInit() {
     this.sideBarOpenSubscription = this.sidebarService.sideBarOpen$.subscribe((sidebarOpen) => {
-      if (this.memes.length > 0) {
-        this.displayMemes(this.memes);
-      }
+      setTimeout(() => {
+        if (this.memes.length > 0) {
+          this.displayMemes(this.memes);
+        }
+      }, 250);
     });
 
     this.loadMemes(0, this.pageSize);
