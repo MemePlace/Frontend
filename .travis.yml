@@ -13,6 +13,7 @@ branches:
 
 script:
   - npm run build # Generates the dist folder with built angular app
+  - cp src/404.html dist/404.html
 
 deploy:
   provider: pages
