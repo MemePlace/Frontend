@@ -28,6 +28,8 @@ export class MemeViewComponent implements OnInit, OnDestroy {
   computedDimensions: Meme[] = [];
   maxRowHeight = 300;
 
+  maxAspectRatio = 3.0;
+
   loading = false;
 
   constructor(@Self() private el: ElementRef,
@@ -77,11 +79,22 @@ export class MemeViewComponent implements OnInit, OnDestroy {
 
   displayMemes(memes) {
     this.computedDimensions = [];
-    const mMemes = memes.slice();
+    let mMemes = memes.slice();
     let row = [];
 
-    const width = this.el.nativeElement.offsetWidth;
+    if (!this.utils.isMobile) {
+      // Ensure the memes don't violate aspect ratio constraints
+      mMemes = mMemes.map((meme) => {
+        const i = Object.assign({}, meme.Image);
+        if (i.width / i.height > this.maxAspectRatio) {
+          i.width = i.height * this.maxAspectRatio;
+        }
 
+        return Object.assign(meme, {Image: i});
+      });
+    }
+
+    const width = this.el.nativeElement.offsetWidth;
 
     while (mMemes.length > 0) {
       const meme = mMemes.shift();

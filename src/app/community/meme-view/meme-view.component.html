@@ -9,7 +9,7 @@
   <a [routerLink]="['/creation']">MAKE A MEME HERE</a>
 </div>
 
-<div class="browseContentWrapper" [style.justify-content]="utils.isMobile ? 'center' : 'flex-start'">
+<div class="browseContentWrapper" [style.justify-content]="utils.isMobile ? 'center' : 'flex-start'" *ngIf="computedDimensions.length === memes.length">
   <app-meme-card class="flexItem" *ngFor="let meme of memes; let i = index"
                  [imageHeight]="computedDimensions[i].height"
                  [imageWidth]="computedDimensions[i].width"
