@@ -1,10 +1,9 @@
-<div class="meme-dialog" [style.maxHeight.px]="maxDialogHeight()">
-  <img class="meme-img" [style.minWidth.px]="minCardWidth()" [style.maxWidth.px]="maxCardWidth()" [src]="imageLink">
-  <mat-dialog-content class="actions" style="margin-top: -3px;">
-    <span class="author">
-      <a href="/">{{username}}</a>
-    </span>
+<div class="meme-dialog" [style.height.px]="maxDialogHeight()">
+    <img class="meme-img" [style.minWidth.px]="minCardWidth()" [style.maxWidth.px]="maxCardWidth()" [src]="imageLink">
 
+    <h1 class="author" mat-dialog-title>
+      <a href="/">{{username}}</a> posted {{ createdAt | timeAgo }}
+    </h1>
     <div class="cardActionButtons">
       <!-- Up vote button -->
       <button mat-icon-button (click)="onClickUpVote()" [color]="myVote == 1 ? 'primary': 'basic'"><i
@@ -14,15 +13,19 @@
       <button mat-icon-button (click)="onClickDownVote()" [color]="myVote == -1 ? 'warn': 'basic'"><i
         class="material-icons">thumb_down</i></button>
     </div>
-    <br />
     <mat-list>
       <mat-divider></mat-divider>
       <mat-list-item *ngFor="let comment of comments">
-        <div class="comment">
-          <div class="comment-info" matLine>{{ comment.User.username }}</div>
-          <div matLine>{{ comment.text }}</div>
+        <div class="comment-line">
+          <div class="comment">
+            <div class="comment-info" matLine>{{ comment.User.username }} commented {{ comment.createdAt | timeAgo }}</div>
+            <div matLine>{{ comment.text }}</div>
+          </div>
+          <div class="delete-button" *ngIf="userService.user && comment.User.username===userService.user.username">
+            <button mat-icon-button (click)="deleteComment(comment.id)"><i class="material-icons">delete</i></button>
+          </div>
         </div>
-        <mat-divider></mat-divider>
+        <mat-divider [inset]="true" ></mat-divider>
       </mat-list-item>
     </mat-list>
     <form [formGroup]="form" (ngSubmit)="submitComment()" *ngIf="userService.isLoggedIn()">
@@ -31,5 +34,4 @@
       </mat-form-field>
     </form>
     <div style="clear: both"></div>
-  </mat-dialog-content>
 </div>

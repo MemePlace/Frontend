@@ -15,6 +15,8 @@ import { SearchModule } from './search/search.module';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { MemeDialogComponent } from './meme-dialog/meme-dialog.component';
 import { MemeService } from './api/meme.service';
+import { TimeAgoPipe } from 'time-ago-pipe';
+import { DeleteDialogComponent } from './meme-dialog/delete-dialog/delete-dialog.component';
 
 @NgModule({
   declarations: [
@@ -23,6 +25,8 @@ import { MemeService } from './api/meme.service';
     HeaderComponent,
     PageNotFoundComponent,
     MemeDialogComponent,
+    TimeAgoPipe,
+    DeleteDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -42,6 +46,6 @@ import { MemeService } from './api/meme.service';
   ],
   providers: [MemeDialogComponent, MemeService],
   bootstrap: [AppComponent],
-  entryComponents: [MemeDialogComponent],
+  entryComponents: [MemeDialogComponent, DeleteDialogComponent],
 })
 export class AppModule { }

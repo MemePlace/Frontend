@@ -20,7 +20,7 @@
 
 mat-list {
   clear: both;
-  word-wrap: break-word;
+  padding: 0 10px 0 0;
 }
 
 mat-list .comment-info {
@@ -42,8 +42,20 @@ mat-list .comment-info {
   height:initial!important;
 }
 
-.comment {
+.comment-line {
+  display: flex;
+  width: 100%;
+  align-items: center;
   padding: 10px 0;
+}
+
+.comment {
+  flex: 1;
+  clear: both;
+}
+
+.delete-button {
+  flex: 0;
 }
 
 mat-form-field {

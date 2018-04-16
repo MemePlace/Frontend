@@ -38,6 +38,7 @@ export interface Comment {
     id: number;
     username: string;
   };
+  createdAt: string;
   text: string;
 }
 
@@ -186,6 +187,15 @@ export class MemeService {
     }).then((reply: MessageReply) => {
       return reply;
     });
+  }
+
+  /**
+   * Delete a meme comment
+   * @param {number} memeId
+   * @param {number} commentId
+   */
+  deleteMemeComment(memeId: number, commentId: number) {
+    return this.api.delete(Version.v1, `memes/${memeId}/comments/${commentId}`);
   }
 
   /**
