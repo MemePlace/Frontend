@@ -48,7 +48,7 @@ export class MemeViewComponent implements OnInit, OnDestroy {
         if (this.memes.length > 0) {
           this.displayMemes(this.memes);
         }
-      }, 250);
+      }, 500);
     });
 
     this.loadMemes(0, this.pageSize);
@@ -80,12 +80,15 @@ export class MemeViewComponent implements OnInit, OnDestroy {
     const mMemes = memes.slice();
     let row = [];
 
+    const width = this.el.nativeElement.offsetWidth;
+
+
     while (mMemes.length > 0) {
       const meme = mMemes.shift();
       row.push(meme);
 
       // Width with some leeway for the image margins and padding
-      const rowHeight = this.getRowHeight(row, this.el.nativeElement.offsetWidth - row.length * 20);
+      const rowHeight = this.getRowHeight(row, this.el.nativeElement.offsetWidth - row.length * 10 - 10);
 
       if (rowHeight < this.maxRowHeight) {
         this.computedDimensions.push(...this.computeImageHeights(row, rowHeight));
@@ -98,6 +101,14 @@ export class MemeViewComponent implements OnInit, OnDestroy {
       const rowHeight = Math.min(this.getRowHeight(row, this.el.nativeElement.offsetWidth - row.length * 20), this.maxRowHeight);
       this.computedDimensions.push(...this.computeImageHeights(row, rowHeight));
     }
+
+    // we need to figure out if sidebars will be added since it effects the row width
+    setTimeout(() => {
+      if (this.el.nativeElement.offsetWidth !== width) {
+        // Recompute layout
+        this.displayMemes(this.memes);
+      }
+    }, 0);
   }
 
   getRowHeight(row, width): number {
