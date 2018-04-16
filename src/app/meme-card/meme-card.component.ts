@@ -13,7 +13,10 @@ import { Subscription } from 'rxjs/Subscription';
 })
 export class MemeCardComponent implements OnInit, OnDestroy {
   @Input() imageHeight: number;
+  @Input() imageWidth: number;
   @Input() memeId: number;
+
+  utils = Utils;
 
   imageLink = 'data:image/png;base64,ffff';  // ensures no null request being sent
   username: string;

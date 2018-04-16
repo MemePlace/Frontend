@@ -16,6 +16,11 @@
   margin-top: 20px;
 }
 
+:host {
+  width: 100%;
+  display: block;
+}
+
 .no-memes {
   display: block;
   margin: 20px auto 0 auto;
