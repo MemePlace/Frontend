@@ -1,7 +1,9 @@
-import {Component, ElementRef, HostListener, Input, OnInit, Self} from '@angular/core';
+import {Component, ElementRef, HostListener, Input, OnDestroy, OnInit, Self} from '@angular/core';
 import {Meme, MemeService} from '../../api/meme.service';
 import {Utils} from '../../utils';
 import {MatSnackBar, PageEvent} from '@angular/material';
+import {SidebarService} from '../../api/sidebar.service';
+import {Subscription} from 'rxjs/Subscription';
 
 export interface MemeDimensions {
   width: number;
@@ -13,10 +15,11 @@ export interface MemeDimensions {
   templateUrl: './meme-view.component.html',
   styleUrls: ['./meme-view.component.scss']
 })
-export class MemeViewComponent implements OnInit {
+export class MemeViewComponent implements OnInit, OnDestroy {
   @Input() communityName: string;
   @Input() sort = 'top';
 
+  sideBarOpenSubscription: Subscription;
   utils = Utils;
   totalCount = 0;
   pageSize = 30;
@@ -29,6 +32,7 @@ export class MemeViewComponent implements OnInit {
 
   constructor(@Self() private el: ElementRef,
               private memeService: MemeService,
+              private sidebarService: SidebarService,
               private snackBar: MatSnackBar) { }
 
   @HostListener('window:resize', ['$event.target'])
@@ -39,7 +43,17 @@ export class MemeViewComponent implements OnInit {
   }
 
   async ngOnInit() {
+    this.sideBarOpenSubscription = this.sidebarService.sideBarOpen$.subscribe((sidebarOpen) => {
+      if (this.memes.length > 0) {
+        this.displayMemes(this.memes);
+      }
+    });
+
     this.loadMemes(0, this.pageSize);
+  }
+
+  ngOnDestroy() {
+    this.sideBarOpenSubscription.unsubscribe();
   }
 
   async loadMemes(offset: number, count: number) {
