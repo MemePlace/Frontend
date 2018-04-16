@@ -29,9 +29,10 @@ mat-list .comment-info {
 }
 
 ::ng-deep .mat-list .mat-list-item .mat-line{
+  overflow-wrap: break-word;
   word-wrap: break-word;
+  word-break: break-word;
   white-space: pre-wrap;
-  height: auto;
 }
 
 ::ng-deep .mat-list-item-content {

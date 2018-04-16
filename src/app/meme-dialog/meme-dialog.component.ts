@@ -88,12 +88,12 @@ export class MemeDialogComponent implements OnInit {
     });
   }
 
-  maxCardWidth(): number {
-    return Utils.screenWidth * 0.70;
+  minImgWidth(): number {
+    return Utils.screenWidth * 0.30;
   }
 
-  minCardWidth(): number {
-    return Utils.screenWidth * 0.5;
+  maxImgWidth(): number {
+    return Utils.screenWidth * 0.7;
   }
 
   maxDialogHeight(): number {

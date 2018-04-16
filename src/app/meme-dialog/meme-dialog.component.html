@@ -1,5 +1,5 @@
 <div class="meme-dialog" [style.height.px]="maxDialogHeight()">
-    <img class="meme-img" [style.minWidth.px]="minCardWidth()" [style.maxWidth.px]="maxCardWidth()" [src]="imageLink">
+    <img class="meme-img" [style.maxWidth.px]="maxImgWidth()" [style.minWidth.px]="minImgWidth()" [src]="imageLink">
 
     <h1 class="author" mat-dialog-title>
       {{username}} posted {{ createdAt | timeAgo }}
