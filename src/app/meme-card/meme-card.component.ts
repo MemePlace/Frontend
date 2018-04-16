@@ -1,8 +1,7 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { Utils } from '../utils';
 import { MemeService } from '../api/meme.service';
-import { MatSnackBar } from '@angular/material';
-import { MatDialog } from '@angular/material';
+import { MatSnackBar, MatDialog } from '@angular/material';
 import { MemeDialogComponent } from '../meme-dialog/meme-dialog.component';
 import { UserService } from '../api/user.service';
 import { Subscription } from 'rxjs/Subscription';
@@ -64,6 +63,7 @@ export class MemeCardComponent implements OnInit, OnDestroy {
     if (!Utils.isMobile) {
       const dialogRef = this.dialog.open(MemeDialogComponent, {
         data: { memeId: this.memeId },
+        autoFocus: false,
       });
       const dialogInstance = dialogRef.componentInstance;
       dialogInstance.notifyCard.subscribe((vote: number) => {

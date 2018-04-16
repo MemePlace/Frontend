@@ -1,6 +1,14 @@
 <div class="progress-spinner" *ngIf="loading">
   <mat-progress-spinner style="margin: 0 auto;" mode="indeterminate"></mat-progress-spinner>
 </div>
+
+<div *ngIf="!loading && totalCount === 0" class="no-memes">
+  <img *ngIf="!loading && totalCount === 0" class="no-memes-img"
+       src="/assets/images/no-memes.png">
+  <br>
+  <a [routerLink]="['/creation']">MAKE A MEME HERE</a>
+</div>
+
 <div class="browseContentWrapper" [style.justify-content]="utils.isMobile ? 'center' : 'flex-start'">
   <app-meme-card class="flexItem" *ngFor="let meme of memes"
                  [imageHeight]="300"

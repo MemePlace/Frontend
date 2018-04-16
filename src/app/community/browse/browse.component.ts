@@ -22,6 +22,8 @@ export class BrowseComponent implements OnInit {
 
   ngOnInit() {
     this.routeSubscription = this.route.params.subscribe((params) => {
+      this.retrieved = false;
+
       if (params.name) {
         this.communityService.getCommunityDetails(params.name).then((community) => {
           this.community = community;

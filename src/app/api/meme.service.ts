@@ -31,6 +31,20 @@ export interface MemeList {
   sort: string;
 }
 
+export interface Comment {
+  id: number;
+  User: {
+    id: number;
+    username: string;
+  };
+  createdAt: string;
+  text: string;
+}
+
+export interface CommentList {
+  comments: Array<Comment>;
+}
+
 @Injectable()
 export class MemeService {
   private memes: {[id: number]: Meme} = {};
@@ -151,6 +165,38 @@ export class MemeService {
 
       return 0;
     });
+  }
+
+  /**
+   * Get comments for a meme
+   * @param {number} memeId
+   */
+  getMemeComments(memeId: number): Promise<CommentList> {
+    return this.api.get(Version.v1, `memes/${memeId}/comments`).then((list: CommentList) => {
+      return list;
+    });
+  }
+
+  /**
+   * Add a comment to a meme
+   * @param {number} memeId
+   * @param {string} text
+   */
+  addMemeComment(memeId: number, text: string): Promise<MessageReply> {
+    return this.api.post(Version.v1, `memes/${memeId}/comments`, {
+      text: text
+    }).then((reply: MessageReply) => {
+      return reply;
+    });
+  }
+
+  /**
+   * Delete a meme comment
+   * @param {number} memeId
+   * @param {number} commentId
+   */
+  deleteMemeComment(memeId: number, commentId: number) {
+    return this.api.delete(Version.v1, `memes/${memeId}/comments/${commentId}`);
   }
 
   /**

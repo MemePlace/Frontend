@@ -5,7 +5,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { MaterialModule } from './material/material.module';
-import { MatDialogModule } from '@angular/material';
+import { MatDialogModule, MatFormFieldModule, MatInputModule, MatChipsModule } from '@angular/material';
 import { SidenavComponent } from './sidenav/sidenav.component';
 import { HeaderComponent } from './header/header.component';
 import { CommunityModule } from './community/community.module';
@@ -16,7 +16,8 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
 import { MemeDialogComponent } from './meme-dialog/meme-dialog.component';
 import { MemeService } from './api/meme.service';
 import { CreationModule } from './creation/creation.module';
-
+import { TimeAgoPipe } from 'time-ago-pipe';
+import { DeleteDialogComponent } from './meme-dialog/delete-dialog/delete-dialog.component';
 import 'hammerjs';
 
 
@@ -27,6 +28,8 @@ import 'hammerjs';
     HeaderComponent,
     PageNotFoundComponent,
     MemeDialogComponent,
+    TimeAgoPipe,
+    DeleteDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -34,6 +37,8 @@ import 'hammerjs';
     AppRoutingModule,
     MaterialModule,
     MatDialogModule,
+    MatFormFieldModule,
+    MatInputModule,
     CommunityModule,
     CreationModule,
     ApiModule,
@@ -41,9 +46,10 @@ import 'hammerjs';
     FormsModule,
     ReactiveFormsModule,
     LoginFormModule,
+    MatChipsModule,
   ],
   providers: [MemeDialogComponent, MemeService],
   bootstrap: [AppComponent],
-  entryComponents: [MemeDialogComponent],
+  entryComponents: [MemeDialogComponent, DeleteDialogComponent],
 })
 export class AppModule { }
