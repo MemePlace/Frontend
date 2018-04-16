@@ -5,8 +5,8 @@ import {Utils} from '../utils';
 import {UserService} from '../api/user.service';
 import {CommunityService} from '../api/community.service';
 import {Community} from '../api/community.service';
-import {StorageService, StorageType} from '../api/storage.service';
-import { Subscription } from 'rxjs/Subscription';
+import {Subscription} from 'rxjs/Subscription';
+import {SidebarService} from '../api/sidebar.service';
 
 @Component({
   selector: 'app-sidenav',
@@ -18,12 +18,18 @@ export class SidenavComponent implements OnInit, OnDestroy {
   @ViewChild('sidenav') sidenav: MatSidenav;
   communities: Array<Community> = [];
   communitiesFavourited: Array<Community> = [];
-  sidebarState = true;
   loggedInSubscription: Subscription;
-  userLoggedIn = false;
+
+  get userLoggedIn() {
+    return this.userService.isLoggedIn();
+  }
 
   get sidebarWidth(): number {
     return 300;
+  }
+
+  get sidebarState() {
+    return this.sidebarService.sideBarOpen;
   }
 
   utils = Utils;
@@ -31,30 +37,25 @@ export class SidenavComponent implements OnInit, OnDestroy {
   constructor(
     public userService: UserService,
     private communityService: CommunityService,
-    private storageService: StorageService,
     private snackBar: MatSnackBar,
+    private sidebarService: SidebarService,
   ) { }
 
   async ngOnInit() {
-    // check if sidenavbar is open or closed
-    if (this.storageService.get(StorageType.local, 'sidebarState') === 'close') {
-      this.sidebarState = false;
-    } else { this.sidebarState = true; }
-
     const communityList = await this.communityService.getCommunities('top', 10, 0);
+
     // checks if user is logged in on page refresh
-    if (this.userService.isLoggedIn()) {
+    if (this.userLoggedIn) {
       // user's favourite communities
       const user = await this.userService.getDetails(true);
-    this.communitiesFavourited = await user.Favourites as Community[];
+      this.communitiesFavourited = await user.Favourites as Community[];
     }
 
     this.loggedInSubscription = this.userService.loggedIn$.subscribe(async (isLoggedIn) => {
-      this.userLoggedIn = isLoggedIn;
-      if (this.userLoggedIn) {
+      if (isLoggedIn) {
         // user's favourite communities
         const user = await this.userService.getDetails(true);
-      this.communitiesFavourited = await user.Favourites as Community[];
+        this.communitiesFavourited = await user.Favourites as Community[];
       }
     });
     this.communities = communityList.communities;
@@ -66,13 +67,7 @@ export class SidenavComponent implements OnInit, OnDestroy {
 
   toggle() {
     this.sidenav.toggle();
-    if (this.sidenav.opened === true) {
-      this.storageService.set(StorageType.local, 'sidebarState', 'open');
-      this.sidebarState = true;
-    } else {
-      this.storageService.set(StorageType.local, 'sidebarState', 'close');
-      this.sidebarState = false;
-    }
+    this.sidebarService.sideBarOpen = this.sidenav.opened;
   }
 
   async Unfavourite(community: Community) {
@@ -80,7 +75,7 @@ export class SidenavComponent implements OnInit, OnDestroy {
         // unfavourite community
         try {
           await this.userService.unfavouriteCommunity(community);
-          } catch (err) {
+        } catch (err) {
           this.snackBar.open(`Failed to unfavourite: ${err.message}`, 'Close');
         }
     }
