@@ -1,6 +1,7 @@
 .meme-dialog {
   overflow-x: hidden;
   overflow-y: scroll;
+  padding: 0 10px 0 0;
 }
 
 .meme-img {
@@ -20,7 +21,6 @@
 
 mat-list {
   clear: both;
-  padding: 0 10px 0 0;
 }
 
 mat-list .comment-info {
@@ -38,24 +38,35 @@ mat-list .comment-info {
   padding: 0!important;
 }
 
-::ng-deep  .mat-list .mat-list-item{
+::ng-deep .mat-list .mat-list-item{
   height:initial!important;
 }
 
-.comment-line {
+.form-wrapper {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  padding: 0;
+}
+
+.line-wrapper {
   display: flex;
   width: 100%;
   align-items: center;
   padding: 10px 0;
 }
 
-.comment {
-  flex: 1;
+.text-wrapper {
+  flex: 10;
   clear: both;
 }
 
-.delete-button {
-  flex: 0;
+.button-wrapper {
+  flex: 1;
+}
+
+.side-button {
+  float: right;
 }
 
 mat-form-field {

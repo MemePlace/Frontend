@@ -22,7 +22,6 @@ export interface Meme {
   myVote: {
     diff: number;
   };
-  comments: CommentList;
 }
 
 export interface MemeList {
@@ -110,7 +109,7 @@ export class MemeService {
    * @param {number} memeId
    */
   async getMemeDetails(memeId: number): Promise<Meme> {
-    if (this.memes[memeId] && (this.memes[memeId].myVote !== undefined)) {
+    if (this.memes[memeId]) {
       return Promise.resolve(this.memes[memeId]);
     }
 

@@ -69,7 +69,7 @@ export class MemeDialogComponent implements OnInit {
   }
 
   submitComment() {
-    if (this.form.value.commentTest !== '') {
+    if (this.form.value.commentText !== '') {
       this.memeService.addMemeComment(this.memeId, this.form.value.commentText).then((reply) => {
         this.getComments();
       });

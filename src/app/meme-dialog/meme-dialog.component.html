@@ -13,25 +13,30 @@
       <button mat-icon-button (click)="onClickDownVote()" [color]="myVote == -1 ? 'warn': 'basic'"><i
         class="material-icons">thumb_down</i></button>
     </div>
+    <div class="form-wrapper" *ngIf="userService.isLoggedIn()">
+      <form class="text-wrapper" [formGroup]="form">
+        <mat-form-field>
+          <textarea matInput type="text" placeholder="Add a comment" formControlName="commentText" maxLength="1000"></textarea>
+        </mat-form-field>
+      </form>
+      <div class="button-wrapper">
+        <button class="side-button" mat-icon-button (click)="submitComment()"><i class="material-icons">send</i></button>
+      </div>
+    </div>
     <mat-list>
       <mat-divider></mat-divider>
       <mat-list-item *ngFor="let comment of comments">
-        <div class="comment-line">
-          <div class="comment">
+        <div class="line-wrapper">
+          <div class="text-wrapper">
             <div class="comment-info" matLine>{{ comment.User.username }} commented {{ comment.createdAt | timeAgo }}</div>
             <div matLine>{{ comment.text }}</div>
           </div>
-          <div class="delete-button" *ngIf="userService.user && comment.User.username===userService.user.username">
-            <button mat-icon-button (click)="deleteComment(comment.id)"><i class="material-icons">delete</i></button>
+          <div class="button-wrapper" *ngIf="userService.user && comment.User.username===userService.user.username">
+            <button class="side-button" mat-icon-button (click)="deleteComment(comment.id)"><i class="material-icons">delete</i></button>
           </div>
         </div>
-        <mat-divider [inset]="true" ></mat-divider>
+        <mat-divider [inset]="true"></mat-divider>
       </mat-list-item>
     </mat-list>
-    <form [formGroup]="form" (ngSubmit)="submitComment()" *ngIf="userService.isLoggedIn()">
-      <mat-form-field>
-        <input matInput type="text" placeholder="Add a comment" formControlName="commentText" maxLength="1000">
-      </mat-form-field>
-    </form>
     <div style="clear: both"></div>
 </div>
