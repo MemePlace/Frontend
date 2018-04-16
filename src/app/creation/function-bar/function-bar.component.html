@@ -21,7 +21,7 @@
   </mat-list-item>
 
   <mat-list-item>
-    <button mat-raised-button [matMenuTriggerFor]="object" matTooltip="Object Options">
+    <button mat-raised-button matTooltip="Object Options">
       <mat-icon>arrow_drop_down</mat-icon>
       <mat-icon>touch_app</mat-icon>
     </button>
@@ -153,50 +153,3 @@
     </form>
   </span>
 </mat-menu>
-
-<mat-menu #object="matMenu" [overlapTrigger]="false">
-  <span (click)="$event.stopPropagation()">
-    <h3>Selection: <span>{{selType}}</span></h3>
-
-    <span *ngIf="selType == 'Text'">
-      <span mat-menu-item  [disableRipple]="true">
-        <mat-button-toggle-group value="center" (change)="alignChange($event)">
-            <mat-button-toggle value="left">
-              <mat-icon>format_align_left</mat-icon>
-            </mat-button-toggle>
-            <mat-button-toggle value="center">
-              <mat-icon>format_align_center</mat-icon>
-            </mat-button-toggle>
-            <mat-button-toggle value="right">
-              <mat-icon>format_align_right</mat-icon>
-            </mat-button-toggle>
-            <mat-button-toggle value="justify">
-              <mat-icon>format_align_justify</mat-icon>
-            </mat-button-toggle>
-          </mat-button-toggle-group>
-      </span>
-      <mat-divider></mat-divider>
-      <form>
-        <mat-button-toggle-group multiple mat-menu-item [disableRipple]="true">
-          <mat-button-toggle #bold><mat-icon>format_bold</mat-icon></mat-button-toggle>
-          <mat-button-toggle #italic><mat-icon>format_italic</mat-icon></mat-button-toggle>
-          <mat-button-toggle #underline><mat-icon>format_underline</mat-icon></mat-button-toggle>
-        </mat-button-toggle-group>
-        <mat-divider></mat-divider>
-        <mat-action-row>
-          <mat-form-field>
-            <mat-select  #fontOption [(value)]="selected" placeholder="Font">
-              <mat-option *ngFor="let font of fonts"  [value]="font.name">{{font.name}}</mat-option>
-            </mat-select>
-          </mat-form-field>
-          <mat-form-field style="width:15%; margin-left: 20px;">
-            <input matInput #fontSizeIn id="fontSize" type="number" placeholder="Font Size" value="{{fontSize}}" min="0"><span>px</span>
-          </mat-form-field>
-        </mat-action-row>
-      </form>
-    </span>
-
-
-  </span>
-</mat-menu>
-
