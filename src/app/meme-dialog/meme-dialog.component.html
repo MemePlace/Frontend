@@ -2,7 +2,7 @@
     <img class="meme-img" [style.minWidth.px]="minCardWidth()" [style.maxWidth.px]="maxCardWidth()" [src]="imageLink">
 
     <h1 class="author" mat-dialog-title>
-      <a href="/">{{username}}</a> posted {{ createdAt | timeAgo }}
+      {{username}} posted {{ createdAt | timeAgo }}
     </h1>
     <div class="cardActionButtons">
       <!-- Up vote button -->
