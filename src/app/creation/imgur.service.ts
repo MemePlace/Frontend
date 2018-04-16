@@ -20,7 +20,6 @@ export class ImgurService {
   constructor(private http: HttpClient) { }
 
   uploadImg(dataURL: string): Promise<ImgurUploadResponse> {
-    // TODO: Get the community that the meme is going into
     const httpHeader = new HttpHeaders({
       'Authorization' : 'Client-ID ' + this.clientID
     });

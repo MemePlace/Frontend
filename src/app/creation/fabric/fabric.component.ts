@@ -5,6 +5,7 @@ import {FunctionBarComponent} from '../function-bar/function-bar.component';
 import {ImgurService} from '../imgur.service';
 import {MatSnackBar} from '@angular/material';
 import {MemeService} from '../../api/meme.service';
+import {UserService} from '../../api/user.service';
 
 declare let fabric;
 
@@ -29,13 +30,16 @@ export class FabricComponent {
 
   private canvas;
   private functComp: FunctionBarComponent;
-  public height: number; width: number;
-  private zoomVal: number; scaledHeight: number; scaledWidth: number;
+  public height: number;
+  public width: number;
+  public zoomVal: number;
+  public scaledHeight: number;
+  public scaledWidth: number;
 
-  private badURL = 'https://fthmb.tqn.com/i5PTJXJQGb5Kg64f2T1mMDt2ULg=/768x0/filters:no_upscale():max_bytes(150000):strip_icc()/ggg-580734603df78cbc28f46d37.PNG';
 
   constructor(private imgurService: ImgurService,
               private memeService: MemeService,
+              private userService: UserService,
               private snackBar: MatSnackBar) { }
 
   initCanv(par: CreationComponent, funct: FunctionBarComponent, h: number, w: number) {
@@ -177,11 +181,7 @@ export class FabricComponent {
   }
 
 
-  upURL(url, resize: boolean){
-    const add = (obj: fabric.Object) => {
-      this.canvas.add(obj);
-      this.canvas.renderAll();
-    };
+  upURL(url, resize: boolean) {
     const setSize = (val: [number, number]) => (this.setSize(val));
     const setFBSize = (val: [number, number]) => (this.functComp.setSize(val));
     // TODO: Handle bad URL's and other failures
@@ -252,22 +252,26 @@ export class FabricComponent {
       return;
     }
 
-    const pic = this.canvas.toDataURL({
-      height: this.height,
-      width: this.width
-    });
+    if(!this.userService.isLoggedIn()) {
+      this.snackBar.open('You must be logged in to post your meme!', 'Close');
+    }  else {
+      const pic = this.canvas.toDataURL({
+        height: this.height,
+        width: this.width
+      });
 
-    const imageData = pic.replace('data:image/png;base64,', '');
-    this.imgurService.uploadImg(imageData).then((response) => {
-      return this.memeService.createMeme(this.parent.title, response.link, response.width, response.height, null, communityName);
-    }).then((meme) => {
-      this.snackBar.open('Successfully created meme!');
-      this.parent.resetZoom();
-      this.parent.title = '';
-      this.parent.communityName = '';
-    }).catch((err) => {
-      this.snackBar.open(`Failed to create meme: ${err.message}`, 'Close');
-    });
+      const imageData = pic.replace('data:image/png;base64,', '');
+      this.imgurService.uploadImg(imageData).then((response) => {
+        return this.memeService.createMeme(this.parent.title, response.link, response.width, response.height, null, communityName);
+      }).then((meme) => {
+        this.snackBar.open('Successfully created meme!');
+        this.parent.resetZoom();
+        this.parent.title = '';
+        this.parent.communityName = '';
+      }).catch((err) => {
+        this.snackBar.open(`Failed to create meme: ${err.message}`, 'Close');
+      });
+    }
   }
 
 }
