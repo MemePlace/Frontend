@@ -19,26 +19,19 @@ export class CreationComponent implements OnInit {
   communityName: string;
 
   constructor(public snackBar: MatSnackBar) {
-    const paste = (file) => (this.fab.uploadFile(file, true));
-    window.addEventListener('paste', function(e: ClipboardEvent) {
-      paste(e.clipboardData.files[0]);
+    window.addEventListener('paste', (e: ClipboardEvent) => {
+      this.fab.uploadImageFromFile(e.clipboardData.files[0]);
     });
 
-    const myDel = () => (this.delete());
-    document.addEventListener('keypress', function(e: KeyboardEvent) {
+    document.addEventListener('keypress', (e: KeyboardEvent) => {
       if (document.activeElement.id === 'canvCont' && e.key === 'Delete') {
-        myDel();
+        this.delete();
       }
     });
   }
 
-  err(mssg: string) {
-    this.snackBar.open(mssg, 'close', { duration: 2000 });
-  }
-
-  moveZoom(slide: any) {
-    this.zoomVal = slide.value;
-    this.fab.setZoom(slide.value);
+  err(msg: string) {
+    this.snackBar.open(msg, 'Close', { duration: 2000 });
   }
 
   resetZoom() {
@@ -54,7 +47,7 @@ export class CreationComponent implements OnInit {
     this.zoomVal = 1;
     const initSize = 500;
     this.fab.initCanv(this, this.functs, initSize, initSize);
-    this.functs.initBar(this, this.fab, [initSize, initSize]);
+    this.functs.initBar(this, this.fab);
   }
 
   onMouseWheel(event: MouseWheelEvent) {
@@ -70,7 +63,5 @@ export class CreationComponent implements OnInit {
 
   onCommunitySelect(event: MatAutocompleteSelectedEvent) {
     this.communityName = event.option.value.name;
-
-    console.log(event.option.value.name);
   }
 }

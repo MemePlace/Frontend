@@ -59,7 +59,7 @@ export class FabricComponent {
       preserveObjectStacking: true
     });
 
-    this.setSize([h, w]);
+    this.setSize(h, w);
   }
 
   resizeStart() {
@@ -94,20 +94,19 @@ export class FabricComponent {
     // Set the height, but we have to pass the new original height without the zoom
     // The user has to be able to adjust on the level of the scaled canvas though
     // (1 pixel affects 1 pixel of the scaled copy they see)
-    this.setSize([height / this.zoomVal, width / this.zoomVal]);
+    this.setSize(height / this.zoomVal, width / this.zoomVal);
     this.oldEdges = Object.assign(this.oldEdges, event.edges);
   }
 
-
-  setSize([nheight, nwidth]: [number, number]) {
-    this.height = nheight;
-    this.width = nwidth;
-    this.scaledHeight = nheight * this.zoomVal;
-    this.scaledWidth = nwidth * this.zoomVal;
-    this.adjustSize([this.scaledHeight, this.scaledWidth]);
+  setSize(nHeight: number, nWidth: number) {
+    this.height = nHeight;
+    this.width = nWidth;
+    this.scaledHeight = nHeight * this.zoomVal;
+    this.scaledWidth = nWidth * this.zoomVal;
+    this.adjustSize(this.scaledHeight, this.scaledWidth);
   }
 
-  adjustSize([h, w]: [number, number]) {
+  adjustSize(h: number, w: number) {
     this.canvas.setHeight(h);
     this.canvas.setWidth(w);
   }
@@ -118,7 +117,7 @@ export class FabricComponent {
     this.zoomVal = val;
     this.scaledHeight = this.zoomVal * this.height;
     this.scaledWidth = this.zoomVal * this.width;
-    this.adjustSize([this.scaledHeight, this.scaledWidth]);
+    this.adjustSize(this.scaledHeight, this.scaledWidth);
     this.canvas.setZoom(this.zoomVal);
   }
 
@@ -189,54 +188,49 @@ export class FabricComponent {
   }
 
 
-  uploadFile(file, resize) {
-    const add = (obj: fabric.Object) => {
-      this.canvas.centerObject(obj);
-      this.canvas.add(obj);
-    };
-    const setSize = (val: [number, number]) => {
-      this.canvas.absolutePan({x: 0, y: 0});
-      this.setSize(val);
-    };
+  uploadImageFromFile(file) {
+    if (!file) {
+      return;
+    }
 
-    const setFBSize = (val: [number, number]) => {
-      this.functComp.setSize(val);
-    };
-
-    if (!(file)) { return; }
     const reader = new FileReader();
-    reader.onload = function (event: FileReaderEvent) {
+
+    reader.onload = (event: FileReaderEvent) => {
       const imgObj = new Image();
       imgObj.src = event.target.result;
-      imgObj.onload = function () {
-        const image = new fabric.Image(imgObj);
-        if (resize) {
-          setSize([image.height, image.width]);
-          setFBSize([image.height, image.width]);
-        }
-        add(image);
+      imgObj.onload = () => {
+        this.addImageToCanvas(new fabric.Image(imgObj));
       };
     };
+
     reader.readAsDataURL(file);
   }
 
-  upImg(targeturl: string, resize: boolean) {
-    this.imgurService.uploadImg(targeturl)
-      .then((val) => this.upURL(val.link, resize))
-      .catch((err) => this.parent.err(err.toString()));
+  addImageToCanvas(image: fabric.Image) {
+    if (this.canvas.getObjects().length === 0) {
+      // resize canvas to fit image, reset panning
+      this.canvas.absolutePan({x: 0, y: 0});
+      this.setSize(image.height, image.width);
+    }
+
+    this.canvas.add(image);
+    (image as any).viewportCenter(); // TODO: Fabric types out of date
   }
 
 
-  upURL(url, resize: boolean) {
-    const setSize = (val: [number, number]) => (this.setSize(val));
-    const setFBSize = (val: [number, number]) => (this.functComp.setSize(val));
-    // TODO: Handle bad URL's and other failures
-    fabric.Image.fromURL(url, (oImg) => {
-      if (resize) {
-        setSize([oImg.height, oImg.width]);
-        setFBSize([oImg.height, oImg.width]);
+  uploadImageFromExternalUrl(url: string) {
+    this.imgurService.uploadImg(url)
+      .then((val) => this.addImageUrlToCanvas(val.link))
+      .catch((err) => this.parent.err(err.toString()));
+  }
+
+  addImageUrlToCanvas(url) {
+    fabric.Image.fromURL(url, (img) => {
+      if (img.getElement() === undefined) {
+        this.snackBar.open('Failed to obtain image from URL', 'Close');
       }
-      this.canvas.add(oImg);
+
+      this.addImageToCanvas(img);
     }, {crossOrigin: 'Anonymous'});
   }
 
@@ -257,10 +251,8 @@ export class FabricComponent {
       _strokeWidth: 2,
     });
 
-
     this.canvas.add(newTxt);
-    this.canvas.centerObject(newTxt);
-    this.canvas.requestRenderAll();
+    newTxt.viewportCenter();
   }
 
   delete() {
@@ -309,7 +301,7 @@ export class FabricComponent {
       this.imgurService.uploadImg(imageData).then((response) => {
         return this.memeService.createMeme(this.parent.title, response.link, response.width, response.height, null, communityName);
       }).then((meme) => {
-        this.snackBar.open('Successfully created meme!');
+        this.snackBar.open('Successfully created meme!', 'Close');
         this.parent.resetZoom();
         this.parent.title = '';
         this.parent.communityName = '';
