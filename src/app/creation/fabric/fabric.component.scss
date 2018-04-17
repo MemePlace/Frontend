@@ -66,20 +66,22 @@
 
 .left-resize {
   position: absolute;
-  top: 50%;
-  transform: translateX(-50%);
+  display: flex;
+  height: 100%;
+  align-items: center;
   bottom: 0;
   left: 0;
-  margin: auto 0 auto -20px;
+  margin: auto 0 auto -30px;
   cursor: ew-resize;
 }
 
 .right-resize {
   position: absolute;
-  top: 50%;
-  transform: translateX(-50%);
+  display: flex;
+  height: 100%;
+  align-items: center;
   bottom: 0;
   right: 0;
-  margin: auto -40px auto 0;
+  margin: auto -30px auto 0;
   cursor: ew-resize;
 }
