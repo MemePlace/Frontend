@@ -17,18 +17,69 @@
 }
 
 #canvCont {
-  background: darkgray;
   border-radius: 1px;
-  box-shadow: 0 1px 4px -1px rgba(0, 0, 0, .4);
   display: inline-block;
-  margin: 50px;
   position: relative;
   vertical-align: middle;
-  z-index: 0;
+  margin: 50px;
+  user-select: none;
+  outline: none;
 }
 
-canvas {
+::ng-deep .canvas-container {
   border: 1px solid black;
-  background: white;
-  overflow: auto;
+}
+
+/*
+::ng-deep .canvas-container {
+  left: 50%;
+  transform: translateX(-50%);
+  user-select: auto;
+}*/
+
+.resize-handle {
+  position: absolute;
+  outline: none;
+}
+
+.resize-handle:focus {
+  outline: 0;
+}
+
+.top-resize {
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  margin: -30px auto 0 auto;
+  cursor: ns-resize;
+}
+
+.bottom-resize {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  margin: 0 auto -30px auto;
+  cursor: ns-resize;
+}
+
+.left-resize {
+  position: absolute;
+  top: 50%;
+  transform: translateX(-50%);
+  bottom: 0;
+  left: 0;
+  margin: auto 0 auto -20px;
+  cursor: ew-resize;
+}
+
+.right-resize {
+  position: absolute;
+  top: 50%;
+  transform: translateX(-50%);
+  bottom: 0;
+  right: 0;
+  margin: auto -40px auto 0;
+  cursor: ew-resize;
 }

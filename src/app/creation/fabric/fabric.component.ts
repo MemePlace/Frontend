@@ -6,6 +6,7 @@ import {ImgurService} from '../imgur.service';
 import {MatSnackBar} from '@angular/material';
 import {MemeService} from '../../api/meme.service';
 import {UserService} from '../../api/user.service';
+import {ResizeEvent} from 'angular-resizable-element';
 
 declare let fabric;
 
@@ -36,6 +37,8 @@ export class FabricComponent {
   public scaledHeight: number;
   public scaledWidth: number;
 
+  private preResize = {width: 0, height: 0};
+  private oldEdges: {top: number, right: number, bottom: number, left: number};
 
   constructor(private imgurService: ImgurService,
               private memeService: MemeService,
@@ -59,6 +62,42 @@ export class FabricComponent {
     this.setSize([h, w]);
   }
 
+  resizeStart() {
+    this.preResize.width = this.scaledWidth;
+    this.preResize.height = this.scaledHeight;
+    this.oldEdges = {top: 0, right: 0, bottom: 0, left: 0};
+  }
+
+  onResize(event: ResizeEvent) {
+    let height = this.preResize.height;
+    const pan = {x: 0, y: 0};
+
+    if (event.edges.top) {
+      pan.y = -(event.edges.top as number - this.oldEdges.top);
+      height += -event.edges.top;
+    }
+    else if (event.edges.bottom) {
+      height += event.edges.bottom as number;
+    }
+
+    let width = this.preResize.width;
+    if (event.edges.right) {
+      width += event.edges.right as number;
+    } else if (event.edges.left) {
+      pan.x = -(event.edges.left as number - this.oldEdges.left);
+      width += -event.edges.left;
+    }
+
+    // We have to pan the opposite way if the user is adjusting the top or left handles
+    this.canvas.relativePan(pan);
+
+    // Set the height, but we have to pass the new original height without the zoom
+    // The user has to be able to adjust on the level of the scaled canvas though
+    // (1 pixel affects 1 pixel of the scaled copy they see)
+    this.setSize([height/this.zoomVal, width / this.zoomVal]);
+    this.oldEdges = Object.assign(this.oldEdges, event.edges);
+  }
+
 
   setSize([nheight, nwidth]: [number, number]) {
     this.height = nheight;
@@ -68,7 +107,6 @@ export class FabricComponent {
     this.adjustSize([this.scaledHeight, this.scaledWidth]);
   }
 
-// This sets the display size, zooming
   adjustSize([h, w]: [number, number]) {
     this.canvas.setHeight(h);
     this.canvas.setWidth(w);
@@ -152,9 +190,19 @@ export class FabricComponent {
 
 
   uploadFile(file, resize) {
-    const add = (obj: fabric.Object) => (this.canvas.add(obj));
-    const setSize = (val: [number, number]) => (this.setSize(val));
-    const setFBSize = (val: [number, number]) => (this.functComp.setSize(val));
+    const add = (obj: fabric.Object) => {
+      this.canvas.centerObject(obj);
+      this.canvas.add(obj);
+    };
+    const setSize = (val: [number, number]) => {
+      this.canvas.absolutePan({x: 0, y: 0});
+      this.setSize(val);
+    };
+
+    const setFBSize = (val: [number, number]) => {
+      this.functComp.setSize(val);
+    };
+
     if (!(file)) { return; }
     const reader = new FileReader();
     reader.onload = function (event: FileReaderEvent) {
