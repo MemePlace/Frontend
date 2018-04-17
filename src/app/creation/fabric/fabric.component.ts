@@ -94,7 +94,7 @@ export class FabricComponent {
     // Set the height, but we have to pass the new original height without the zoom
     // The user has to be able to adjust on the level of the scaled canvas though
     // (1 pixel affects 1 pixel of the scaled copy they see)
-    this.setSize([height/this.zoomVal, width / this.zoomVal]);
+    this.setSize([height / this.zoomVal, width / this.zoomVal]);
     this.oldEdges = Object.assign(this.oldEdges, event.edges);
   }
 
