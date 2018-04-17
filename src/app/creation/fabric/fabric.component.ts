@@ -250,6 +250,11 @@ export class FabricComponent {
       return;
     }
 
+    if (this.canvas.getObjects().length === 0) {
+      this.snackBar.open('Do you really think you can publish an empty meme?', 'Close');
+      return;
+    }
+
     if(!this.userService.isLoggedIn()) {
       this.snackBar.open('You must be logged in to post your meme!', 'Close');
     }  else {
