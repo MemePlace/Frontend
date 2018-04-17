@@ -275,6 +275,7 @@ export class FabricComponent {
 
   clearCanvas() {
     this.canvas.clear();
+    this.canvas.setBackgroundColor('white');
   }
 
   toJSON(): string {
