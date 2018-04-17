@@ -4,11 +4,6 @@
   flex-wrap: nowrap;
 }
 
-app-size {
-  width: 100%;
-  margin: 0 25px 0 25px;
-}
-
 #creation-body {
   height: calc(100% - (4em + 0px) + 0px);
   background: lightgrey;
@@ -24,27 +19,8 @@ app-size {
   margin-left: 10px;
 }
 
-#fabricBody {
-  flex-grow: 95;
-}
-
 #functionBar {
   position: absolute;
   top: calc((4em + 0px) + 10px);
   right: 10px;
-}
-
-#zoom-container {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-}
-
-
-#fabiric-container {
-  flex-grow: 85;
-}
-
-#creationBar-container {
-  flex-grow: 15;
 }
