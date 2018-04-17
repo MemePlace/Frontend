@@ -52,9 +52,9 @@ export class CreationComponent implements OnInit {
 
   onMouseWheel(event: MouseWheelEvent) {
     if (event.deltaY > 0) {
-      this.zoomVal -= 0.10;
+      this.zoomVal -= 0.08;
     } else if (event.deltaY < 0) {
-      this.zoomVal += 0.10;
+      this.zoomVal += 0.08;
     }
 
     event.preventDefault();
