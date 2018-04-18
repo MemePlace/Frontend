@@ -27,6 +27,7 @@ export class MemeViewComponent implements OnInit, OnDestroy {
   memes: Meme[] = [];
   computedDimensions: Meme[] = [];
   maxRowHeight = 300;
+  minCardWidth = 200;
 
   maxAspectRatio = 3.0;
 
@@ -92,6 +93,12 @@ export class MemeViewComponent implements OnInit, OnDestroy {
         const i = Object.assign({}, meme.Image);
         if (i.width / i.height > this.maxAspectRatio) {
           i.width = i.height * this.maxAspectRatio;
+        }
+
+        // if we restricted the height, would the width be too small?
+        if (this.maxRowHeight / i.height * i.width < this.minCardWidth) {
+          // scale the original size to what it'd be if the smaller size was the min card width
+          i.width *= this.minCardWidth / (this.maxRowHeight / i.height * i.width);
         }
 
         return Object.assign(meme, {Image: i});
