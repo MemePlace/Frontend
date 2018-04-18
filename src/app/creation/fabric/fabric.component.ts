@@ -1,5 +1,4 @@
 import {Component, OnDestroy, ViewChild} from '@angular/core';
-import 'fabric';
 import {CreationComponent} from '../creation.component';
 import {FunctionBarComponent} from '../function-bar/function-bar.component';
 import {ImgurService} from '../imgur.service';
@@ -8,6 +7,9 @@ import {MemeService} from '../../api/meme.service';
 import {UserService} from '../../api/user.service';
 import {ResizeEvent} from 'angular-resizable-element';
 import {StorageService, StorageType} from '../../api/storage.service';
+
+import * as FontFaceObserver from 'fontfaceobserver';
+import 'fabric';
 
 declare let fabric;
 
@@ -329,9 +331,17 @@ export class FabricComponent implements OnDestroy {
   }
 
 
-  addTxt(bold: boolean, italic: boolean, underline: boolean, font: string, size: number, align: string) {
+  async addTxt(bold: boolean, italic: boolean, underline: boolean, font: string, size: number, align: string) {
     const fontWeight = bold ? 'bold' : 'normal';
     const fontStyle = italic ? 'italic' : 'normal';
+
+    const f = new FontFaceObserver(font);
+
+    try {
+      await f.load();
+    } catch(e) {
+      this.snackBar.open(`Failed to load font ${font}`, 'Close');
+    }
 
     const newTxt = new fabric.Textbox('New Text', {
       fontSize: size,
