@@ -82,8 +82,7 @@ export class MemeCardComponent implements OnInit, OnDestroy {
   maxCardWidth(height: number): number {
     if (Utils.isMobile) {
       return Utils.screenWidth * 0.95;
-    }
-    else {
+    } else {
       return this.imageWidth;
     }
   }
