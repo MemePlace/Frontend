@@ -7,6 +7,7 @@ import {MatSnackBar} from '@angular/material';
 import {MemeService} from '../../api/meme.service';
 import {UserService} from '../../api/user.service';
 import {ResizeEvent} from 'angular-resizable-element';
+import {StorageService} from '../../api/storage.service';
 
 declare let fabric;
 
@@ -40,6 +41,10 @@ export class FabricComponent {
   private preResize = {width: 0, height: 0};
   private oldEdges: {top: number, right: number, bottom: number, left: number};
 
+  private history = [];
+  private loadingCanvas = false;
+  private historyPointer = -1;
+
   constructor(private imgurService: ImgurService,
               private memeService: MemeService,
               private userService: UserService,
@@ -59,7 +64,59 @@ export class FabricComponent {
       preserveObjectStacking: true
     });
 
+    this.history.push(this.canvas.toJSON());
+    this.historyPointer = 0;
+
+    const onHistory = () => {
+      if (this.loadingCanvas) {
+        return;
+      }
+
+      if (this.history.length >= this.historyPointer+2) {
+        // destroy any history after this
+        this.history = this.history.slice(0, this.historyPointer+1);
+        this.historyPointer = this.history.length - 1;
+      }
+
+      this.history.push(this.canvas.toJSON());
+      this.historyPointer++;
+    };
+
+    const historyTimeout = () => {
+      setTimeout(onHistory.bind(this), 0);
+    };
+
+    this.canvas.on('object:modified', historyTimeout.bind(this));
+    this.canvas.on('object:added', historyTimeout.bind(this));
+    this.canvas.on('object:removed', historyTimeout.bind(this));
+
     this.setSize(h, w);
+  }
+
+  undo() {
+    if (this.historyPointer > 0) {
+      this.historyPointer--;
+      this.loadCanvasJSON(this.history[this.historyPointer]);
+    }
+  }
+
+  redo() {
+    if (this.history.length > this.historyPointer+1) {
+      this.historyPointer += 1;
+      this.loadCanvasJSON(this.history[this.historyPointer]);
+    }
+  }
+
+  loadCanvasJSON(data) {
+    this.loadingCanvas = true;
+    this.canvas.loadFromJSON(data, () => {
+      this.canvas.renderAll();
+
+      setTimeout(() => {
+        this.loadingCanvas = false;
+      }, 1);
+      this.curState = this.canvas.toJSON();
+    });
   }
 
   resizeStart() {
@@ -215,6 +272,7 @@ export class FabricComponent {
 
     this.canvas.add(image);
     (image as any).viewportCenter(); // TODO: Fabric types out of date
+    image.setCoords();
   }
 
 
@@ -252,7 +310,7 @@ export class FabricComponent {
     });
 
     this.canvas.add(newTxt);
-    newTxt.viewportCenter();
+    newTxt.viewportCenter().setCoords();
   }
 
   delete() {
@@ -276,6 +334,8 @@ export class FabricComponent {
   clearCanvas() {
     this.canvas.clear();
     this.canvas.setBackgroundColor('white');
+    this.history = this.canvas.toJSON();
+    this.historyPointer = 0;
   }
 
   toJSON(): string {
