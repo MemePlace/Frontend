@@ -354,8 +354,7 @@ export class FabricComponent {
   clearCanvas() {
     this.canvas.clear();
     this.canvas.setBackgroundColor('white');
-    this.history = this.toJSON();
-    this.historyPointer = 0;
+    this.save();
   }
 
   publish() {
