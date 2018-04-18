@@ -17,4 +17,4 @@
                  [style.marginLeft.px]="utils.isMobile ? 0 : 10">
   </app-meme-card>
 </div>
-<mat-paginator *ngIf="!loading && totalCount > 0" [length]="totalCount" [pageSize]="pageSize" (page)="onPaginate($event)"></mat-paginator>
+<mat-paginator [hidden]="loading || totalCount === 0" [length]="totalCount" [pageSize]="pageSize" (page)="onPaginate($event)"></mat-paginator>
