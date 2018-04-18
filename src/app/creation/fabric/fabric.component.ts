@@ -64,33 +64,41 @@ export class FabricComponent {
       preserveObjectStacking: true
     });
 
-    this.history.push(this.canvas.toJSON());
-    this.historyPointer = 0;
+    this.save();
 
-    const onHistory = () => {
-      if (this.loadingCanvas) {
-        return;
-      }
-
-      if (this.history.length >= this.historyPointer+2) {
-        // destroy any history after this
-        this.history = this.history.slice(0, this.historyPointer+1);
-        this.historyPointer = this.history.length - 1;
-      }
-
-      this.history.push(this.canvas.toJSON());
-      this.historyPointer++;
-    };
-
-    const historyTimeout = () => {
-      setTimeout(onHistory.bind(this), 0);
-    };
-
-    this.canvas.on('object:modified', historyTimeout.bind(this));
-    this.canvas.on('object:added', historyTimeout.bind(this));
-    this.canvas.on('object:removed', historyTimeout.bind(this));
+    this.canvas.on('object:modified', this.save.bind(this));
+    this.canvas.on('object:added', this.save.bind(this));
+    this.canvas.on('object:removed', this.save.bind(this));
 
     this.setSize(h, w);
+  }
+
+  /**
+   * Wrapper around save to ensure the canvas has done the pending operations before saving
+   */
+  save() {
+    setTimeout(() => {
+      this._save();
+    }, 0);
+  }
+
+  private _save() {
+    if (this.loadingCanvas) {
+      return;
+    }
+
+    if (this.history.length >= this.historyPointer+2) {
+      // destroy any history after this
+      this.history = this.history.slice(0, this.historyPointer+1);
+      this.historyPointer = this.history.length - 1;
+    }
+
+    this.history.push(this.toJSON());
+    this.historyPointer++;
+  };
+
+  toJSON() {
+    return this.canvas.toJSON(['width', 'height', 'viewportTransform']);
   }
 
   undo() {
@@ -108,14 +116,22 @@ export class FabricComponent {
   }
 
   loadCanvasJSON(data) {
+    if (typeof data === 'string') {
+      data = JSON.parse(data);
+    }
+
     this.loadingCanvas = true;
     this.canvas.loadFromJSON(data, () => {
+      // set the width and height
+      this.zoomVal = data.viewportTransform[0];
+      this.setSize(data.height / this.zoomVal, data.width / this.zoomVal);
+
+      this.canvas.absolutePan({x: -data.viewportTransform[4], y: -data.viewportTransform[5]});
       this.canvas.renderAll();
 
       setTimeout(() => {
         this.loadingCanvas = false;
       }, 1);
-      this.curState = this.canvas.toJSON();
     });
   }
 
@@ -123,6 +139,10 @@ export class FabricComponent {
     this.preResize.width = this.scaledWidth;
     this.preResize.height = this.scaledHeight;
     this.oldEdges = {top: 0, right: 0, bottom: 0, left: 0};
+  }
+
+  resizeEnd() {
+    this.save();
   }
 
   onResize(event: ResizeEvent) {
@@ -334,13 +354,8 @@ export class FabricComponent {
   clearCanvas() {
     this.canvas.clear();
     this.canvas.setBackgroundColor('white');
-    this.history = this.canvas.toJSON();
+    this.history = this.toJSON();
     this.historyPointer = 0;
-  }
-
-  toJSON(): string {
-    console.log(JSON.stringify(this.canvas));
-    return JSON.stringify(this.canvas);
   }
 
   publish() {
