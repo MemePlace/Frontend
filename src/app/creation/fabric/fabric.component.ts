@@ -240,7 +240,7 @@ export class FabricComponent implements OnDestroy {
     console.log(this.canvas.getObjects());
   }
 
-/* CREDIT TO https://github.com/michaeljcalkins/angular-fabric/blob/master/assets/fabric.js */
+  /* CREDIT TO https://github.com/michaeljcalkins/angular-fabric/blob/master/assets/fabric.js */
   download() {
     const pic = this.canvas.toDataURL({
       multiplier: 1/this.zoomVal
