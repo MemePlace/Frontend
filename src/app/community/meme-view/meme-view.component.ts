@@ -32,6 +32,10 @@ export class MemeViewComponent implements OnInit, OnDestroy {
 
   loading = false;
 
+  get isFrontPage() {
+    return !this.communityName;
+  }
+
   constructor(@Self() private el: ElementRef,
               private memeService: MemeService,
               private sidebarService: SidebarService,

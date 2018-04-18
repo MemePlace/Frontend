@@ -6,6 +6,9 @@
   <mat-card-content class="actions" style="margin-top: -3px;">
     <span class="author">
       {{username}}
+      <span *ngIf="frontPage">
+        to <a [routerLink]="['c', communityName]">c/{{communityName}}</a>
+      </span>
     </span>
 
     <div class="cardActionButtons">

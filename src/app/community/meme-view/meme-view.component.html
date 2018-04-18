@@ -13,6 +13,7 @@
   <app-meme-card class="flexItem" *ngFor="let meme of memes; let i = index"
                  [imageHeight]="computedDimensions[i].height"
                  [imageWidth]="computedDimensions[i].width"
+                 [frontPage]="isFrontPage"
                  [memeId]="meme.id"
                  [style.marginLeft.px]="utils.isMobile ? 0 : 10">
   </app-meme-card>
