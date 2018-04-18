@@ -27,6 +27,10 @@ const routes: Routes = [
     component: BrowseComponent
   },
   {
+    path: 'c/:name/m/:id',
+    component: BrowseComponent
+  },
+  {
     path: '404',
     component: PageNotFoundComponent
   },

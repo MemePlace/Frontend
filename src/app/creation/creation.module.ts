@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { MaterialModule } from '../material/material.module';
-import {MatFormFieldModule, MatInputModule, MatGridListModule, MatSliderModule, MatSnackBarModule} from '@angular/material';
+import {MatFormFieldModule, MatInputModule, MatGridListModule, MatSliderModule, MatSnackBarModule, MatIconModule} from '@angular/material';
 
 import { FormsModule } from '@angular/forms';
 
@@ -12,6 +12,7 @@ import { FunctionBarComponent } from './function-bar/function-bar.component';
 import {HttpClientModule} from '@angular/common/http';
 import {ImgurService} from './imgur.service';
 import {SearchModule} from '../search/search.module';
+import {ResizableModule} from 'angular-resizable-element';
 
 
 @NgModule({
@@ -25,7 +26,9 @@ import {SearchModule} from '../search/search.module';
     FormsModule,
     HttpClientModule,
     SearchModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    ResizableModule,
+    MatIconModule
   ],
   providers: [
     ImgurService

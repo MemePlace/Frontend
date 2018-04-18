@@ -1,14 +1,19 @@
-<mat-card class="meme-card">
-  <img (click)="dialogPage()" class="meme-img" [style.height]="utils.isMobile ? '': imageHeight + 'px'"
-       [style.width]="utils.isMobile ? '95%': imageWidth + 'px'"
-       [style.minWidth.px]="minCardWidth()" [style.maxWidth.px]="maxCardWidth(imageHeight)" [src]="imageLink">
+<mat-card class="meme-card" [style.width]="utils.isMobile ? '': imageWidth + 'px'" [style.minWidth.px]="minCardWidth()">
+  <img (click)="dialogPage()" class="meme-img"
+       [style.height]="utils.isMobile ? '': imageHeight + 'px'"
+       [style.maxHeight]="utils.isMobile ? '70vh': ''"
+       [style.maxWidth.px]="maxCardWidth(imageHeight)" [src]="imageLink">
   <!-- Actions that are appended to the bottom of the card: show author name, up vote, down vote-->
   <mat-card-content class="actions" style="margin-top: -3px;">
     <span class="author">
       {{username}}
+      <span *ngIf="frontPage">
+        to <a [routerLink]="['c', communityName]">c/{{communityName}}</a>
+      </span>
     </span>
 
-    <div class="cardActionButtons">
+    <div style="flex: 1 1 auto;"></div>
+    <div class="vote">
       <!-- Up vote button -->
       <button mat-icon-button (click)="onClickUpVote()" [color]="myVote == 1 ? 'primary': 'basic'"><i
         class="material-icons">thumb_up</i></button>
@@ -16,7 +21,5 @@
       <!-- Down vote button -->
       <button mat-icon-button (click)="onClickDownVote()" [color]="myVote == -1 ? 'warn': 'basic'"><i class="material-icons">thumb_down</i></button>
     </div>
-
-    <div style="clear: both"></div>
   </mat-card-content>
 </mat-card>

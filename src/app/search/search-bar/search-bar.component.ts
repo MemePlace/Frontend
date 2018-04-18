@@ -12,6 +12,8 @@ export class SearchBarComponent implements OnInit {
   @Input() placeholder = 'Search';
   @Output() optionSelected = new EventEmitter<MatAutocompleteSelectedEvent>();
 
+  text: string;
+
   private autocompleteTimeout;
   options: AutocompleteResults = {};
 
@@ -42,6 +44,16 @@ export class SearchBarComponent implements OnInit {
   }
 
   displayFn(option): string {
-    return option.username || option.name || '';
+    if (option) {
+      return option.username || option.name || '';
+    }
+  }
+
+  onSelect(event: MatAutocompleteSelectedEvent) {
+    this.optionSelected.emit(event);
+  }
+
+  resetText() {
+    this.text = '';
   }
 }
