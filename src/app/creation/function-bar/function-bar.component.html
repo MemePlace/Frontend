@@ -1,12 +1,5 @@
 <mat-list dense>
   <mat-list-item>
-    <button mat-raised-button [matMenuTriggerFor]="size" matTooltip="Adjust Size">
-      <mat-icon>arrow_drop_down</mat-icon>
-      <mat-icon>zoom_out_map</mat-icon>
-    </button>
-  </mat-list-item>
-
-  <mat-list-item>
     <button mat-raised-button [matMenuTriggerFor]="load" matTooltip="Load Image">
       <mat-icon>arrow_drop_down</mat-icon>
       <mat-icon>insert_photo</mat-icon>
@@ -64,26 +57,6 @@
   </mat-list-item>
 </mat-list>
 
-
-<mat-menu #size="matMenu" [overlapTrigger]="false">
-  <span mat-menu-item [disableRipple]="true" (click)="$event.stopPropagation()">
-  <form id="newSize">
-    <mat-action-row>
-      <mat-form-field class="sizeInput">
-        <input matInput #height type="number" placeholder="Height" value="{{sHeight}}" (change)="checkAR('h', height.value)" min="1">
-      </mat-form-field>
-      <button mat-icon-button class="tiny" (click)="toggleAspectRatio()">
-        <mat-icon class="tiny">{{aspectIcon}}</mat-icon>
-      </button>
-      <mat-form-field class="sizeInput">
-        <input matInput #width type="number" placeholder="Width" value="{{sWidth}}" (change)="checkAR('w', width.value)" min="1">
-      </mat-form-field>
-      <button mat-raised-button color="accent" (click)="changeSize([height.value, width.value])">Submit</button>
-    </mat-action-row>
-  </form>
-  </span>
-</mat-menu>
-
 <mat-menu #load="matMenu" [overlapTrigger]="false">
   <span (click)="$event.stopPropagation()">
     <form>
@@ -99,9 +72,6 @@
         <button mat-raised-button  color="accent" (click)="uploadFile()">Upload File</button>
         <button mat-raised-button color="accent" (click)="uploadUrl()">URL</button>
       </mat-action-row>
-      <span mat-menu-item [disableRipple]="true">
-        <mat-checkbox #resize [checked]="true" (change)="toggleSize()">Fit to Image?</mat-checkbox>
-      </span>
     </form>
   </span>
 </mat-menu>

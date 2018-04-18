@@ -1,34 +1,62 @@
-#canvasTile {
-  overflow: auto;
-  background: darkgray;
-
-}
-
-#canvBackdrop {
-  background: lightgray;
-  box-sizing: border-box;
-  border: 1px solid lightgray;
-  min-height: 460px;
-  text-align: center;
-  position: relative;
-  overflow-x: auto;
-  overflow-y: auto;
-  width: auto;
-}
-
 #canvCont {
-  background: darkgray;
   border-radius: 1px;
-  box-shadow: 0 1px 4px -1px rgba(0, 0, 0, .4);
   display: inline-block;
-  margin: 50px;
   position: relative;
   vertical-align: middle;
-  z-index: 0;
+  margin: 50px;
+  user-select: none;
+  outline: none;
 }
 
-canvas {
+::ng-deep .canvas-container {
   border: 1px solid black;
-  background: white;
-  overflow: auto;
+}
+
+.resize-handle {
+  position: absolute;
+  outline: none;
+}
+
+.resize-handle:focus {
+  outline: 0;
+}
+
+.top-resize {
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  margin: -30px auto 0 auto;
+  cursor: ns-resize;
+}
+
+.bottom-resize {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  margin: 0 auto -30px auto;
+  cursor: ns-resize;
+}
+
+.left-resize {
+  position: absolute;
+  display: flex;
+  height: 100%;
+  align-items: center;
+  bottom: 0;
+  left: 0;
+  margin: auto 0 auto -30px;
+  cursor: ew-resize;
+}
+
+.right-resize {
+  position: absolute;
+  display: flex;
+  height: 100%;
+  align-items: center;
+  bottom: 0;
+  right: 0;
+  margin: auto -30px auto 0;
+  cursor: ew-resize;
 }

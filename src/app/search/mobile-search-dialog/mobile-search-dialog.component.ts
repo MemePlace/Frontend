@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {MatDialogRef} from '@angular/material';
+import {MatAutocompleteSelectedEvent, MatDialogRef} from '@angular/material';
 import {SearchService, AutocompleteResults} from '../../api/search.service';
 
 @Component({
@@ -36,6 +36,10 @@ export class MobileSearchDialogComponent implements OnInit {
         console.error(err);
       });
     }, 250);
+  }
+
+  onSelect(event: MatAutocompleteSelectedEvent) {
+    this.dialogRef.close(event);
   }
 
   displayFn(option): string {

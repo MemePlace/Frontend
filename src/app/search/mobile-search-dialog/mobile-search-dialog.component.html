@@ -1,6 +1,6 @@
 <h1 mat-dialog-title>Search</h1>
 <div>
-  <app-search-bar class="search-bar"></app-search-bar>
+  <app-search-bar class="search-bar" (optionSelected)="onSelect($event)"></app-search-bar>
 </div>
 <div mat-dialog-actions>
   <button mat-button (click)="close()">Cancel</button>
