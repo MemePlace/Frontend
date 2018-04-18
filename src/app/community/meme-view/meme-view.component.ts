@@ -26,7 +26,7 @@ export class MemeViewComponent implements OnInit, OnDestroy {
 
   memes: Meme[] = [];
   computedDimensions: Meme[] = [];
-  maxRowHeight = 300;
+  maxRowHeight = 350;
   minCardWidth = 200;
 
   maxAspectRatio = 3.0;
