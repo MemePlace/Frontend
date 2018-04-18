@@ -81,7 +81,12 @@ export class FabricComponent implements OnDestroy {
   }
 
   ngOnDestroy() {
-    this.storageService.setJSON(StorageType.local, 'canvas_state', this.toJSON());
+    if (this.canvas.getObjects().length === 0) {
+      this.storageService.remove(StorageType.local, 'canvas_state');
+    }
+    else {
+      this.storageService.setJSON(StorageType.local, 'canvas_state', this.toJSON());
+    }
   }
 
   /**
