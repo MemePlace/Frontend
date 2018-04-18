@@ -1,4 +1,4 @@
-import {Component, ViewChild} from '@angular/core';
+import {Component, OnDestroy, ViewChild} from '@angular/core';
 import 'fabric';
 import {CreationComponent} from '../creation.component';
 import {FunctionBarComponent} from '../function-bar/function-bar.component';
@@ -7,7 +7,7 @@ import {MatSnackBar} from '@angular/material';
 import {MemeService} from '../../api/meme.service';
 import {UserService} from '../../api/user.service';
 import {ResizeEvent} from 'angular-resizable-element';
-import {StorageService} from '../../api/storage.service';
+import {StorageService, StorageType} from '../../api/storage.service';
 
 declare let fabric;
 
@@ -26,7 +26,7 @@ interface FileReaderEvent extends Event {
   styleUrls: ['./fabric.component.scss']
 })
 
-export class FabricComponent {
+export class FabricComponent implements OnDestroy {
   @ViewChild('canvCont') canvCont;
   private parent: CreationComponent;
 
@@ -48,7 +48,8 @@ export class FabricComponent {
   constructor(private imgurService: ImgurService,
               private memeService: MemeService,
               private userService: UserService,
-              private snackBar: MatSnackBar) { }
+              private snackBar: MatSnackBar,
+              private storageService: StorageService) { }
 
   initCanv(par: CreationComponent, funct: FunctionBarComponent, h: number, w: number) {
     this.height = h;
@@ -64,6 +65,12 @@ export class FabricComponent {
       preserveObjectStacking: true
     });
 
+    const savedState = this.storageService.getJSON(StorageType.local, 'canvas_state');
+
+    if (savedState) {
+      this.loadCanvasJSON(savedState);
+    }
+
     this.save();
 
     this.canvas.on('object:modified', this.save.bind(this));
@@ -71,6 +78,10 @@ export class FabricComponent {
     this.canvas.on('object:removed', this.save.bind(this));
 
     this.setSize(h, w);
+  }
+
+  ngOnDestroy() {
+    this.storageService.setJSON(StorageType.local, 'canvas_state', this.toJSON());
   }
 
   /**
