@@ -1,6 +1,7 @@
 <div #canvCont id="canvCont" tabindex="1"
      mwlResizable
      (resizeStart)="resizeStart()"
+     (resizeEnd)="resizeEnd()"
      (resizing)="onResize($event)"
      [resizeEdges]="{bottom: true, right: true, top: true, left: true}">
   <canvas class="canvas" id="fabric"></canvas>

@@ -1,14 +1,12 @@
-#creation-container {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: nowrap;
-}
-
 #creation-body {
   height: calc(100% - (4em + 0px) + 0px);
   background: lightgrey;
   overflow: auto;
   text-align: center;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 #community-bar {

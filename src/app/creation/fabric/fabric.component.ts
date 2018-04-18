@@ -1,4 +1,4 @@
-import {Component, ViewChild} from '@angular/core';
+import {Component, OnDestroy, ViewChild} from '@angular/core';
 import 'fabric';
 import {CreationComponent} from '../creation.component';
 import {FunctionBarComponent} from '../function-bar/function-bar.component';
@@ -7,6 +7,7 @@ import {MatSnackBar} from '@angular/material';
 import {MemeService} from '../../api/meme.service';
 import {UserService} from '../../api/user.service';
 import {ResizeEvent} from 'angular-resizable-element';
+import {StorageService, StorageType} from '../../api/storage.service';
 
 declare let fabric;
 
@@ -25,7 +26,7 @@ interface FileReaderEvent extends Event {
   styleUrls: ['./fabric.component.scss']
 })
 
-export class FabricComponent {
+export class FabricComponent implements OnDestroy {
   @ViewChild('canvCont') canvCont;
   private parent: CreationComponent;
 
@@ -40,10 +41,15 @@ export class FabricComponent {
   private preResize = {width: 0, height: 0};
   private oldEdges: {top: number, right: number, bottom: number, left: number};
 
+  private history = [];
+  private loadingCanvas = false;
+  private historyPointer = -1;
+
   constructor(private imgurService: ImgurService,
               private memeService: MemeService,
               private userService: UserService,
-              private snackBar: MatSnackBar) { }
+              private snackBar: MatSnackBar,
+              private storageService: StorageService) { }
 
   initCanv(par: CreationComponent, funct: FunctionBarComponent, h: number, w: number) {
     this.height = h;
@@ -59,13 +65,100 @@ export class FabricComponent {
       preserveObjectStacking: true
     });
 
+    const savedState = this.storageService.getJSON(StorageType.local, 'canvas_state');
+
+    if (savedState) {
+      this.loadCanvasJSON(savedState);
+    }
+
+    this.save();
+
+    this.canvas.on('object:modified', this.save.bind(this));
+    this.canvas.on('object:added', this.save.bind(this));
+    this.canvas.on('object:removed', this.save.bind(this));
+
     this.setSize(h, w);
+  }
+
+  ngOnDestroy() {
+    if (this.canvas.getObjects().length === 0) {
+      this.storageService.remove(StorageType.local, 'canvas_state');
+    }
+    else {
+      this.storageService.setJSON(StorageType.local, 'canvas_state', this.toJSON());
+    }
+  }
+
+  /**
+   * Wrapper around save to ensure the canvas has done the pending operations before saving
+   */
+  save() {
+    setTimeout(() => {
+      this._save();
+    }, 0);
+  }
+
+  private _save() {
+    if (this.loadingCanvas) {
+      return;
+    }
+
+    if (this.history.length >= this.historyPointer+2) {
+      // destroy any history after this
+      this.history = this.history.slice(0, this.historyPointer+1);
+      this.historyPointer = this.history.length - 1;
+    }
+
+    this.history.push(this.toJSON());
+    this.historyPointer++;
+  };
+
+  toJSON() {
+    return this.canvas.toJSON(['width', 'height', 'viewportTransform']);
+  }
+
+  undo() {
+    if (this.historyPointer > 0) {
+      this.historyPointer--;
+      this.loadCanvasJSON(this.history[this.historyPointer]);
+    }
+  }
+
+  redo() {
+    if (this.history.length > this.historyPointer+1) {
+      this.historyPointer += 1;
+      this.loadCanvasJSON(this.history[this.historyPointer]);
+    }
+  }
+
+  loadCanvasJSON(data) {
+    if (typeof data === 'string') {
+      data = JSON.parse(data);
+    }
+
+    this.loadingCanvas = true;
+    this.canvas.loadFromJSON(data, () => {
+      // set the width and height
+      this.zoomVal = data.viewportTransform[0];
+      this.setSize(data.height / this.zoomVal, data.width / this.zoomVal);
+
+      this.canvas.absolutePan({x: -data.viewportTransform[4], y: -data.viewportTransform[5]});
+      this.canvas.renderAll();
+
+      setTimeout(() => {
+        this.loadingCanvas = false;
+      }, 1);
+    });
   }
 
   resizeStart() {
     this.preResize.width = this.scaledWidth;
     this.preResize.height = this.scaledHeight;
     this.oldEdges = {top: 0, right: 0, bottom: 0, left: 0};
+  }
+
+  resizeEnd() {
+    this.save();
   }
 
   onResize(event: ResizeEvent) {
@@ -215,6 +308,7 @@ export class FabricComponent {
 
     this.canvas.add(image);
     (image as any).viewportCenter(); // TODO: Fabric types out of date
+    image.setCoords();
   }
 
 
@@ -252,7 +346,7 @@ export class FabricComponent {
     });
 
     this.canvas.add(newTxt);
-    newTxt.viewportCenter();
+    newTxt.viewportCenter().setCoords();
   }
 
   delete() {
@@ -276,11 +370,7 @@ export class FabricComponent {
   clearCanvas() {
     this.canvas.clear();
     this.canvas.setBackgroundColor('white');
-  }
-
-  toJSON(): string {
-    console.log(JSON.stringify(this.canvas));
-    return JSON.stringify(this.canvas);
+    this.save();
   }
 
   publish() {
@@ -309,6 +399,7 @@ export class FabricComponent {
       }).then((meme) => {
         this.snackBar.open('Successfully created meme!', 'Close');
         this.parent.resetZoom();
+        this.clearCanvas();
         this.parent.title = '';
         this.parent.communityName = '';
       }).catch((err) => {
