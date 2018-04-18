@@ -394,6 +394,7 @@ export class FabricComponent implements OnDestroy {
       }).then((meme) => {
         this.snackBar.open('Successfully created meme!', 'Close');
         this.parent.resetZoom();
+        this.clearCanvas();
         this.parent.title = '';
         this.parent.communityName = '';
       }).catch((err) => {
