@@ -1,4 +1,7 @@
 <span [hidden]="hidden" style="white-space: nowrap;">
+  <mat-select  #fontOption [(value)]="selected" placeholder="Font">
+    <mat-option *ngFor="let font of fonts"  [value]="font.name">{{font.name}}</mat-option>
+  </mat-select>
   <mat-input-container style="width: 50px; padding-bottom: 0">
     <input matInput #fontSizeIn id="fontSize" type="number" placeholder="Font Size" min="0" value="12">
   </mat-input-container>
@@ -8,7 +11,7 @@
         <mat-button-toggle #italic><mat-icon>format_italic</mat-icon></mat-button-toggle>
         <mat-button-toggle #underline><mat-icon>format_underline</mat-icon></mat-button-toggle>
   </mat-button-toggle-group>
-  <mat-button-toggle-group multiple>
+  <mat-button-toggle-group>
         <mat-button-toggle value="left">
             <mat-icon>format_align_left</mat-icon>
           </mat-button-toggle>

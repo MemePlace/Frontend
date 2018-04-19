@@ -10,6 +10,29 @@ export class TextEditToolbarComponent implements OnInit {
   canvas_;
   hidden = true;
 
+  public fonts = [
+    { name: 'Impact' },
+    { name: 'Arial' },
+    { name: 'Pacifico' },
+    { name: 'Roboto' },
+    { name: 'Lora' },
+    { name: 'VT323' },
+    { name: 'Quicksand' },
+    { name: 'Croissant One' },
+    { name: 'Architects Daughter' },
+    { name: 'Emblema One' },
+    { name: 'Graduate' },
+    { name: 'Hammersmith One' },
+    { name: 'Inconsolata' },
+    { name: 'Oswald' },
+    { name: 'Oxygen' },
+    { name: 'Krona One' },
+    { name: 'Indie Flower' },
+    { name: 'Courgette' },
+    { name: 'Gruppo' },
+    { name: 'Ranchers' }
+  ];
+
   @HostBinding('style.bottom.px') bottom = 0;
   @HostBinding('style.left.px') left = 0;
 
