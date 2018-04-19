@@ -1,11 +1,15 @@
-import {Component, ViewChild} from '@angular/core';
-import 'fabric';
+import {Component, OnDestroy, ViewChild} from '@angular/core';
 import {CreationComponent} from '../creation.component';
 import {FunctionBarComponent} from '../function-bar/function-bar.component';
 import {ImgurService} from '../imgur.service';
 import {MatSnackBar} from '@angular/material';
 import {MemeService} from '../../api/meme.service';
 import {UserService} from '../../api/user.service';
+import {ResizeEvent} from 'angular-resizable-element';
+import {StorageService, StorageType} from '../../api/storage.service';
+
+import * as FontFaceObserver from 'fontfaceobserver';
+import 'fabric';
 
 declare let fabric;
 
@@ -24,7 +28,7 @@ interface FileReaderEvent extends Event {
   styleUrls: ['./fabric.component.scss']
 })
 
-export class FabricComponent {
+export class FabricComponent implements OnDestroy {
   @ViewChild('canvCont') canvCont;
   private parent: CreationComponent;
 
@@ -36,11 +40,18 @@ export class FabricComponent {
   public scaledHeight: number;
   public scaledWidth: number;
 
+  private preResize = {width: 0, height: 0};
+  private oldEdges: {top: number, right: number, bottom: number, left: number};
+
+  private history = [];
+  private loadingCanvas = false;
+  private historyPointer = -1;
 
   constructor(private imgurService: ImgurService,
               private memeService: MemeService,
               private userService: UserService,
-              private snackBar: MatSnackBar) { }
+              private snackBar: MatSnackBar,
+              private storageService: StorageService) { }
 
   initCanv(par: CreationComponent, funct: FunctionBarComponent, h: number, w: number) {
     this.height = h;
@@ -56,20 +67,139 @@ export class FabricComponent {
       preserveObjectStacking: true
     });
 
-    this.setSize([h, w]);
+    const savedState = this.storageService.getJSON(StorageType.local, 'canvas_state');
+
+    if (savedState) {
+      this.loadCanvasJSON(savedState);
+    }
+
+    this.save();
+
+    this.canvas.on('object:modified', this.save.bind(this));
+    this.canvas.on('object:added', this.save.bind(this));
+    this.canvas.on('object:removed', this.save.bind(this));
+
+    this.setSize(h, w);
   }
 
-
-  setSize([nheight, nwidth]: [number, number]) {
-    this.height = nheight;
-    this.width = nwidth;
-    this.scaledHeight = nheight * this.zoomVal;
-    this.scaledWidth = nwidth * this.zoomVal;
-    this.adjustSize([this.scaledHeight, this.scaledWidth]);
+  ngOnDestroy() {
+    if (this.canvas.getObjects().length === 0) {
+      this.storageService.remove(StorageType.local, 'canvas_state');
+    } else {
+      this.storageService.setJSON(StorageType.local, 'canvas_state', this.toJSON());
+    }
   }
 
-// This sets the display size, zooming
-  adjustSize([h, w]: [number, number]) {
+  /**
+   * Wrapper around save to ensure the canvas has done the pending operations before saving
+   */
+  save() {
+    setTimeout(() => {
+      this._save();
+    }, 0);
+  }
+
+  private _save() {
+    if (this.loadingCanvas) {
+      return;
+    }
+
+    if (this.history.length >= this.historyPointer + 2) {
+      // destroy any history after this
+      this.history = this.history.slice(0, this.historyPointer + 1);
+      this.historyPointer = this.history.length - 1;
+    }
+
+    this.history.push(this.toJSON());
+    this.historyPointer++;
+  }
+
+  toJSON() {
+    return this.canvas.toJSON(['width', 'height', 'viewportTransform']);
+  }
+
+  undo() {
+    if (this.historyPointer > 0) {
+      this.historyPointer--;
+      this.loadCanvasJSON(this.history[this.historyPointer]);
+    }
+  }
+
+  redo() {
+    if (this.history.length > this.historyPointer + 1) {
+      this.historyPointer += 1;
+      this.loadCanvasJSON(this.history[this.historyPointer]);
+    }
+  }
+
+  loadCanvasJSON(data) {
+    if (typeof data === 'string') {
+      data = JSON.parse(data);
+    }
+
+    this.loadingCanvas = true;
+    this.canvas.loadFromJSON(data, () => {
+      // set the width and height
+      this.zoomVal = data.viewportTransform[0];
+      this.setSize(data.height / this.zoomVal, data.width / this.zoomVal);
+
+      this.canvas.absolutePan({x: -data.viewportTransform[4], y: -data.viewportTransform[5]});
+      this.canvas.renderAll();
+
+      setTimeout(() => {
+        this.loadingCanvas = false;
+      }, 1);
+    });
+  }
+
+  resizeStart() {
+    this.preResize.width = this.scaledWidth;
+    this.preResize.height = this.scaledHeight;
+    this.oldEdges = {top: 0, right: 0, bottom: 0, left: 0};
+  }
+
+  resizeEnd() {
+    this.save();
+  }
+
+  onResize(event: ResizeEvent) {
+    let height = this.preResize.height;
+    const pan = {x: 0, y: 0};
+
+    if (event.edges.top) {
+      pan.y = -(event.edges.top as number - this.oldEdges.top);
+      height += -event.edges.top;
+    } else if (event.edges.bottom) {
+      height += event.edges.bottom as number;
+    }
+
+    let width = this.preResize.width;
+    if (event.edges.right) {
+      width += event.edges.right as number;
+    } else if (event.edges.left) {
+      pan.x = -(event.edges.left as number - this.oldEdges.left);
+      width += -event.edges.left;
+    }
+
+    // We have to pan the opposite way if the user is adjusting the top or left handles
+    this.canvas.relativePan(pan);
+
+    // Set the height, but we have to pass the new original height without the zoom
+    // The user has to be able to adjust on the level of the scaled canvas though
+    // (1 pixel affects 1 pixel of the scaled copy they see)
+    this.setSize(height / this.zoomVal, width / this.zoomVal);
+    this.oldEdges = Object.assign(this.oldEdges, event.edges);
+  }
+
+  setSize(nHeight: number, nWidth: number) {
+    this.height = nHeight;
+    this.width = nWidth;
+    this.scaledHeight = nHeight * this.zoomVal;
+    this.scaledWidth = nWidth * this.zoomVal;
+    this.adjustSize(this.scaledHeight, this.scaledWidth);
+  }
+
+  adjustSize(h: number, w: number) {
     this.canvas.setHeight(h);
     this.canvas.setWidth(w);
   }
@@ -80,7 +210,7 @@ export class FabricComponent {
     this.zoomVal = val;
     this.scaledHeight = this.zoomVal * this.height;
     this.scaledWidth = this.zoomVal * this.width;
-    this.adjustSize([this.scaledHeight, this.scaledWidth]);
+    this.adjustSize(this.scaledHeight, this.scaledWidth);
     this.canvas.setZoom(this.zoomVal);
   }
 
@@ -108,11 +238,10 @@ export class FabricComponent {
     console.log(this.canvas.getObjects());
   }
 
-/* CREDIT TO https://github.com/michaeljcalkins/angular-fabric/blob/master/assets/fabric.js */
+  /* CREDIT TO https://github.com/michaeljcalkins/angular-fabric/blob/master/assets/fabric.js */
   download() {
     const pic = this.canvas.toDataURL({
-      height: this.height,
-      width: this.width
+      multiplier: 1 / this.zoomVal
     });
 
     const data = pic.replace('data:image/png;base64,', '');
@@ -152,52 +281,65 @@ export class FabricComponent {
   }
 
 
-  uploadFile(file, resize) {
-    const add = (obj: fabric.Object) => (this.canvas.add(obj));
-    const setSize = (val: [number, number]) => (this.setSize(val));
-    const setFBSize = (val: [number, number]) => (this.functComp.setSize(val));
-    if (!(file)) { return; }
+  uploadImageFromFile(file) {
+    if (!file) {
+      return;
+    }
+
     const reader = new FileReader();
-    reader.onload = function (event: FileReaderEvent) {
+
+    reader.onload = (event: FileReaderEvent) => {
       const imgObj = new Image();
-      console.log(event);
       imgObj.src = event.target.result;
-      imgObj.onload = function () {
-        const image = new fabric.Image(imgObj);
-        if (resize) {
-          setSize([image.height, image.width]);
-          setFBSize([image.height, image.width]);
-        }
-        add(image);
+      imgObj.onload = () => {
+        this.addImageToCanvas(new fabric.Image(imgObj));
       };
     };
+
     reader.readAsDataURL(file);
   }
 
-  upImg(targeturl: string, resize: boolean) {
-    this.imgurService.uploadImg(targeturl)
-      .then((val) => this.upURL(val.link, resize))
-      .catch((err) => this.parent.err(err.toString()));
+  addImageToCanvas(image: fabric.Image) {
+    if (this.canvas.getObjects().length === 0) {
+      // resize canvas to fit image, reset panning
+      this.canvas.absolutePan({x: 0, y: 0});
+      this.setSize(image.height, image.width);
+    }
+
+    this.canvas.add(image);
+    (image as any).viewportCenter(); // TODO: Fabric types out of date
+    image.setCoords();
   }
 
 
-  upURL(url, resize: boolean) {
-    const setSize = (val: [number, number]) => (this.setSize(val));
-    const setFBSize = (val: [number, number]) => (this.functComp.setSize(val));
-    // TODO: Handle bad URL's and other failures
-    fabric.Image.fromURL(url, (oImg) => {
-      if (resize) {
-        setSize([oImg.height, oImg.width]);
-        setFBSize([oImg.height, oImg.width]);
+  uploadImageFromExternalUrl(url: string) {
+    this.imgurService.uploadImg(url)
+      .then((val) => this.addImageUrlToCanvas(val.link))
+      .catch((err) => this.parent.err(err.toString()));
+  }
+
+  addImageUrlToCanvas(url) {
+    fabric.Image.fromURL(url, (img) => {
+      if (img.getElement() === undefined) {
+        this.snackBar.open('Failed to obtain image from URL', 'Close');
       }
-      this.canvas.add(oImg);
+
+      this.addImageToCanvas(img);
     }, {crossOrigin: 'Anonymous'});
   }
 
 
-  addTxt(bold: boolean, italic: boolean, underline: boolean, font: string, size: number, align: string) {
+  async addTxt(bold: boolean, italic: boolean, underline: boolean, font: string, size: number, align: string) {
     const fontWeight = bold ? 'bold' : 'normal';
     const fontStyle = italic ? 'italic' : 'normal';
+
+    const f = new FontFaceObserver(font);
+
+    try {
+      await f.load();
+    } catch (e) {
+      this.snackBar.open(`Failed to load font ${font}`, 'Close');
+    }
 
     const newTxt = new fabric.Textbox('New Text', {
       fontSize: size,
@@ -211,10 +353,8 @@ export class FabricComponent {
       _strokeWidth: 2,
     });
 
-
     this.canvas.add(newTxt);
-    this.canvas.centerObject(newTxt);
-    this.canvas.requestRenderAll();
+    newTxt.viewportCenter().setCoords();
   }
 
   delete() {
@@ -237,11 +377,8 @@ export class FabricComponent {
 
   clearCanvas() {
     this.canvas.clear();
-  }
-
-  toJSON(): string {
-    console.log(JSON.stringify(this.canvas));
-    return JSON.stringify(this.canvas);
+    this.canvas.setBackgroundColor('white');
+    this.save();
   }
 
   publish() {
@@ -252,20 +389,25 @@ export class FabricComponent {
       return;
     }
 
-    if(!this.userService.isLoggedIn()) {
+    if (this.canvas.getObjects().length === 0) {
+      this.snackBar.open('Do you really think you can publish an empty meme?', 'Close');
+      return;
+    }
+
+    if (!this.userService.isLoggedIn()) {
       this.snackBar.open('You must be logged in to post your meme!', 'Close');
     }  else {
       const pic = this.canvas.toDataURL({
-        height: this.height,
-        width: this.width
+        multiplier: 1 / this.zoomVal
       });
 
       const imageData = pic.replace('data:image/png;base64,', '');
       this.imgurService.uploadImg(imageData).then((response) => {
         return this.memeService.createMeme(this.parent.title, response.link, response.width, response.height, null, communityName);
       }).then((meme) => {
-        this.snackBar.open('Successfully created meme!');
+        this.snackBar.open('Successfully created meme!', 'Close');
         this.parent.resetZoom();
+        this.clearCanvas();
         this.parent.title = '';
         this.parent.communityName = '';
       }).catch((err) => {

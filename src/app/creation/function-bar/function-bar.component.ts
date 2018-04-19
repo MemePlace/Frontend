@@ -18,12 +18,6 @@ export class FunctionBarComponent {
   @ViewChild('fontAlignTG') fontAlignTG;
   private parent: CreationComponent;
   private fabComp: FabricComponent;
-  public sHeight: number;
-  public sWidth: number;
-  public resizeCheck: boolean;
-  public aspectIcon: string;
-  public arToggle: boolean;
-  public aspectRatio: number;
   public fontSize: number;
   public fontAlign: string;
   public selected = 'Impact';
@@ -36,11 +30,14 @@ export class FunctionBarComponent {
     { name: 'Pacifico' },
     { name: 'Roboto' },
     { name: 'Lora' },
+    { name: 'VT323' },
+    { name: 'Quicksand' },
     { name: 'Croissant One' },
     { name: 'Architects Daughter' },
     { name: 'Emblema One' },
     { name: 'Graduate' },
     { name: 'Hammersmith One' },
+    { name: 'Inconsolata' },
     { name: 'Oswald' },
     { name: 'Oxygen' },
     { name: 'Krona One' },
@@ -50,32 +47,19 @@ export class FunctionBarComponent {
     { name: 'Ranchers' }
     ];
 
-
   constructor(private snackBar: MatSnackBar) { }
-
-
-  changeSize(val: [number, number]): void {
-    this.setSize(val);
-    this.fabComp.setSize(val);
-  }
-
-  setSize([newHeight, newWidth]: [number, number]): void {
-    this.sHeight = newHeight;
-    this.sWidth = newWidth;
-  }
 
   uploadFile() {
     const file = this.fileIn.nativeElement.files[0];
-    this.fabComp.uploadFile(file, this.resizeCheck);
+    this.fabComp.uploadImageFromFile(file);
   }
 
-// Won't be reached until CORS is figured out (button disabled)
   uploadUrl(): void {
     const url = this.urlIn.nativeElement.value;
     if (url === '') {
       this.parent.err('Invalid URL');
     } else {
-      this.fabComp.upImg(url, this.resizeCheck);
+      this.fabComp.uploadImageFromExternalUrl(url);
     }
   }
 
@@ -99,10 +83,6 @@ export class FunctionBarComponent {
     }
   }
 
-  viewAll() {
-    console.log(this.fabComp.getObjects());
-  }
-
   selectAll() {
     this.fabComp.selectAll();
   }
@@ -111,52 +91,16 @@ export class FunctionBarComponent {
     this.fabComp.download();
   }
 
-  publish() {
-    this.fabComp.publish();
-  }
-
   clear() {
     this.fabComp.clearCanvas();
   }
 
-  toggleSize() {
-    this.resizeCheck = !this.resizeCheck;
-  }
-
-  toggleAspectRatio() {
-    if (this.arToggle) {
-      this.arToggle = false;
-      this.aspectIcon = 'lock_open';
-    } else {
-      this.arToggle = true;
-      this.aspectIcon = 'lock';
-      this.aspectRatio = this.sHeight / this.sWidth;
-      console.log(this.aspectRatio);
-    }
-  }
-
-  checkAR(axis: string, value: number) {
-    if (axis === 'h' && this.arToggle === true) {
-      this.sHeight = value;
-      this.sWidth = this.sHeight / this.aspectRatio;
-    } else if (axis === 'w' && this.arToggle === true) {
-      this.sWidth = value;
-      this.sHeight = this.sWidth * this.aspectRatio;
-    }
-  }
-
-
-  initBar(par: CreationComponent, fab: FabricComponent, size: [number, number]): void {
-    this.arToggle = false;
-    this.aspectIcon = 'lock_open';
+  initBar(par: CreationComponent, fab: FabricComponent): void {
     this.fontSize = 72;
     this.fontAlign = 'center';
-    this.resizeCheck = true;
     this.parent = par;
     this.fabComp = fab;
-    this.setSize(size);
   }
-
 
   coming() {
     this.snackBar.open('This feature is coming soon!', 'Close');

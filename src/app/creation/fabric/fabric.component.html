@@ -1,3 +1,20 @@
-<div #canvCont id="canvCont" tabindex="1">
+<div #canvCont id="canvCont" tabindex="1"
+     mwlResizable
+     (resizeStart)="resizeStart()"
+     (resizeEnd)="resizeEnd()"
+     (resizing)="onResize($event)"
+     [resizeEdges]="{bottom: true, right: true, top: true, left: true}">
   <canvas class="canvas" id="fabric"></canvas>
+  <div mwlResizeHandle
+       [resizeEdges]="{top: true}"
+       class="top-resize resize-handle"><mat-icon>arrow_upward</mat-icon></div>
+  <div mwlResizeHandle
+       [resizeEdges]="{bottom: true}"
+       class="bottom-resize resize-handle"><mat-icon>arrow_downward</mat-icon></div>
+  <div mwlResizeHandle
+       [resizeEdges]="{left: true}"
+       class="left-resize resize-handle"><mat-icon>arrow_back</mat-icon></div>
+  <div mwlResizeHandle
+       [resizeEdges]="{right: true}"
+       class="right-resize resize-handle"><mat-icon>arrow_forward</mat-icon></div>
 </div>

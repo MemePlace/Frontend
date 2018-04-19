@@ -1,2 +1,2 @@
-<app-search-bar class="search-bar" [hidden]="utils.isMobile"></app-search-bar>
+<app-search-bar #bar (optionSelected)="onSelect($event); bar.resetText()" class="search-bar" [hidden]="utils.isMobile"></app-search-bar>
 <button mat-icon-button (click)="openMobileDialog()" [hidden]="!utils.isMobile"><i class="material-icons">search</i></button>

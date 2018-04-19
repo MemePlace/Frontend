@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import {Utils} from '../../utils';
 import {MobileSearchDialogComponent} from '../mobile-search-dialog/mobile-search-dialog.component';
-import {MatDialog} from '@angular/material';
+import {MatAutocompleteSelectedEvent, MatDialog} from '@angular/material';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-header-search',
@@ -11,7 +12,8 @@ import {MatDialog} from '@angular/material';
 export class HeaderSearchComponent implements OnInit {
   utils = Utils;
 
-  constructor(private dialog: MatDialog) { }
+  constructor(private dialog: MatDialog,
+              private router: Router) { }
 
   ngOnInit() {
   }
@@ -21,8 +23,14 @@ export class HeaderSearchComponent implements OnInit {
       width: '400px'
     });
 
-    dialog.afterClosed().subscribe((query) => {
-      console.log(query);
+    dialog.afterClosed().subscribe((event) => {
+      if (event) {
+        this.onSelect(event);
+      }
     });
+  }
+
+  onSelect(event: MatAutocompleteSelectedEvent) {
+    this.router.navigate(['c', event.option.value.name]);
   }
 }

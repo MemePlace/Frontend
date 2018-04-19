@@ -16,8 +16,11 @@
 </mat-grid-list>
 
 
-<div id="creation-body" (mousewheel)="onMouseWheel($event)">
-  <app-fabric #fab></app-fabric>
+<div id="creation-body"
+     (wheel)="onMouseWheel($event)"
+     (keyup.control.z)="fab.undo()"
+     (keyup.control.y)="fab.redo()">
+  <app-fabric #fab style="margin: auto;"></app-fabric>
 
   <div id="functionBar">
     <app-function-bar #functs></app-function-bar>

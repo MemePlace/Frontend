@@ -4,8 +4,9 @@
        [placeholder]="placeholder"
        (keyup)="onKey(query.value)"
        [style.width]="barWidth ? barWidth : ''"
-       [matAutocomplete]="auto">
-<mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn" (optionSelected)="optionSelected.emit($event)">
+       [matAutocomplete]="auto"
+       [(ngModel)]="text">
+<mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn" (optionSelected)="onSelect($event)">
   <mat-optgroup *ngIf="options.communities && options.communities.length > 0" label="Communities">
     <mat-option *ngFor="let community of options.communities" [value]="community">
       {{ community.name }} - {{community.title}}

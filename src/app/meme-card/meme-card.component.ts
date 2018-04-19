@@ -15,11 +15,14 @@ export class MemeCardComponent implements OnInit, OnDestroy {
   @Input() imageHeight: number;
   @Input() imageWidth: number;
   @Input() memeId: number;
+  @Input() frontPage = false;
 
   utils = Utils;
 
+
   imageLink = 'data:image/png;base64,ffff';  // ensures no null request being sent
   username: string;
+  communityName: string;
   totalVote = 0;
   myVote = 0;
 
@@ -50,6 +53,7 @@ export class MemeCardComponent implements OnInit, OnDestroy {
       this.imageLink = meme.Image.link;
       this.username = meme.creator.username;
       this.totalVote = meme.totalVote || 0;
+      this.communityName = meme.Community && meme.Community.name;
 
       if (meme.myVote) {
         this.myVote =  meme.myVote.diff;
@@ -79,7 +83,7 @@ export class MemeCardComponent implements OnInit, OnDestroy {
     if (Utils.isMobile) {
       return Utils.screenWidth * 0.95;
     } else {
-      return Math.min(Utils.screenWidth * 0.95, height * 2.5);
+      return this.imageWidth;
     }
   }
 

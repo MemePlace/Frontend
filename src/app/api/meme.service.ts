@@ -130,7 +130,11 @@ export class MemeService {
       vote: 1
     }).then((reply: MessageReply) => {
       if (this.memes[memeId]) {
+        if (this.memes[memeId].myVote) {
+          this.memes[memeId].totalVote -= this.memes[memeId].myVote.diff;
+        }
         this.memes[memeId].myVote = {diff: 1};
+        this.memes[memeId].totalVote++;
       }
 
       return reply;
@@ -146,7 +150,11 @@ export class MemeService {
       vote: -1
     }).then((reply: MessageReply) => {
       if (this.memes[memeId]) {
+        if (this.memes[memeId].myVote) {
+          this.memes[memeId].totalVote -= this.memes[memeId].myVote.diff;
+        }
         this.memes[memeId].myVote = {diff: -1};
+        this.memes[memeId].totalVote--;
       }
 
       return reply;
@@ -160,6 +168,7 @@ export class MemeService {
   deleteMemeVote(memeId: number) {
     return this.api.delete(Version.v1, `memes/${memeId}/vote`).then((value: ({}|void)) => {
       if (this.memes[memeId]) {
+        this.memes[memeId].totalVote -= this.memes[memeId].myVote.diff;
         delete this.memes[memeId].myVote;
       }
 
