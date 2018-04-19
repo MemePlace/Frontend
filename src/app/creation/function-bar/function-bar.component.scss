@@ -1,4 +1,15 @@
-@import url('https://fonts.googleapis.com/css?family=Pacifico|VT323|Quicksand|Inconsolata|Impact|Roboto|Lora|Croissant One|Architects Daughter|Emblema One|Graduate|Hammersmith One|Oswald|Oxygen|Krona One|Indie Flower|Courgette|Gruppo|Ranchers');
+@import url('https://fonts.googleapis.com/css?family=Pacifico|VT323|Quicksand|Inconsolata|Roboto|Lora|Croissant One|Architects Daughter|Emblema One|Graduate|Hammersmith One|Oswald|Oxygen|Krona One|Indie Flower|Courgette|Gruppo|Ranchers');
+
+/* Aliases for Default Fonts to Prevent FontFaceObserver Errors */
+@font-face {
+  font-family: Impact;
+  src: local("Impact");
+}
+
+@font-face {
+  font-family: Arial;
+  src: local("Arial");
+}
 
 .sizeInput {
   width: 80px;
