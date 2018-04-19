@@ -85,8 +85,7 @@ export class FabricComponent implements OnDestroy {
   ngOnDestroy() {
     if (this.canvas.getObjects().length === 0) {
       this.storageService.remove(StorageType.local, 'canvas_state');
-    }
-    else {
+    } else {
       this.storageService.setJSON(StorageType.local, 'canvas_state', this.toJSON());
     }
   }
@@ -105,15 +104,15 @@ export class FabricComponent implements OnDestroy {
       return;
     }
 
-    if (this.history.length >= this.historyPointer+2) {
+    if (this.history.length >= this.historyPointer + 2) {
       // destroy any history after this
-      this.history = this.history.slice(0, this.historyPointer+1);
+      this.history = this.history.slice(0, this.historyPointer + 1);
       this.historyPointer = this.history.length - 1;
     }
 
     this.history.push(this.toJSON());
     this.historyPointer++;
-  };
+  }
 
   toJSON() {
     return this.canvas.toJSON(['width', 'height', 'viewportTransform']);
@@ -127,7 +126,7 @@ export class FabricComponent implements OnDestroy {
   }
 
   redo() {
-    if (this.history.length > this.historyPointer+1) {
+    if (this.history.length > this.historyPointer + 1) {
       this.historyPointer += 1;
       this.loadCanvasJSON(this.history[this.historyPointer]);
     }
@@ -170,8 +169,7 @@ export class FabricComponent implements OnDestroy {
     if (event.edges.top) {
       pan.y = -(event.edges.top as number - this.oldEdges.top);
       height += -event.edges.top;
-    }
-    else if (event.edges.bottom) {
+    } else if (event.edges.bottom) {
       height += event.edges.bottom as number;
     }
 
@@ -243,7 +241,7 @@ export class FabricComponent implements OnDestroy {
   /* CREDIT TO https://github.com/michaeljcalkins/angular-fabric/blob/master/assets/fabric.js */
   download() {
     const pic = this.canvas.toDataURL({
-      multiplier: 1/this.zoomVal
+      multiplier: 1 / this.zoomVal
     });
 
     const data = pic.replace('data:image/png;base64,', '');
@@ -339,7 +337,7 @@ export class FabricComponent implements OnDestroy {
 
     try {
       await f.load();
-    } catch(e) {
+    } catch (e) {
       this.snackBar.open(`Failed to load font ${font}`, 'Close');
     }
 
@@ -396,11 +394,11 @@ export class FabricComponent implements OnDestroy {
       return;
     }
 
-    if(!this.userService.isLoggedIn()) {
+    if (!this.userService.isLoggedIn()) {
       this.snackBar.open('You must be logged in to post your meme!', 'Close');
     }  else {
       const pic = this.canvas.toDataURL({
-        multiplier: 1/this.zoomVal
+        multiplier: 1 / this.zoomVal
       });
 
       const imageData = pic.replace('data:image/png;base64,', '');
