@@ -56,8 +56,8 @@ export class TextEditToolbarComponent implements OnInit {
 
       console.log('editing entered');
       console.log(this.canvas.getActiveObject());
-      this.bottom = (this.canvas.height - object.top * object.zoomY) + 20;
-      this.left = (object.left + (object.width / 2)) * object.zoomX;
+      this.bottom = this.canvas.height - object.oCoords.tl.y + 20;
+      this.left = object.oCoords.mb.x;
       this.hidden = false;
     });
 
