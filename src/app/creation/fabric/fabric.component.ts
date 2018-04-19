@@ -32,7 +32,7 @@ export class FabricComponent implements OnDestroy {
   @ViewChild('canvCont') canvCont;
   private parent: CreationComponent;
 
-  private canvas;
+  public canvas;
   private functComp: FunctionBarComponent;
   public height: number;
   public width: number;

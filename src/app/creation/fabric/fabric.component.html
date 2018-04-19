@@ -4,6 +4,7 @@
      (resizeEnd)="resizeEnd()"
      (resizing)="onResize($event)"
      [resizeEdges]="{bottom: true, right: true, top: true, left: true}">
+  <app-text-edit-toolbar [canvas]="canvas"></app-text-edit-toolbar>
   <canvas class="canvas" id="fabric"></canvas>
   <div mwlResizeHandle
        [resizeEdges]="{top: true}"
