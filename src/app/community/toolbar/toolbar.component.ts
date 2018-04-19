@@ -9,7 +9,16 @@ import {DetailsDialogComponent} from '../details-dialog/details-dialog.component
   styleUrls: ['./toolbar.component.scss']
 })
 export class ToolbarComponent implements OnInit {
-  @Input() community: Community;
+  community_: Community;
+
+  @Input() set community(val: Community) {
+    this.community_ = val;
+    this.ngOnInit();
+  }
+
+  get community(): Community {
+    return this.community_;
+  }
 
   get isFavourited() {
     return this.communityService.isFavourited(this.community.name);
