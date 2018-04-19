@@ -17,7 +17,7 @@
 
 
 <div id="creation-body"
-     (mousewheel)="onMouseWheel($event)"
+     (wheel)="onMouseWheel($event)"
      (keyup.control.z)="fab.undo()"
      (keyup.control.y)="fab.redo()">
   <app-fabric #fab style="margin: auto;"></app-fabric>

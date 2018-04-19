@@ -12,6 +12,7 @@ branches:
     - gh-pages # will be deployed to, no need to build it
 
 script:
+  - npm run lint # lints the project
   - npm run build # Generates the dist folder with built angular app
 
 deploy:
