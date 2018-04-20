@@ -16,8 +16,8 @@ export class FunctionBarComponent {
   @ViewChild('fileIn') fileIn;
   @ViewChild('fontOption') fontOption;
   @ViewChild('fontAlignTG') fontAlignTG;
-  private parent: CreationComponent;
-  private fabComp: FabricComponent;
+  public parent: CreationComponent;
+  public fabComp: FabricComponent;
 
   constructor(private snackBar: MatSnackBar) { }
 
