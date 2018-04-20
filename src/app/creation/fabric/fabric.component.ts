@@ -418,7 +418,7 @@ export class FabricComponent implements OnDestroy {
         this.clearCanvas();
         this.parent.title = '';
         this.parent.communityName = '';
-      } catch(err) {
+      } catch (err) {
         this.snackBar.open(`Failed to create meme: ${err.message}`, 'Close');
       }
     }

@@ -38,7 +38,7 @@ export class CreationComponent implements OnInit {
       this.creating = true;
       await this.fab.publish();
       this.creating = false;
-    } catch(e) {
+    } catch (e) {
       this.creating = false;
     }
   }
