@@ -3,7 +3,8 @@
      (resizeStart)="resizeStart()"
      (resizeEnd)="resizeEnd()"
      (resizing)="onResize($event); textToolbar.computePosition();"
-     [resizeEdges]="{bottom: true, right: true, top: true, left: true}">
+     [resizeEdges]="{bottom: true, right: true, top: true, left: true}"
+     (keyup.backspace)="delete()">
   <app-text-edit-toolbar #textToolbar [canvas]="canvas"></app-text-edit-toolbar>
   <canvas class="canvas" id="fabric"></canvas>
   <div mwlResizeHandle
