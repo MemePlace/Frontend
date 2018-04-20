@@ -21,6 +21,11 @@
                            [checked]="style.fontWeight === 'bold'">
           <mat-icon>format_bold</mat-icon>
         </mat-button-toggle>
+        <mat-button-toggle #underline
+                           (change)="setStyle('underline', $event.source.checked)"
+                           [checked]="style.underline">
+          <mat-icon>format_underlined</mat-icon>
+        </mat-button-toggle>
         <mat-button-toggle #italic
                            (change)="setStyle('fontStyle', $event.source.checked ? 'italic' : 'normal')"
                            [checked]="style.fontWeight === 'italic'">
