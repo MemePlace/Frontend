@@ -330,11 +330,8 @@ export class FabricComponent implements OnDestroy {
     }, {crossOrigin: 'Anonymous'});
   }
 
-
-  async addTxt(bold: boolean, italic: boolean, underline: boolean, font: string, size: number, align: string) {
-    const fontWeight = bold ? 'bold' : 'normal';
-    const fontStyle = italic ? 'italic' : 'normal';
-
+  async addTxt() {
+    const font = 'Impact';
     const f = new FontFaceObserver(font);
 
     try {
@@ -344,11 +341,9 @@ export class FabricComponent implements OnDestroy {
     }
 
     const defaultStyling = {
-      fontSize: size,
-      fontFamily: font,
-      fontWeight: fontWeight,
-      fontStyle: fontStyle,
-      textAlign: align,
+      fontSize: 72,
+      fontFamily: 'Impact',
+      textAlign: 'center',
       fill: '#ffffff',
       stroke: '#000000',
       _strokeWidth: 2,
