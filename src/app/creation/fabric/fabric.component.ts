@@ -1,6 +1,7 @@
 import {Component, OnDestroy, ViewChild} from '@angular/core';
 import {CreationComponent} from '../creation.component';
 import {FunctionBarComponent} from '../function-bar/function-bar.component';
+import {TextEditToolbarComponent} from '../text-edit-toolbar/text-edit-toolbar.component';
 import {ImgurService} from '../imgur.service';
 import {MatSnackBar} from '@angular/material';
 import {MemeService} from '../../api/meme.service';
@@ -30,6 +31,7 @@ interface FileReaderEvent extends Event {
 
 export class FabricComponent implements OnDestroy {
   @ViewChild('canvCont') canvCont;
+  @ViewChild('textToolbar') textToolbar: TextEditToolbarComponent;
   private parent: CreationComponent;
 
   public canvas;

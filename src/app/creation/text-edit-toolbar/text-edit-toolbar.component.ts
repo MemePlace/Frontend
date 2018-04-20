@@ -50,14 +50,22 @@ export class TextEditToolbarComponent implements OnInit {
   ngOnInit() {
   }
 
+  computePosition() {
+    const object = this.canvas.getActiveObject();
+
+    if (!object) {
+      return;
+    }
+
+    this.bottom = this.canvas.height - object.oCoords.tl.y + 20;
+    this.left = object.oCoords.mb.x;
+  }
+
   bindEvents() {
     this.canvas.on('text:editing:entered', () => {
-      const object = this.canvas.getActiveObject();
-
       console.log('editing entered');
       console.log(this.canvas.getActiveObject());
-      this.bottom = this.canvas.height - object.oCoords.tl.y + 20;
-      this.left = object.oCoords.mb.x;
+      this.computePosition();
       this.hidden = false;
     });
 

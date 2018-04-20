@@ -59,6 +59,7 @@ export class CreationComponent implements OnInit {
 
     event.preventDefault();
     this.fab.setZoom(this.zoomVal);
+    this.fab.textToolbar.computePosition();
   }
 
   onCommunitySelect(event: MatAutocompleteSelectedEvent) {
