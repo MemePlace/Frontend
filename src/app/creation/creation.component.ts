@@ -18,6 +18,8 @@ export class CreationComponent implements OnInit {
   title: string;
   communityName: string;
 
+  creating = false;
+
   constructor(public snackBar: MatSnackBar) {
     window.addEventListener('paste', (e: ClipboardEvent) => {
       this.fab.uploadImageFromFile(e.clipboardData.files[0]);
@@ -28,6 +30,23 @@ export class CreationComponent implements OnInit {
         this.delete();
       }
     });
+  }
+
+  ngOnInit() {
+    this.zoomVal = 1;
+    const initSize = 500;
+    this.fab.initCanv(this, this.functs, initSize, initSize);
+    this.functs.initBar(this, this.fab);
+  }
+
+  async createMeme() {
+    try {
+      this.creating = true;
+      await this.fab.publish();
+      this.creating = false;
+    } catch(e) {
+      this.creating = false;
+    }
   }
 
   err(msg: string) {
@@ -41,13 +60,6 @@ export class CreationComponent implements OnInit {
 
   delete() {
     this.fab.delete();
-  }
-
-  ngOnInit() {
-    this.zoomVal = 1;
-    const initSize = 500;
-    this.fab.initCanv(this, this.functs, initSize, initSize);
-    this.functs.initBar(this, this.fab);
   }
 
   onMouseWheel(event: MouseWheelEvent) {

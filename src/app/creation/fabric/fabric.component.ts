@@ -381,7 +381,7 @@ export class FabricComponent implements OnDestroy {
     this.save();
   }
 
-  publish() {
+  async publish() {
     const communityName = this.parent.communityName;
 
     if (!communityName) {
@@ -402,17 +402,20 @@ export class FabricComponent implements OnDestroy {
       });
 
       const imageData = pic.replace('data:image/png;base64,', '');
-      this.imgurService.uploadImg(imageData).then((response) => {
-        return this.memeService.createMeme(this.parent.title, response.link, response.width, response.height, null, communityName);
-      }).then((meme) => {
+
+      try {
+        const response = await this.imgurService.uploadImg(imageData);
+        const meme = await this.memeService.createMeme(this.parent.title, response.link,
+          response.width, response.height, null, communityName);
+
         this.snackBar.open('Successfully created meme!', 'Close');
         this.parent.resetZoom();
         this.clearCanvas();
         this.parent.title = '';
         this.parent.communityName = '';
-      }).catch((err) => {
+      } catch(err) {
         this.snackBar.open(`Failed to create meme: ${err.message}`, 'Close');
-      });
+      }
     }
   }
 }
