@@ -22,12 +22,6 @@ export class CreationComponent implements OnInit {
     window.addEventListener('paste', (e: ClipboardEvent) => {
       this.fab.uploadImageFromFile(e.clipboardData.files[0]);
     });
-
-    document.addEventListener('keypress', (e: KeyboardEvent) => {
-      if (document.activeElement.id === 'canvCont' && e.key === 'Delete') {
-        this.delete();
-      }
-    });
   }
 
   err(msg: string) {
@@ -59,6 +53,7 @@ export class CreationComponent implements OnInit {
 
     event.preventDefault();
     this.fab.setZoom(this.zoomVal);
+    this.fab.textToolbar.computePosition();
   }
 
   onCommunitySelect(event: MatAutocompleteSelectedEvent) {

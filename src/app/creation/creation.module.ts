@@ -13,6 +13,7 @@ import {HttpClientModule} from '@angular/common/http';
 import {ImgurService} from './imgur.service';
 import {SearchModule} from '../search/search.module';
 import {ResizableModule} from 'angular-resizable-element';
+import { TextEditToolbarComponent } from './text-edit-toolbar/text-edit-toolbar.component';
 
 
 @NgModule({
@@ -33,6 +34,6 @@ import {ResizableModule} from 'angular-resizable-element';
   providers: [
     ImgurService
   ],
-  declarations: [CreationComponent, FabricComponent, FunctionBarComponent]
+  declarations: [CreationComponent, FabricComponent, FunctionBarComponent, TextEditToolbarComponent]
 })
 export class CreationModule { }

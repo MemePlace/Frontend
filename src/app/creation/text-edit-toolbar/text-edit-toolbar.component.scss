@@ -1,0 +1,9 @@
+:host {
+  position: absolute;
+  z-index: 999;
+  transform: translateX(-50%);
+}
+
+mat-select {
+  width: 150px;
+}
