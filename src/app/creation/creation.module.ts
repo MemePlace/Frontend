@@ -2,7 +2,10 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { MaterialModule } from '../material/material.module';
-import {MatFormFieldModule, MatInputModule, MatGridListModule, MatSliderModule, MatSnackBarModule, MatIconModule} from '@angular/material';
+import {
+  MatFormFieldModule, MatInputModule, MatGridListModule, MatSliderModule, MatSnackBarModule, MatIconModule,
+  MatCardModule
+} from '@angular/material';
 
 import { FormsModule } from '@angular/forms';
 
@@ -29,7 +32,8 @@ import { TextEditToolbarComponent } from './text-edit-toolbar/text-edit-toolbar.
     SearchModule,
     MatSnackBarModule,
     ResizableModule,
-    MatIconModule
+    MatIconModule,
+    MatCardModule,
   ],
   providers: [
     ImgurService

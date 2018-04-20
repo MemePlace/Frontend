@@ -1,4 +1,4 @@
-<span [hidden]="hidden" style="white-space: nowrap;">
+<mat-card [hidden]="hidden" style="white-space: nowrap;">
   <mat-select  #fontOption [value]="style.fontFamily" placeholder="Font" (change)="changeFont($event.value)">
     <mat-option *ngFor="let font of fonts"  [value]="font.name">{{font.name}}</mat-option>
   </mat-select>
@@ -38,4 +38,4 @@
             <mat-icon>format_align_justify</mat-icon>
           </mat-button-toggle>
   </mat-button-toggle-group>
-</span>
+</mat-card>
