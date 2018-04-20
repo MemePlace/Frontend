@@ -1,5 +1,5 @@
 <span [hidden]="hidden" style="white-space: nowrap;">
-  <mat-select  #fontOption [value]="style.fontFamily" placeholder="Font" (change)="setStyle('fontFamily', $event.value)">
+  <mat-select  #fontOption [value]="style.fontFamily" placeholder="Font" (change)="changeFont($event.value)">
     <mat-option *ngFor="let font of fonts"  [value]="font.name">{{font.name}}</mat-option>
   </mat-select>
   <mat-input-container style="width: 60px; padding-bottom: 0">

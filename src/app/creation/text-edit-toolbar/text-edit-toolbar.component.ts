@@ -1,6 +1,6 @@
 import {Component, HostBinding, Input, OnInit} from '@angular/core';
-import {fabric} from 'fabric';
-import {IText} from 'fabric/fabric-impl';
+import * as FontFaceObserver from 'fontfaceobserver';
+import {MatSnackBar} from '@angular/material';
 
 @Component({
   selector: 'app-text-edit-toolbar',
@@ -52,7 +52,7 @@ export class TextEditToolbarComponent implements OnInit {
     return this.canvas_;
   }
 
-  constructor() { }
+  constructor(private snackBar: MatSnackBar) { }
 
   ngOnInit() {
   }
@@ -86,5 +86,16 @@ export class TextEditToolbarComponent implements OnInit {
     this.activeObject.dirty = true;
 
     this.canvas.renderAll();
+  }
+
+  async changeFont(font: string) {
+    const f = new FontFaceObserver(font);
+
+    try {
+      await f.load();
+      this.setStyle('fontFamily', font);
+    } catch (e) {
+      this.snackBar.open(`Failed to load font ${font}`, 'Close');
+    }
   }
 }
