@@ -106,13 +106,19 @@ export class FabricComponent implements OnDestroy {
       return;
     }
 
+    // check if this has a different state
+    const state = this.toJSON();
+    if (state === this.history[this.historyPointer]) {
+      return;
+    }
+
     if (this.history.length >= this.historyPointer + 2) {
       // destroy any history after this
       this.history = this.history.slice(0, this.historyPointer + 1);
       this.historyPointer = this.history.length - 1;
     }
 
-    this.history.push(this.toJSON());
+    this.history.push(state);
     this.historyPointer++;
   }
 

@@ -1,4 +1,4 @@
-import {Component, HostBinding, Input, OnInit} from '@angular/core';
+import {Component, EventEmitter, HostBinding, Input, OnInit, Output} from '@angular/core';
 import * as FontFaceObserver from 'fontfaceobserver';
 import {MatSnackBar} from '@angular/material';
 
@@ -8,6 +8,8 @@ import {MatSnackBar} from '@angular/material';
   styleUrls: ['./text-edit-toolbar.component.scss']
 })
 export class TextEditToolbarComponent implements OnInit {
+  @Output() textChanged = new EventEmitter();
+
   canvas_;
   hidden = true;
 
@@ -92,12 +94,15 @@ export class TextEditToolbarComponent implements OnInit {
       throw new Error('Invalid text centering option');
     }
 
+    this.textChanged.emit();
     this.computePosition();
   }
 
   setStyle(key: string, val: string) {
     this.activeObject.set(key, val);
     this.activeObject.dirty = true;
+
+    this.textChanged.emit();
 
     this.canvas.renderAll();
   }
