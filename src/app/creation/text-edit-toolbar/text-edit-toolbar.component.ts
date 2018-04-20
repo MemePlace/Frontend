@@ -81,6 +81,20 @@ export class TextEditToolbarComponent implements OnInit {
     });
   }
 
+  center(type: 'horizontal'|'vertical'|'both') {
+    if (type === 'horizontal') {
+      this.activeObject.viewportCenterH().setCoords();
+    } else if (type === 'vertical') {
+      this.activeObject.viewportCenterV().setCoords();
+    } else if (type === 'both') {
+      this.activeObject.viewportCenter().setCoords();
+    } else {
+      throw new Error('Invalid text centering option');
+    }
+
+    this.computePosition();
+  }
+
   setStyle(key: string, val: string) {
     this.activeObject.set(key, val);
     this.activeObject.dirty = true;

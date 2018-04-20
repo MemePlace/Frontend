@@ -11,6 +11,9 @@
            (change)="setStyle('fontSize', fontSize.value)">
   </mat-input-container>
   <input #fillColour type="color" [value]="style.fill" (change)="setStyle('fill', fillColour.value)">
+  <button (click)="center('both')" mat-icon-button matTooltip="Center Horizontally and Vertically"><mat-icon>border_inner</mat-icon></button>
+  <button (click)="center('horizontal')" mat-icon-button matTooltip="Center Horizontally"><mat-icon>border_vertical</mat-icon></button>
+  <button (click)="center('vertical')" mat-icon-button matTooltip="Center Vertically"><mat-icon>border_horizontal</mat-icon></button>
   <br>
   <mat-button-toggle-group multiple>
         <mat-button-toggle #bold
