@@ -9,8 +9,8 @@
   <mat-grid-tile [colspan]="2"></mat-grid-tile>
   <mat-grid-tile [colspan]="2">
     <app-search-bar id="community-bar" barWidth="100%" placeholder="Community" (optionSelected)="onCommunitySelect($event)"></app-search-bar>
-    <button id="meme-create" mat-raised-button color="primary" (click)="fab.publish()">
-      Create Meme
+    <button id="meme-create" mat-raised-button color="primary" [disabled]="creating" (click)="createMeme()">
+      {{ creating ? 'Creating...' : 'Create Meme'}}
     </button>
   </mat-grid-tile>
 </mat-grid-list>
