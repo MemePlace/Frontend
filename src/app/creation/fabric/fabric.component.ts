@@ -343,20 +343,28 @@ export class FabricComponent implements OnDestroy {
       this.snackBar.open(`Failed to load font ${font}`, 'Close');
     }
 
-    const newTxt = new fabric.Textbox('New Text', {
+    const defaultStyling = {
       fontSize: size,
       fontFamily: font,
       fontWeight: fontWeight,
       fontStyle: fontStyle,
       textAlign: align,
-      underline: underline,
-      fill: '#fff',
-      stroke: '#000',
+      fill: '#ffffff',
+      stroke: '#000000',
       _strokeWidth: 2,
-    });
+      cursorColor: '#000000'
+    };
+
+    const newTxt = new fabric.Textbox('New Text', defaultStyling);
 
     this.canvas.add(newTxt);
     newTxt.viewportCenter().setCoords();
+    this.canvas.setActiveObject(newTxt);
+
+    setTimeout(() => {
+      newTxt.enterEditing();
+      newTxt.selectAll();
+    }, 0);
   }
 
   delete() {

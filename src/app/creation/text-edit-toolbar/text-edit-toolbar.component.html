@@ -1,17 +1,30 @@
 <span [hidden]="hidden" style="white-space: nowrap;">
-  <mat-select  #fontOption [(value)]="selected" placeholder="Font">
+  <mat-select  #fontOption [value]="style.fontFamily" placeholder="Font" (change)="setStyle('fontFamily', $event.value)">
     <mat-option *ngFor="let font of fonts"  [value]="font.name">{{font.name}}</mat-option>
   </mat-select>
-  <mat-input-container style="width: 50px; padding-bottom: 0">
-    <input matInput #fontSizeIn id="fontSize" type="number" placeholder="Font Size" min="0" value="12">
+  <mat-input-container style="width: 60px; padding-bottom: 0">
+    <input matInput #fontSize
+           type="number"
+           placeholder="Font Size"
+           min="0" value="12"
+           [value]="style.fontSize"
+           (change)="setStyle('fontSize', fontSize.value)">
   </mat-input-container>
+  <input #fillColour type="color" [value]="style.fill" (change)="setStyle('fill', fillColour.value)">
   <br>
   <mat-button-toggle-group multiple>
-        <mat-button-toggle #bold><mat-icon>format_bold</mat-icon></mat-button-toggle>
-        <mat-button-toggle #italic><mat-icon>format_italic</mat-icon></mat-button-toggle>
-        <mat-button-toggle #underline><mat-icon>format_underline</mat-icon></mat-button-toggle>
+        <mat-button-toggle #bold
+                           (change)="setStyle('fontWeight', $event.source.checked ? 'bold' : 'normal')"
+                           [checked]="style.fontWeight === 'bold'">
+          <mat-icon>format_bold</mat-icon>
+        </mat-button-toggle>
+        <mat-button-toggle #italic
+                           (change)="setStyle('fontStyle', $event.source.checked ? 'italic' : 'normal')"
+                           [checked]="style.fontWeight === 'italic'">
+          <mat-icon>format_italic</mat-icon>
+        </mat-button-toggle>
   </mat-button-toggle-group>
-  <mat-button-toggle-group>
+  <mat-button-toggle-group (change)="setStyle('textAlign', $event.value)" [value]="style.textAlign">
         <mat-button-toggle value="left">
             <mat-icon>format_align_left</mat-icon>
           </mat-button-toggle>

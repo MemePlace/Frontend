@@ -1,5 +1,6 @@
 import {Component, HostBinding, Input, OnInit} from '@angular/core';
 import {fabric} from 'fabric';
+import {IText} from 'fabric/fabric-impl';
 
 @Component({
   selector: 'app-text-edit-toolbar',
@@ -9,6 +10,12 @@ import {fabric} from 'fabric';
 export class TextEditToolbarComponent implements OnInit {
   canvas_;
   hidden = true;
+
+  public activeObject;
+
+  get style() {
+    return this.activeObject || {};
+  }
 
   public fonts = [
     { name: 'Impact' },
@@ -63,15 +70,21 @@ export class TextEditToolbarComponent implements OnInit {
 
   bindEvents() {
     this.canvas.on('text:editing:entered', () => {
-      console.log('editing entered');
-      console.log(this.canvas.getActiveObject());
+      this.activeObject = this.canvas.getActiveObject();
       this.computePosition();
       this.hidden = false;
     });
 
     this.canvas.on('text:editing:exited', () => {
-      console.log('editing exited');
+      this.activeObject = null;
       this.hidden = true;
     });
+  }
+
+  setStyle(key: string, val: string) {
+    this.activeObject.set(key, val);
+    this.activeObject.dirty = true;
+
+    this.canvas.renderAll();
   }
 }
