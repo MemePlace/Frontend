@@ -118,6 +118,8 @@ export class FabricComponent implements OnDestroy {
       this.historyPointer = this.history.length - 1;
     }
 
+    this.storageService.setJSON(StorageType.local, 'canvas_state', state);
+
     this.history.push(state);
     this.historyPointer++;
   }
