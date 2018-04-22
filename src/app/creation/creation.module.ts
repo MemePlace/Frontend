@@ -2,7 +2,10 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { MaterialModule } from '../material/material.module';
-import {MatFormFieldModule, MatInputModule, MatGridListModule, MatSliderModule, MatSnackBarModule, MatIconModule} from '@angular/material';
+import {
+  MatFormFieldModule, MatInputModule, MatGridListModule, MatSliderModule, MatSnackBarModule, MatIconModule,
+  MatCardModule
+} from '@angular/material';
 
 import { FormsModule } from '@angular/forms';
 
@@ -13,6 +16,7 @@ import {HttpClientModule} from '@angular/common/http';
 import {ImgurService} from './imgur.service';
 import {SearchModule} from '../search/search.module';
 import {ResizableModule} from 'angular-resizable-element';
+import { TextEditToolbarComponent } from './text-edit-toolbar/text-edit-toolbar.component';
 
 
 @NgModule({
@@ -28,11 +32,12 @@ import {ResizableModule} from 'angular-resizable-element';
     SearchModule,
     MatSnackBarModule,
     ResizableModule,
-    MatIconModule
+    MatIconModule,
+    MatCardModule,
   ],
   providers: [
     ImgurService
   ],
-  declarations: [CreationComponent, FabricComponent, FunctionBarComponent]
+  declarations: [CreationComponent, FabricComponent, FunctionBarComponent, TextEditToolbarComponent]
 })
 export class CreationModule { }

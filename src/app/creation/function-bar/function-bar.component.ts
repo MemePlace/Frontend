@@ -16,38 +16,15 @@ export class FunctionBarComponent {
   @ViewChild('fileIn') fileIn;
   @ViewChild('fontOption') fontOption;
   @ViewChild('fontAlignTG') fontAlignTG;
-  private parent: CreationComponent;
-  private fabComp: FabricComponent;
-  public fontSize: number;
-  public fontAlign: string;
-  public selected = 'Impact';
-  public fontColour; // TODO: Implement font color UI
-
-  // TODO: Not all fonts are loaded into FabricJS immediately, pre-loading is needed
-  public fonts: Array<any> = [
-    { name: 'Impact' },
-    { name: 'Arial' },
-    { name: 'Pacifico' },
-    { name: 'Roboto' },
-    { name: 'Lora' },
-    { name: 'VT323' },
-    { name: 'Quicksand' },
-    { name: 'Croissant One' },
-    { name: 'Architects Daughter' },
-    { name: 'Emblema One' },
-    { name: 'Graduate' },
-    { name: 'Hammersmith One' },
-    { name: 'Inconsolata' },
-    { name: 'Oswald' },
-    { name: 'Oxygen' },
-    { name: 'Krona One' },
-    { name: 'Indie Flower' },
-    { name: 'Courgette' },
-    { name: 'Gruppo' },
-    { name: 'Ranchers' }
-    ];
+  public parent: CreationComponent;
+  public fabComp: FabricComponent;
 
   constructor(private snackBar: MatSnackBar) { }
+
+  initBar(par: CreationComponent, fab: FabricComponent): void {
+    this.parent = par;
+    this.fabComp = fab;
+  }
 
   uploadFile() {
     const file = this.fileIn.nativeElement.files[0];
@@ -57,18 +34,10 @@ export class FunctionBarComponent {
   uploadUrl(): void {
     const url = this.urlIn.nativeElement.value;
     if (url === '') {
-      this.parent.err('Invalid URL');
+      this.snackBar.open('Invalid URL', 'Close');
     } else {
       this.fabComp.uploadImageFromExternalUrl(url);
     }
-  }
-
-  alignChange(e) {
-    this.fontAlign = e.value;
-  }
-
-  addTxt(bold: boolean, italic: boolean, underline: boolean, font: string, size: number) {
-    this.fabComp.addTxt(bold, italic, underline, font, size, this.fontAlign);
   }
 
   moveObj(val: number) {
@@ -93,13 +62,6 @@ export class FunctionBarComponent {
 
   clear() {
     this.fabComp.clearCanvas();
-  }
-
-  initBar(par: CreationComponent, fab: FabricComponent): void {
-    this.fontSize = 72;
-    this.fontAlign = 'center';
-    this.parent = par;
-    this.fabComp = fab;
   }
 
   coming() {

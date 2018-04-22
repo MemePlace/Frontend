@@ -1,6 +1,7 @@
 import {Component, OnDestroy, ViewChild} from '@angular/core';
 import {CreationComponent} from '../creation.component';
 import {FunctionBarComponent} from '../function-bar/function-bar.component';
+import {TextEditToolbarComponent} from '../text-edit-toolbar/text-edit-toolbar.component';
 import {ImgurService} from '../imgur.service';
 import {MatSnackBar} from '@angular/material';
 import {MemeService} from '../../api/meme.service';
@@ -30,9 +31,10 @@ interface FileReaderEvent extends Event {
 
 export class FabricComponent implements OnDestroy {
   @ViewChild('canvCont') canvCont;
+  @ViewChild('textToolbar') textToolbar: TextEditToolbarComponent;
   private parent: CreationComponent;
 
-  private canvas;
+  public canvas;
   private functComp: FunctionBarComponent;
   public height: number;
   public width: number;
@@ -104,13 +106,21 @@ export class FabricComponent implements OnDestroy {
       return;
     }
 
+    // check if this has a different state
+    const state = this.toJSON();
+    if (state === this.history[this.historyPointer]) {
+      return;
+    }
+
     if (this.history.length >= this.historyPointer + 2) {
       // destroy any history after this
       this.history = this.history.slice(0, this.historyPointer + 1);
       this.historyPointer = this.history.length - 1;
     }
 
-    this.history.push(this.toJSON());
+    this.storageService.setJSON(StorageType.local, 'canvas_state', state);
+
+    this.history.push(state);
     this.historyPointer++;
   }
 
@@ -328,11 +338,8 @@ export class FabricComponent implements OnDestroy {
     }, {crossOrigin: 'Anonymous'});
   }
 
-
-  async addTxt(bold: boolean, italic: boolean, underline: boolean, font: string, size: number, align: string) {
-    const fontWeight = bold ? 'bold' : 'normal';
-    const fontStyle = italic ? 'italic' : 'normal';
-
+  async addTxt() {
+    const font = 'Impact';
     const f = new FontFaceObserver(font);
 
     try {
@@ -341,20 +348,26 @@ export class FabricComponent implements OnDestroy {
       this.snackBar.open(`Failed to load font ${font}`, 'Close');
     }
 
-    const newTxt = new fabric.Textbox('New Text', {
-      fontSize: size,
-      fontFamily: font,
-      fontWeight: fontWeight,
-      fontStyle: fontStyle,
-      textAlign: align,
-      underline: underline,
-      fill: '#fff',
-      stroke: '#000',
+    const defaultStyling = {
+      fontSize: 72,
+      fontFamily: 'Impact',
+      textAlign: 'center',
+      fill: '#ffffff',
+      stroke: '#000000',
       _strokeWidth: 2,
-    });
+      cursorColor: '#000000'
+    };
+
+    const newTxt = new fabric.Textbox('New Text', defaultStyling);
 
     this.canvas.add(newTxt);
     newTxt.viewportCenter().setCoords();
+    this.canvas.setActiveObject(newTxt);
+
+    setTimeout(() => {
+      newTxt.enterEditing();
+      newTxt.selectAll();
+    }, 0);
   }
 
   delete() {
@@ -381,7 +394,7 @@ export class FabricComponent implements OnDestroy {
     this.save();
   }
 
-  publish() {
+  async publish() {
     const communityName = this.parent.communityName;
 
     if (!communityName) {
@@ -402,17 +415,20 @@ export class FabricComponent implements OnDestroy {
       });
 
       const imageData = pic.replace('data:image/png;base64,', '');
-      this.imgurService.uploadImg(imageData).then((response) => {
-        return this.memeService.createMeme(this.parent.title, response.link, response.width, response.height, null, communityName);
-      }).then((meme) => {
+
+      try {
+        const response = await this.imgurService.uploadImg(imageData);
+        const meme = await this.memeService.createMeme(this.parent.title, response.link,
+          response.width, response.height, null, communityName);
+
         this.snackBar.open('Successfully created meme!', 'Close');
         this.parent.resetZoom();
         this.clearCanvas();
         this.parent.title = '';
         this.parent.communityName = '';
-      }).catch((err) => {
+      } catch (err) {
         this.snackBar.open(`Failed to create meme: ${err.message}`, 'Close');
-      });
+      }
     }
   }
 }

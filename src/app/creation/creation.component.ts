@@ -18,16 +18,29 @@ export class CreationComponent implements OnInit {
   title: string;
   communityName: string;
 
+  creating = false;
+
   constructor(public snackBar: MatSnackBar) {
     window.addEventListener('paste', (e: ClipboardEvent) => {
       this.fab.uploadImageFromFile(e.clipboardData.files[0]);
     });
+  }
 
-    document.addEventListener('keypress', (e: KeyboardEvent) => {
-      if (document.activeElement.id === 'canvCont' && e.key === 'Delete') {
-        this.delete();
-      }
-    });
+  ngOnInit() {
+    this.zoomVal = 1;
+    const initSize = 500;
+    this.fab.initCanv(this, this.functs, initSize, initSize);
+    this.functs.initBar(this, this.fab);
+  }
+
+  async createMeme() {
+    try {
+      this.creating = true;
+      await this.fab.publish();
+      this.creating = false;
+    } catch (e) {
+      this.creating = false;
+    }
   }
 
   err(msg: string) {
@@ -43,13 +56,6 @@ export class CreationComponent implements OnInit {
     this.fab.delete();
   }
 
-  ngOnInit() {
-    this.zoomVal = 1;
-    const initSize = 500;
-    this.fab.initCanv(this, this.functs, initSize, initSize);
-    this.functs.initBar(this, this.fab);
-  }
-
   onMouseWheel(event: MouseWheelEvent) {
     if (event.deltaY > 0) {
       this.zoomVal -= 0.08;
@@ -59,6 +65,7 @@ export class CreationComponent implements OnInit {
 
     event.preventDefault();
     this.fab.setZoom(this.zoomVal);
+    this.fab.textToolbar.computePosition();
   }
 
   onCommunitySelect(event: MatAutocompleteSelectedEvent) {

@@ -2,8 +2,10 @@
      mwlResizable
      (resizeStart)="resizeStart()"
      (resizeEnd)="resizeEnd()"
-     (resizing)="onResize($event)"
-     [resizeEdges]="{bottom: true, right: true, top: true, left: true}">
+     (resizing)="onResize($event); textToolbar.computePosition();"
+     [resizeEdges]="{bottom: true, right: true, top: true, left: true}"
+     (keyup.backspace)="delete()">
+  <app-text-edit-toolbar #textToolbar [canvas]="canvas" (textChanged)="save()"></app-text-edit-toolbar>
   <canvas class="canvas" id="fabric"></canvas>
   <div mwlResizeHandle
        [resizeEdges]="{top: true}"
