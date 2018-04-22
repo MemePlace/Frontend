@@ -1,18 +1,29 @@
-<div class="meme-dialog" [style.height.px]="maxDialogHeight()">
-    <img class="meme-img" [style.maxWidth.px]="maxImgWidth()" [style.minWidth.px]="minImgWidth()" [src]="imageLink">
+<div class="meme-dialog"
+     [style.maxHeight.px]="maxDialogHeight"
+     [style.width.px]="dialogWidth">
+    <img class="meme-img" [src]="meme.Image.link">
 
     <h1 class="author" mat-dialog-title>
-      {{username}} posted {{ createdAt | timeAgo }}
+      {{meme.creator.username}} posted {{ meme.createdAt | timeAgo }}
     </h1>
+
     <div class="cardActionButtons">
       <!-- Up vote button -->
-      <button mat-icon-button (click)="onClickUpVote()" [color]="myVote == 1 ? 'primary': 'basic'"><i
-        class="material-icons">thumb_up</i></button>
+      <button mat-icon-button
+              (click)="onVote(1)"
+              [color]="myVote == 1 ? 'primary': 'basic'">
+        <i class="material-icons">thumb_up</i>
+      </button>
       <span>{{totalVote + myVote}}</span>
+
       <!-- Down vote button -->
-      <button mat-icon-button (click)="onClickDownVote()" [color]="myVote == -1 ? 'warn': 'basic'"><i
-        class="material-icons">thumb_down</i></button>
+      <button mat-icon-button
+              (click)="onVote(-1)"
+              [color]="myVote == -1 ? 'warn': 'basic'">
+        <i class="material-icons">thumb_down</i>
+      </button>
     </div>
+
     <div class="form-wrapper" *ngIf="userService.isLoggedIn()">
       <form class="text-wrapper" [formGroup]="form">
         <mat-form-field>
@@ -23,7 +34,8 @@
         <button class="side-button" mat-icon-button (click)="submitComment()"><i class="material-icons">send</i></button>
       </div>
     </div>
-    <mat-list>
+
+    <mat-list *ngIf="comments.length > 0">
       <mat-divider></mat-divider>
       <mat-list-item *ngFor="let comment of comments">
         <div class="line-wrapper">
@@ -32,7 +44,9 @@
             <div matLine>{{ comment.text }}</div>
           </div>
           <div class="button-wrapper" *ngIf="userService.user && comment.User.username===userService.user.username">
-            <button class="side-button" mat-icon-button (click)="deleteComment(comment.id)"><i class="material-icons">delete</i></button>
+            <button class="side-button" mat-icon-button (click)="deleteComment(comment.id)">
+              <i class="material-icons">delete</i>
+            </button>
           </div>
         </div>
         <mat-divider [inset]="true"></mat-divider>

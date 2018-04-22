@@ -1,11 +1,8 @@
-.meme-dialog {
-  overflow-x: hidden;
-  padding: 0 10px 0 0;
-}
-
 .meme-img {
   display: block;
   margin: auto;
+  max-width: 100%;
+  max-height: 70vh;
 }
 
 .cardActionButtons {
@@ -18,27 +15,23 @@
   vertical-align: middle;
 }
 
-mat-list {
-  clear: both;
-}
-
 mat-list .comment-info {
   font-size: small;
   font-weight: bold;
 }
 
-::ng-deep .mat-list .mat-list-item .mat-line{
+::ng-deep .mat-list .mat-list-item .mat-line {
   overflow-wrap: break-word;
   word-wrap: break-word;
   word-break: break-word;
   white-space: pre-wrap;
 }
 
-::ng-deep .cdk-overlay-pane mat-dialog-container app-meme-dialog .meme-dialog mat-list mat-list-item .mat-list-item-content {
+::ng-deep div.meme-dialog mat-list mat-list-item.mat-list-item div.mat-list-item-content {
   padding: 0;
 }
 
-::ng-deep .cdk-global-overlay-wrapper .cdk-overlay-pane mat-dialog-container app-meme-dialog .meme-dialog mat-list mat-list-item {
+.meme-dialog mat-list mat-list-item {
   height:initial;
 }
 
@@ -58,7 +51,6 @@ mat-list .comment-info {
 
 .text-wrapper {
   flex: 10;
-  clear: both;
 }
 
 .button-wrapper {

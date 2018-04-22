@@ -15,9 +15,6 @@ import {Router} from '@angular/router';
   styleUrls: ['./meme-dialog.component.scss']
 })
 export class MemeDialogComponent implements OnInit {
-  username: string;
-  imageLink: string;
-  createdAt: string;
   totalVote = 0;
   myVote = 0;
   memeId: number;
@@ -25,20 +22,30 @@ export class MemeDialogComponent implements OnInit {
   comments: Comment[] = [];
   form: FormGroup;
   oldUrl: string;
+
   utils = Utils;
 
   @Output() notifyCard: EventEmitter<number> = new EventEmitter<number>();
 
+  get dialogWidth(): number {
+    return Math.min(this.utils.screenWidth * 0.75, 800);
+  }
+
+  get maxDialogHeight(): number {
+    return Utils.screenHeight * 0.9;
+  }
+
   constructor(private dialogRef: MatDialogRef<MemeDialogComponent>,
+              @Inject(MAT_DIALOG_DATA) public data: {memeId: number},
               private memeService: MemeService,
               private snackBar: MatSnackBar,
-              @Inject(MAT_DIALOG_DATA) public data: any,
               public userService: UserService,
               private fb: FormBuilder,
               public dialog: MatDialog,
               private location: Location) {
     this.memeId = data.memeId;
     this.fetchMemeDetails();
+
     if (this.userService.isLoggedIn()) {
       this.createForm();
     }
@@ -52,10 +59,7 @@ export class MemeDialogComponent implements OnInit {
   fetchMemeDetails() {
     this.memeService.getMemeDetails(this.memeId).then((meme) => {
       this.meme = meme;
-      this.imageLink = meme.Image.link;
-      this.username = meme.creator.username;
       this.totalVote = meme.totalVote || 0;
-      this.createdAt = meme.createdAt;
 
       if (meme.myVote) {
         this.myVote =  meme.myVote.diff;
@@ -108,40 +112,29 @@ export class MemeDialogComponent implements OnInit {
     });
   }
 
-  minImgWidth(): number {
-    return Utils.screenWidth * 0.30;
-  }
-
-  maxImgWidth(): number {
-    return Utils.screenWidth * 0.7;
-  }
-
-  maxDialogHeight(): number {
-    return Utils.screenHeight * 0.9;
-  }
-
-  async onClickUpVote() {
+  async onVote(type: number) {
     try {
-      const promise = (this.myVote === 1) ? this.memeService.deleteMemeVote(this.memeId) : this.memeService.upvoteMeme(this.memeId);
+      let promise;
+
+      if (type === this.myVote) {
+        promise = this.memeService.deleteMemeVote(this.memeId);
+      } else if (type === 1) {
+        promise = this.memeService.upvoteMeme(this.memeId);
+      } else if (type === -1) {
+        promise = this.memeService.downvoteMeme(this.memeId);
+      }
+
       await promise;
 
-      this.myVote = (this.myVote === 1) ? 0 : 1;
+      if (type === this.myVote) {
+        this.myVote = 0;
+      } else {
+        this.myVote = type;
+      }
+
       this.notifyCard.emit(this.myVote);
     } catch (e) {
       this.snackBar.open(`Failed to vote: ${e.message}`, 'Close');
     }
   }
-
-  async onClickDownVote() {
-    try {
-      const promise = (this.myVote === -1) ? this.memeService.deleteMemeVote(this.memeId) : this.memeService.downvoteMeme(this.memeId);
-      await promise;
-
-      this.myVote = (this.myVote === -1) ? 0 : -1;
-      this.notifyCard.emit(this.myVote);
-    } catch (e) {
-      this.snackBar.open(`Failed to vote: ${e.message}`, 'Close');
-    }
-  }
-
 }
